@@ -63,7 +63,7 @@ public class DamageListener implements Listener {
         recordDamage(damagedEntity, damager, null);
       } else {
         //There is an entity which shot the projectile.
-        recordDamage(damagedEntity, (Entity) projectile.getShooter(), Kollections.getEntityTypeName(damager.getType()));
+        recordDamage(damagedEntity, (Entity) projectile.getShooter(), Utils.getEntityTypeName(damager.getType()));
       }
     } else if (damager instanceof TNTPrimed) {
       //The damaged entity was damaged by tnt.
@@ -75,7 +75,7 @@ public class DamageListener implements Listener {
         recordDamage(damagedEntity, damager, null);
       } else {
         //There is an entity which caused the tnt to be lit.
-        recordDamage(damagedEntity, tntSource, Kollections.getEntityTypeName(damager.getType()));
+        recordDamage(damagedEntity, tntSource, Utils.getEntityTypeName(damager.getType()));
       }
     } else {
       //The damaged entity was not hit by a projectile or tnt.
@@ -92,7 +92,7 @@ public class DamageListener implements Listener {
     if (!(damagedEntity instanceof Damageable)) return;
     if (event.getCause() == EntityDamageEvent.DamageCause.CUSTOM) return;
 
-    recordDamage(damagedEntity,null, Kollections.getDamageCauseName(event.getCause()));
+    recordDamage(damagedEntity,null, Utils.getDamageCauseDisplayName(event.getCause()));
   }
 
   /*
@@ -173,9 +173,9 @@ public class DamageListener implements Listener {
 
     String deadName;
     if (damagedEntity instanceof Player) {
-      deadName = Kollections.getName(damagedEntity);
+      deadName = Utils.getName(damagedEntity);
     } else {
-      deadName = Kollections.getEntityTypeName(damagedEntity.getType());
+      deadName = Utils.getEntityTypeName(damagedEntity.getType());
       if (damagedEntity instanceof Tameable) {
         AnimalTamer tamer = ((Tameable) damagedEntity).getOwner();
         if (tamer != null) {
@@ -214,9 +214,9 @@ public class DamageListener implements Listener {
 
     String killerName;
     if (killer instanceof Player) {
-      killerName = Kollections.getName(killer);
+      killerName = Utils.getName(killer);
     } else {
-      killerName = Kollections.getEntityTypeName(killer.getType());
+      killerName = Utils.getEntityTypeName(killer.getType());
     }
     if (killerName == null) killerName = "?¿?¿?";
     ChatColor killerColor = ChatColor.RED; //TODO Not always red pls
