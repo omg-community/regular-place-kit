@@ -51,24 +51,6 @@ public class Utils {
   //   return buildStringFromArguments(args, 0);
   // }
 
-  public static String getName(CommandSender sender) {
-    return sender instanceof Player ? Crashplayer.get(((Player) sender).getUniqueId()).getDisplayName() : sender.getName();
-  }
-
-  public static Player getOnlinePlayer(String search) {
-    for (Player p : Bukkit.getOnlinePlayers()) {
-      String name = Crashplayer.get(p.getUniqueId()).getDisplayName();
-      if (name.toLowerCase().startsWith(search.toLowerCase())) return p;
-    }
-    return null;
-  }
-
-  public static List<Player> getOnlineStaff() {
-    List<Player> players = new ArrayList<>();
-    for (Player p : Bukkit.getOnlinePlayers()) if (Crashplayer.get(p.getUniqueId()).getActualRank().compareTo(Crashrank.MOD) >= 0) players.add(p);
-    return players;
-  }
-
   public static String createEnglishList(List<String> items) {
     if (items.size() == 0) return "";
     if (items.size() == 1) return items.get(0);
