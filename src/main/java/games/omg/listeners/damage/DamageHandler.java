@@ -36,7 +36,7 @@ public class DamageHandler implements Listener {
 
   final private static ChatColor CAUSE_COLOR = ChatColor.YELLOW;
 
-  final private static HashMap<Entity, List<DamageAction>> damageList = new HashMap<>();
+  final private static HashMap<Entity, List<Damage>> damageList = new HashMap<>();
 
   //
 
@@ -92,7 +92,7 @@ public class DamageHandler implements Listener {
 
   //
 
-  public static void damage(Entity damagedEntity, double damage, DamageAction cause) {
+  public static void damage(Entity damagedEntity, double damage, Damage cause) {
     if (!(damagedEntity instanceof Damageable))
       return;
     recordDamage(damagedEntity, cause);
@@ -102,7 +102,7 @@ public class DamageHandler implements Listener {
   public static Entity getKiller(Entity damagedEntity) {
     if (!damageList.containsKey(damagedEntity))
       return null;
-    for (DamageAction cause : damageList.get(damagedEntity))
+    for (Damage cause : damageList.get(damagedEntity))
       if (System.currentTimeMillis() - cause.getTime() <= IGNORE_TIME) {
         if (cause.getDamager() == null)
           continue;
@@ -117,7 +117,7 @@ public class DamageHandler implements Listener {
       return assists;
 
     Entity killer = null;
-    for (DamageAction cause : damageList.get(damagedEntity)) {
+    for (Damage cause : damageList.get(damagedEntity)) {
       if (System.currentTimeMillis() - cause.getTime() > IGNORE_TIME)
         continue;
       if (cause.getDamager() == null)
@@ -138,7 +138,7 @@ public class DamageHandler implements Listener {
       List<String> causes = new ArrayList<>();
       if (!damageList.containsKey(damagedEntity))
         return causes;
-      for (DamageAction cause : damageList.get(damagedEntity)) {
+      for (Damage cause : damageList.get(damagedEntity)) {
         if (System.currentTimeMillis() - cause.getTime() > IGNORE_TIME)
           continue;
         String currentCause = cause.getCause();
@@ -152,7 +152,7 @@ public class DamageHandler implements Listener {
         return causes;
 
       Entity killer = null;
-      for (DamageAction cause : damageList.get(damagedEntity)) {
+      for (Damage cause : damageList.get(damagedEntity)) {
         if (System.currentTimeMillis() - cause.getTime() > IGNORE_TIME)
           continue;
         if (cause.getDamager() != null) {
@@ -279,10 +279,10 @@ public class DamageHandler implements Listener {
   }
 
   public static void damage(Entity damagedEntity, double damage, Entity damager, String cause) {
-    damage(damagedEntity, damage, new DamageAction(damager, cause));
+    damage(damagedEntity, damage, new Damage(damager, cause));
   }
 
-  public static void recordDamage(Entity entity, DamageAction cause) {
+  public static void recordDamage(Entity entity, Damage cause) {
     if (!damageList.containsKey(entity))
       damageList.put(entity, new ArrayList<>());
     damageList.get(entity).add(0, cause);
@@ -292,7 +292,7 @@ public class DamageHandler implements Listener {
   }
 
   public static void recordDamage(Entity damaged, Entity damager, String cause) {
-    recordDamage(damaged, new DamageAction(damager, cause, System.currentTimeMillis()));
+    recordDamage(damaged, new Damage(damager, cause, System.currentTimeMillis()));
   }
 
   public static void clearDamages(Entity entity) {
