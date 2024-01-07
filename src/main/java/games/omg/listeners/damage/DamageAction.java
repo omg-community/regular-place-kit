@@ -6,12 +6,16 @@ public class DamageAction {
 
 	final private Entity damager;
 	final private String cause;
-	final private long tick;
+	final private long time;
 
-	public DamageAction(Entity damager, String cause, long tick) {
+	public DamageAction(Entity damager, String cause) {
+		this(damager, cause, System.currentTimeMillis());
+	}
+
+	public DamageAction(Entity damager, String cause, long time) {
 		this.damager = damager;
 		this.cause = cause;
-		this.tick = tick;
+		this.time = time;
 	}
 
 	public Entity getDamager() {
@@ -22,7 +26,7 @@ public class DamageAction {
 		return cause;
 	}
 
-	public long getTick() {
-		return tick;
+	public long getTime() {
+		return time;
 	}
 }
