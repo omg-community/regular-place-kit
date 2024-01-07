@@ -51,6 +51,19 @@ public class Utils {
   //   return buildStringFromArguments(args, 0);
   // }
 
+  public static String getDisplayNameFromInternalName(String internalName) {
+    String replacementPhase = internalName
+      .replaceAll("ENTITY_", "")
+      .replaceAll("_", " ");
+
+    String formattingPhase = WordUtils.capitalizeFully(replacementPhase);
+    
+    String touchupPhase = formattingPhase
+      .replaceAll("Tnt", "TNT");
+
+    return touchupPhase;
+  }
+
   public static String createEnglishList(List<String> items) {
     if (items.size() == 0) return "";
     if (items.size() == 1) return items.get(0);

@@ -16,25 +16,12 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
 public class EntityUtils {
 
-  public static String getDisplayNameFromInternalName(String internalName) {
-    String replacementPhase = internalName
-      .replaceAll("ENTITY_", "")
-      .replaceAll("_", " ");
-
-    String formattingPhase = WordUtils.capitalizeFully(replacementPhase);
-    
-    String touchupPhase = formattingPhase
-      .replaceAll("Tnt", "TNT");
-
-    return touchupPhase;
-  }
-
   public static String getDisplayName(DamageCause cause) {
-    return getDisplayNameFromInternalName(cause.name());
+    return Utils.getDisplayNameFromInternalName(cause.name());
   }
 
   public static String getDisplayName(EntityType type) {
-    return getDisplayNameFromInternalName(type.name());
+    return Utils.getDisplayNameFromInternalName(type.name());
   }
 
   public static Component getDisplayNameComponent(Entity entity) {
