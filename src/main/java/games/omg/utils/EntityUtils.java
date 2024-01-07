@@ -1,6 +1,5 @@
 package games.omg.utils;
 
-import org.apache.commons.text.WordUtils;
 import org.bukkit.Nameable;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.AnimalTamer;
