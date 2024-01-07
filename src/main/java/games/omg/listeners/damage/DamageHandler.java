@@ -92,84 +92,51 @@ public class DamageHandler implements Listener {
 
   //
 
-  public static void damage(Entity damagedEntity, double damage, Damage cause) {
-    if (!(damagedEntity instanceof Damageable))
-      return;
-    recordDamage(damagedEntity, cause);
-    ((Damageable) damagedEntity).damage(damage);
-  }
-
-  public static Entity getKiller(Entity damagedEntity) {
-    if (!damageList.containsKey(damagedEntity))
-      return null;
-    for (Damage cause : damageList.get(damagedEntity))
-      if (System.currentTimeMillis() - cause.getTime() <= IGNORE_TIME) {
-        if (cause.getDamager() == null)
-          continue;
-        return cause.getDamager();
-      }
-    return null;
-  }
-
-  public static List<Entity> getAssists(Entity damagedEntity) {
-    List<Entity> assists = new ArrayList<>();
-    if (!damageList.containsKey(damagedEntity))
-      return assists;
-
+  public static Death getDeath(Entity killed) {
     Entity killer = null;
-    for (Damage cause : damageList.get(damagedEntity)) {
-      if (System.currentTimeMillis() - cause.getTime() > IGNORE_TIME)
-        continue;
-      if (cause.getDamager() == null)
-        continue;
-      Entity damager = cause.getDamager();
-      if (killer == null || killer.equals(damager)) {
-        killer = damager;
-        continue;
-      }
-      if (!assists.contains(damager))
-        assists.add(damager);
+    List<Entity> assists = new ArrayList<>();
+    List<String> causes = new ArrayList<>();
+
+    // If the entity has no damage history, return now.
+    if (!damageList.containsKey(killed)) {
+      return new Death(killed, killer, assists, causes);
     }
-    return assists;
-  }
 
-  public static List<String> getCauses(Entity damagedEntity, boolean fullList) {
-    if (fullList) {
-      List<String> causes = new ArrayList<>();
-      if (!damageList.containsKey(damagedEntity))
-        return causes;
-      for (Damage cause : damageList.get(damagedEntity)) {
-        if (System.currentTimeMillis() - cause.getTime() > IGNORE_TIME)
-          continue;
-        String currentCause = cause.getCause();
-        if (currentCause != null && !causes.contains(currentCause))
-          causes.add(currentCause);
+    for (Damage damage : damageList.get(killed)) {
+      // If the damage is too old, skip it.
+      if (System.currentTimeMillis() - damage.getTime() > IGNORE_TIME) {
+        continue;
       }
-      return causes;
-    } else {
-      List<String> causes = new ArrayList<>();
-      if (!damageList.containsKey(damagedEntity))
-        return causes;
 
-      Entity killer = null;
-      for (Damage cause : damageList.get(damagedEntity)) {
-        if (System.currentTimeMillis() - cause.getTime() > IGNORE_TIME)
-          continue;
-        if (cause.getDamager() != null) {
-          Entity damager = cause.getDamager();
-          if (killer == null) {
-            killer = damager;
-          } else {
-            if (!killer.equals(damager))
-              continue;
-          }
+      Entity damager = damage.getDamager();
+      String cause = damage.getCause();
+
+      // Do kill and assist logic if there's a damager.
+      if (damager != null) {
+        // If there is no killer yet, set the killer to the damager.
+        if (killer == null) {
+          killer = damager;
         }
-        String currentCause = cause.getCause();
-        if (currentCause != null && !causes.contains(currentCause))
-          causes.add(currentCause);
+
+        if (!killer.equals(damager)) {
+          // This player is an assister.
+          // Add them to the assists list if they're not already in it.
+          if (!assists.contains(damager)) {
+            assists.add(damager);
+          }
+
+          // Continue to the next damage - we don't want to add their cause to the causes list.
+          continue;
+        }
       }
-      return causes;
+
+      // Add the cause to the causes list.
+      if (cause != null && !causes.contains(cause)) {
+        causes.add(cause);
+      }
     }
+
+    return new Death(killed, killer, assists, causes);
   }
 
   public static String getDeathMessage(Entity damagedEntity) {
