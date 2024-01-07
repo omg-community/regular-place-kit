@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.TNTPrimed;
@@ -92,34 +93,42 @@ public class DamageListener implements Listener {
   //
 
   public static void damage(Entity damagedEntity, double damage, DamageAction cause) {
-    if (!(damagedEntity instanceof Damageable)) return;
+    if (!(damagedEntity instanceof Damageable))
+      return;
     recordDamage(damagedEntity, cause);
     ((Damageable) damagedEntity).damage(damage);
   }
 
   public static Entity getKiller(Entity damagedEntity) {
-    if (!damageList.containsKey(damagedEntity)) return null;
-    for (DamageAction cause : damageList.get(damagedEntity)) if (System.currentTimeMillis() - cause.getTick() <= IGNORE_TIME) {
-      if (cause.getDamager() == null) continue;
-      return cause.getDamager();
-    }
+    if (!damageList.containsKey(damagedEntity))
+      return null;
+    for (DamageAction cause : damageList.get(damagedEntity))
+      if (System.currentTimeMillis() - cause.getTime() <= IGNORE_TIME) {
+        if (cause.getDamager() == null)
+          continue;
+        return cause.getDamager();
+      }
     return null;
   }
 
   public static List<Entity> getAssists(Entity damagedEntity) {
     List<Entity> assists = new ArrayList<>();
-    if (!damageList.containsKey(damagedEntity)) return assists;
+    if (!damageList.containsKey(damagedEntity))
+      return assists;
 
     Entity killer = null;
     for (DamageAction cause : damageList.get(damagedEntity)) {
-      if (System.currentTimeMillis() - cause.getTick() > IGNORE_TIME) continue;
-      if (cause.getDamager() == null) continue;
+      if (System.currentTimeMillis() - cause.getTime() > IGNORE_TIME)
+        continue;
+      if (cause.getDamager() == null)
+        continue;
       Entity damager = cause.getDamager();
       if (killer == null || killer.equals(damager)) {
         killer = damager;
         continue;
       }
-      if (!assists.contains(damager)) assists.add(damager);
+      if (!assists.contains(damager))
+        assists.add(damager);
     }
     return assists;
   }
@@ -127,30 +136,37 @@ public class DamageListener implements Listener {
   public static List<String> getCauses(Entity damagedEntity, boolean fullList) {
     if (fullList) {
       List<String> causes = new ArrayList<>();
-      if (!damageList.containsKey(damagedEntity)) return causes;
+      if (!damageList.containsKey(damagedEntity))
+        return causes;
       for (DamageAction cause : damageList.get(damagedEntity)) {
-        if (System.currentTimeMillis() - cause.getTick() > IGNORE_TIME) continue;
+        if (System.currentTimeMillis() - cause.getTime() > IGNORE_TIME)
+          continue;
         String currentCause = cause.getCause();
-        if (currentCause != null && !causes.contains(currentCause)) causes.add(currentCause);
+        if (currentCause != null && !causes.contains(currentCause))
+          causes.add(currentCause);
       }
       return causes;
     } else {
       List<String> causes = new ArrayList<>();
-      if (!damageList.containsKey(damagedEntity)) return causes;
+      if (!damageList.containsKey(damagedEntity))
+        return causes;
 
       Entity killer = null;
       for (DamageAction cause : damageList.get(damagedEntity)) {
-        if (System.currentTimeMillis() - cause.getTick() > IGNORE_TIME) continue;
+        if (System.currentTimeMillis() - cause.getTime() > IGNORE_TIME)
+          continue;
         if (cause.getDamager() != null) {
           Entity damager = cause.getDamager();
           if (killer == null) {
             killer = damager;
           } else {
-            if (!killer.equals(damager)) continue;
+            if (!killer.equals(damager))
+              continue;
           }
         }
         String currentCause = cause.getCause();
-        if (currentCause != null && !causes.contains(currentCause)) causes.add(currentCause);
+        if (currentCause != null && !causes.contains(currentCause))
+          causes.add(currentCause);
       }
       return causes;
     }
@@ -176,15 +192,16 @@ public class DamageListener implements Listener {
         }
       }
     }
-    if (deadName == null) deadName = "?¿?¿?";
-    ChatColor deadColor = ChatColor.RED; //TODO Not always red pls
+    if (deadName == null)
+      deadName = "?¿?¿?";
+    ChatColor deadColor = ChatColor.RED; // TODO Not always red pls
     deadName = deadColor + deadName;
 
     String causeMod = null;
     if (!causes.isEmpty()) {
       for (String cause : causes) {
         if (causeMod == null) {
-          causeMod=cause;
+          causeMod = cause;
         } else {
           causeMod = causeMod + ", " + cause;
         }
@@ -194,10 +211,11 @@ public class DamageListener implements Listener {
 
     if (killer == null) {
       if (causes.isEmpty()) {
-        //No killer, no causes
-        return ChatColor.GRAY + " » " + deadName + ChatColor.RESET + ChatColor.GRAY + " killed by " + CAUSE_COLOR + "?¿?¿?";
+        // No killer, no causes
+        return ChatColor.GRAY + " » " + deadName + ChatColor.RESET + ChatColor.GRAY + " killed by " + CAUSE_COLOR
+            + "?¿?¿?";
       } else {
-        //No killer, causes
+        // No killer, causes
         return ChatColor.GRAY + " » " + deadName + ChatColor.RESET + ChatColor.GRAY + " killed by " + causeMod;
       }
     }
@@ -208,21 +226,24 @@ public class DamageListener implements Listener {
     } else {
       killerName = Utils.getEntityTypeName(killer.getType());
     }
-    if (killerName == null) killerName = "?¿?¿?";
-    ChatColor killerColor = ChatColor.RED; //TODO Not always red pls
+    if (killerName == null)
+      killerName = "?¿?¿?";
+    ChatColor killerColor = ChatColor.RED; // TODO Not always red pls
     killerName = killerColor + killerName;
-    if (!assists.isEmpty()) killerName = killerName + " + " + assists.size();
+    if (!assists.isEmpty())
+      killerName = killerName + " + " + assists.size();
 
     if (causes.isEmpty()) {
-      //Killer, no causes
+      // Killer, no causes
       return ChatColor.GRAY + " » " + deadName + ChatColor.RESET + ChatColor.GRAY + " killed by " + killerName;
     }
-    //Killer, causes
-    return ChatColor.GRAY + " » " + deadName + ChatColor.RESET + ChatColor.GRAY +" killed by " + killerName + ChatColor.RESET + ChatColor.GRAY + " with " + causeMod;
+    // Killer, causes
+    return ChatColor.GRAY + " » " + deadName + ChatColor.RESET + ChatColor.GRAY + " killed by " + killerName
+        + ChatColor.RESET + ChatColor.GRAY + " with " + causeMod;
   }
 
   public static void broadcastDeathMessage(Entity damagedEntity) {
-      Bukkit.broadcastMessage(getDeathMessage(damagedEntity));
+    Bukkit.broadcastMessage(getDeathMessage(damagedEntity));
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
@@ -240,7 +261,7 @@ public class DamageListener implements Listener {
       }
     }
     if (!(event.getEntity() instanceof Player)) {
-      //broadcastDeathMessage(event.getEntity());
+      // broadcastDeathMessage(event.getEntity());
       clearDamages(event.getEntity());
     }
   }
@@ -258,17 +279,20 @@ public class DamageListener implements Listener {
   }
 
   public static void damage(Entity damagedEntity, double damage, Entity damager, String cause) {
-    damage(damagedEntity,damage,new DamageAction(damager,cause,System.currentTimeMillis()));
+    damage(damagedEntity, damage, new DamageAction(damager, cause));
   }
 
   public static void recordDamage(Entity entity, DamageAction cause) {
-    if (!damageList.containsKey(entity)) damageList.put(entity,new ArrayList<>());
-    damageList.get(entity).add(0,cause);
-    if (damageList.get(entity).size()>MAX_DAMAGES) damageList.get(entity).remove(MAX_DAMAGES); //TODO Is it great to keep calling .get() when you can use a reference variable?
+    if (!damageList.containsKey(entity))
+      damageList.put(entity, new ArrayList<>());
+    damageList.get(entity).add(0, cause);
+    if (damageList.get(entity).size() > MAX_DAMAGES)
+      damageList.get(entity).remove(MAX_DAMAGES); // TODO Is it great to keep calling .get() when you can use a
+                                                  // reference variable?
   }
 
   public static void recordDamage(Entity damaged, Entity damager, String cause) {
-    recordDamage(damaged, new DamageAction(damager,cause, System.currentTimeMillis()));
+    recordDamage(damaged, new DamageAction(damager, cause, System.currentTimeMillis()));
   }
 
   public static void clearDamages(Entity entity) {
