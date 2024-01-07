@@ -25,8 +25,10 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.projectiles.ProjectileSource;
 
 import games.omg.utils.EntityUtils;
+import games.omg.utils.StringUtils;
 import games.omg.utils.Utils;
 import javafx.scene.image.Image;
+import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatColor;
 
 public class DamageHandler implements Listener {
@@ -139,78 +141,8 @@ public class DamageHandler implements Listener {
     return new Death(killed, killer, assists, causes);
   }
 
-  public static String getDeathMessage(Entity damagedEntity) {
-    Entity killer = getKiller(damagedEntity);
-    List<Entity> assists = getAssists(damagedEntity);
-    List<String> causes = getCauses(damagedEntity, false);
-
-    String deadName;
-    if (damagedEntity instanceof Player) {
-      deadName = Utils.getName(damagedEntity);
-    } else {
-      deadName = Utils.getEntityTypeName(damagedEntity.getType());
-      if (damagedEntity instanceof Tameable) {
-        AnimalTamer tamer = ((Tameable) damagedEntity).getOwner();
-        if (tamer != null) {
-          Player owner = Bukkit.getPlayer(tamer.getUniqueId());
-          if (owner != null && owner.isOnline()) {
-            deadName = owner.getName() + "'s " + deadName;
-          }
-        }
-      }
-    }
-    if (deadName == null)
-      deadName = "?¿?¿?";
-    ChatColor deadColor = ChatColor.RED; // TODO Not always red pls
-    deadName = deadColor + deadName;
-
-    String causeMod = null;
-    if (!causes.isEmpty()) {
-      for (String cause : causes) {
-        if (causeMod == null) {
-          causeMod = cause;
-        } else {
-          causeMod = causeMod + ", " + cause;
-        }
-      }
-      causeMod = CAUSE_COLOR + causeMod;
-    }
-
-    if (killer == null) {
-      if (causes.isEmpty()) {
-        // No killer, no causes
-        return ChatColor.GRAY + " » " + deadName + ChatColor.RESET + ChatColor.GRAY + " killed by " + CAUSE_COLOR
-            + "?¿?¿?";
-      } else {
-        // No killer, causes
-        return ChatColor.GRAY + " » " + deadName + ChatColor.RESET + ChatColor.GRAY + " killed by " + causeMod;
-      }
-    }
-
-    String killerName;
-    if (killer instanceof Player) {
-      killerName = Utils.getName(killer);
-    } else {
-      killerName = Utils.getEntityTypeName(killer.getType());
-    }
-    if (killerName == null)
-      killerName = "?¿?¿?";
-    ChatColor killerColor = ChatColor.RED; // TODO Not always red pls
-    killerName = killerColor + killerName;
-    if (!assists.isEmpty())
-      killerName = killerName + " + " + assists.size();
-
-    if (causes.isEmpty()) {
-      // Killer, no causes
-      return ChatColor.GRAY + " » " + deadName + ChatColor.RESET + ChatColor.GRAY + " killed by " + killerName;
-    }
-    // Killer, causes
-    return ChatColor.GRAY + " » " + deadName + ChatColor.RESET + ChatColor.GRAY + " killed by " + killerName
-        + ChatColor.RESET + ChatColor.GRAY + " with " + causeMod;
-  }
-
   public static void broadcastDeathMessage(Entity damagedEntity) {
-    Bukkit.broadcastMessage(getDeathMessage(damagedEntity));
+    // Bukkit.broadcastMessage(getDeathMessage(damagedEntity));
   }
 
   @EventHandler(priority = EventPriority.MONITOR)
@@ -243,10 +175,6 @@ public class DamageHandler implements Listener {
   @EventHandler(priority = EventPriority.MONITOR)
   public void onQuit(PlayerQuitEvent event) {
     clearDamages(event.getPlayer());
-  }
-
-  public static void damage(Entity damagedEntity, double damage, Entity damager, String cause) {
-    damage(damagedEntity, damage, new Damage(damager, cause));
   }
 
   public static void recordDamage(Entity entity, Damage cause) {
