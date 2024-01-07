@@ -1,5 +1,6 @@
 package games.omg.listeners.damage;
 
+import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 
 public class Damage {
@@ -28,5 +29,22 @@ public class Damage {
 
 	public long getTime() {
 		return time;
+	}
+
+	public static Damage invoke(Damageable entity, double health, String cause) {
+		return invoke(entity, health, null, cause);
+	}
+
+	public static Damage invoke(Damageable entity, double health, Entity damager) {
+		return invoke(entity, health, damager, null);
+	}
+
+	public static Damage invoke(Damageable entity, double health, Entity damager, String cause) {
+		Damage damage = new Damage(damager, cause);
+
+		entity.damage(health);
+		DamageHandler.recordDamage(entity, damage);
+
+		return damage;
 	}
 }
