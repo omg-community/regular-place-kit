@@ -42,9 +42,9 @@
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <configuration>
-                    <tasks>
+                    <target>
                         <copy file="target/rpk-1.0.jar" todir="C:\Users\krysp\Documents\Minecraft\Servers\rpkserver/plugins"/>
-                    </tasks>
+                    </target>
                 </configuration>
                 <executions>
                     <execution>
