@@ -29,7 +29,7 @@ import games.omg.utils.Utils;
 import javafx.scene.image.Image;
 import net.md_5.bungee.api.ChatColor;
 
-public class DamageListener implements Listener {
+public class DamageHandler implements Listener {
 
   final private static int MAX_DAMAGES = 20;
   final private static double IGNORE_TIME = 8000;
