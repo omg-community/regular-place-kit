@@ -64,15 +64,6 @@ public class Utils {
     return touchupPhase;
   }
 
-  public static String createEnglishList(List<String> items) {
-    if (items.size() == 0) return "";
-    if (items.size() == 1) return items.get(0);
-    if (items.size() == 2) return items.get(0)+", and "+items.get(1);
-    StringBuilder builder = new StringBuilder(items.get(0));
-    for (int i = 1; i < items.size(); i++) builder.append(i == items.size() - 1 ? ", and" : ", ").append(items.get(i));
-    return builder.toString();
-  }
-
   public static void playSoundToAll(String sound, float volume, float pitch) {
     for (Player p : Bukkit.getOnlinePlayers()) {
       p.playSound(p.getLocation(), sound, volume, pitch);

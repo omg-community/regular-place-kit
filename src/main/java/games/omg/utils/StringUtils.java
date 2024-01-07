@@ -1,6 +1,7 @@
 package games.omg.utils;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 public class StringUtils {
   public static String makePossessive(String name) {
@@ -9,6 +10,37 @@ public class StringUtils {
     } else {
       return name + "'s";
     }
+  }
+
+  public static String createGrammaticalList(List<String> items) {
+    int listSize = items.size();
+
+    if (listSize == 0) return "";
+    if (listSize == 1) return items.get(0);
+    if (listSize == 2) return items.get(0) + " and " + items.get(1);
+    
+    StringBuilder builder = new StringBuilder(items.get(0));
+    for (int i = 1; i < listSize; i++) {
+      builder.append(i == listSize - 1 ? ", and" : ", ");
+      builder.append(items.get(i));
+    }
+
+    return builder.toString();
+  }
+
+  public static String separateListWith(List<String> items, String separator) {
+    int listSize = items.size();
+
+    if (listSize == 0) return "";
+    if (listSize == 1) return items.get(0);
+    
+    StringBuilder builder = new StringBuilder(items.get(0));
+    for (int i = 1; i < listSize; i++) {
+      builder.append(separator);
+      builder.append(items.get(i));
+    }
+
+    return builder.toString();
   }
   
   public static String getCommaSeparatedNumber(int num) {
