@@ -7,7 +7,23 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import games.omg.resources.ServerColors;
+import games.omg.resources.ServerStrings;
+import net.kyori.adventure.text.Component;
+
 public class PlayerUtils {
+
+  // We don't color the nametag here because we want to be able to color it differently for different teams
+  // Or various different colors for various different reasons
+  public static Component getNametag(OfflinePlayer player) {
+    String name = PlayerUtils.getPlayerName(player);
+
+    Component prefix = Component.text(ServerStrings.USERNAME_PREFIX).color(ServerColors.OWNER_ROLE_COLOR);
+    Component username = Component.text(name);
+
+    return prefix.append(username);
+  }
+
   public static String getPlayerName(Player player) {
     return getPlayerName((OfflinePlayer) player);
   }
@@ -26,6 +42,7 @@ public class PlayerUtils {
   }
 
   // for commands where you can enter partial usernames and search for online players
+  // eventually, this should also be added to the proxy server to also search for players in other servers and possibly teleport to them
   public static Player getSearchedPlayer(String query) {
     Collection<? extends Player> players = Bukkit.getOnlinePlayers();
     query = query.toLowerCase();
