@@ -56,74 +56,74 @@ public class Death {
       return causes;
     }
 
-    public Component getDeathMessage(Entity killed) {
-      boolean hasKiller = killer != null;
-      boolean hasCauses = !causes.isEmpty();
-      boolean hasAssists = !assists.isEmpty();
+    // public Component getDeathMessage(Entity killed) {
+    //   boolean hasKiller = killer != null;
+    //   boolean hasCauses = !causes.isEmpty();
+    //   boolean hasAssists = !assists.isEmpty();
 
-      Component killedComponent = EntityUtils.getDisplayNameComponent(killed);
+    //   Component killedComponent = EntityUtils.getDisplayNameComponent(killed);
 
-      Component causeComponent = null;
-      if (hasCauses) {
-        causeComponent = Component.text(StringUtils.separateListWith(causes, ", "));
-      }
+    //   Component causeComponent = null;
+    //   if (hasCauses) {
+    //     causeComponent = Component.text(StringUtils.separateListWith(causes, ", "));
+    //   }
 
-      Component killerComponent = null;
-      if (hasKiller) {
-        killerComponent = EntityUtils.getDisplayNameComponent(killer);
-      }
+    //   Component killerComponent = null;
+    //   if (hasKiller) {
+    //     killerComponent = EntityUtils.getDisplayNameComponent(killer);
+    //   }
       
-      TextComponent assistsComponent = null;
-      if (hasAssists) {
-        Component hoverComponent = Component.empty();
+    //   TextComponent assistsComponent = null;
+    //   if (hasAssists) {
+    //     Component hoverComponent = Component.empty();
 
-        for (int i = 0; i < assists.size(); i++) {
-          Entity assist = assists.get(i);
-          Component assistComponent = EntityUtils.getDisplayNameComponent(assist);
+    //     for (int i = 0; i < assists.size(); i++) {
+    //       Entity assist = assists.get(i);
+    //       Component assistComponent = EntityUtils.getDisplayNameComponent(assist);
 
-          if (i != 0) {
-            hoverComponent = hoverComponent.append(Component.newline());
-          }
+    //       if (i != 0) {
+    //         hoverComponent = hoverComponent.append(Component.newline());
+    //       }
 
-          hoverComponent = hoverComponent.append(assistComponent);
-        }
+    //       hoverComponent = hoverComponent.append(assistComponent);
+    //     }
 
-        assistsComponent = Component.text(" + " + assists.size());
-      }
+    //     assistsComponent = Component.text(" + " + assists.size());
+    //   }
 
-      if (!hasKiller) {
-        // No killer, we can just return the death message now with causes
-        return DEATH_MESSAGE_PREFIX.append(killedComponent).append(KILLED_BY_COMPONENT).append(causeComponent);
-        // if (hasCauses) {
-        //   // No killer, causes
-        //   // return ChatColor.GRAY + " » " + deadName + ChatColor.RESET + ChatColor.GRAY + " killed by " + causeMod;
-        // } else {
-        //   // No killer, no causes
-        //   // return ChatColor.GRAY + " » " + deadName + ChatColor.RESET + ChatColor.GRAY + " killed by " + CAUSE_COLOR + "?¿?¿?";
-        // }
-      }
+    //   if (!hasKiller) {
+    //     // No killer, we can just return the death message now with causes
+    //     return DEATH_MESSAGE_PREFIX.append(killedComponent).append(KILLED_BY_COMPONENT).append(causeComponent);
+    //     // if (hasCauses) {
+    //     //   // No killer, causes
+    //     //   // return ChatColor.GRAY + " » " + deadName + ChatColor.RESET + ChatColor.GRAY + " killed by " + causeMod;
+    //     // } else {
+    //     //   // No killer, no causes
+    //     //   // return ChatColor.GRAY + " » " + deadName + ChatColor.RESET + ChatColor.GRAY + " killed by " + CAUSE_COLOR + "?¿?¿?";
+    //     // }
+    //   }
 
-      Component killerName = EntityUtils.getDisplayNameComponent(killer).color(KILLER_COLOR);
+    //   Component killerName = EntityUtils.getDisplayNameComponent(killer).color(KILLER_COLOR);
 
-      if (!hasAssists) {
-        // No assists, we can just return the death message now with the killer name and causes
-        Component deathMessage = DEATH_MESSAGE_PREFIX.append(killedComponent).append(KILLED_BY_COMPONENT).append(killerName);
-        if (hasCauses) {
+    //   if (!hasAssists) {
+    //     // No assists, we can just return the death message now with the killer name and causes
+    //     Component deathMessage = DEATH_MESSAGE_PREFIX.append(killedComponent).append(KILLED_BY_COMPONENT).append(killerName);
+    //     if (hasCauses) {
 
-        }
-        return DEATH_MESSAGE_PREFIX.append(killedComponent).append(KILLED_BY_COMPONENT).append(killerName);
-        // return ChatColor.GRAY + " » " + deadName + ChatColor.RESET + ChatColor.GRAY + " killed by " + killerName;
-      }
+    //     }
+    //     return DEATH_MESSAGE_PREFIX.append(killedComponent).append(KILLED_BY_COMPONENT).append(killerName);
+    //     // return ChatColor.GRAY + " » " + deadName + ChatColor.RESET + ChatColor.GRAY + " killed by " + killerName;
+    //   }
 
-      if (!assists.isEmpty())
-        killerName = killerName + " + " + assists.size();
+    //   if (!assists.isEmpty())
+    //     killerName = killerName + " + " + assists.size();
 
-      if (causes.isEmpty()) {
-        // Killer, no causes
-        return ChatColor.GRAY + " » " + killedComponent + ChatColor.RESET + ChatColor.GRAY + " killed by " + killerName;
-      }
-      // Killer, causes
-      return ChatColor.GRAY + " » " + killedComponent + ChatColor.RESET + ChatColor.GRAY + " killed by " + killerName
-          + ChatColor.RESET + ChatColor.GRAY + " with " + causeMod;
-    }
+    //   if (causes.isEmpty()) {
+    //     // Killer, no causes
+    //     return ChatColor.GRAY + " » " + killedComponent + ChatColor.RESET + ChatColor.GRAY + " killed by " + killerName;
+    //   }
+    //   // Killer, causes
+    //   return ChatColor.GRAY + " » " + killedComponent + ChatColor.RESET + ChatColor.GRAY + " killed by " + killerName
+    //       + ChatColor.RESET + ChatColor.GRAY + " with " + causeMod;
+    // }
   }
