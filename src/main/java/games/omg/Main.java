@@ -9,7 +9,7 @@ public class Main extends JavaPlugin implements Listener {
 	
 	@EventHandler
 	public void onLogin(PlayerJoinEvent event) {
-		event.getPlayer().sendMessage("Salut! " + "Felicitări pentru primul mod de Minecraft!");
+		
 	}
 
 	@Override
