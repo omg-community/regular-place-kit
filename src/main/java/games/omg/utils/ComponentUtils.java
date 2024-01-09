@@ -26,20 +26,22 @@ public class ComponentUtils {
   //   return component.children(coloredChildren);
   // }
 
-  public static Component separateListWith(List<Component> items, Component separator) {
-    int listSize = items.size();
+  // use a join configuration
+  
+  // public static Component separateListWith(List<Component> items, Component separator) {
+  //   int listSize = items.size();
 
-    if (listSize == 0) return Component.empty();
-    if (listSize == 1) return items.get(0);
+  //   if (listSize == 0) return Component.empty();
+  //   if (listSize == 1) return items.get(0);
 
-    JoinConfiguration configuration = JoinConfiguration.builder()
-        .separator(separator)
-        .lastSeparator(separator)
-        .lastSeparatorIfSerial(separator)
-        .build();
+  //   JoinConfiguration configuration = JoinConfiguration.builder()
+  //       .separator(separator)
+  //       .lastSeparator(separator)
+  //       .lastSeparatorIfSerial(separator)
+  //       .build();
 
-    return Component.join(configuration, items);
-  }
+  //   return Component.join(configuration, items);
+  // }
 
   
 }
