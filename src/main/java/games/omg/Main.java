@@ -1,29 +1,33 @@
 package games.omg;
 
+import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import games.omg.utils.PlayerUtils;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.Style;
-
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import games.omg.chat.ChatHandler;
 
 public class Main extends JavaPlugin implements Listener {
-	
-	@EventHandler
-	public void onLogin(PlayerJoinEvent event) {
-		event.joinMessage(
-			PlayerUtils.getNametag(event.getPlayer())
-			// .colorIfAbsent(NamedTextColor.LIGHT_PURPLE)
-			.applyFallbackStyle(Style.style(NamedTextColor.LIGHT_PURPLE))
-		);
+
+	private static JavaPlugin plugin;
+
+	public static void register(Listener ...listeners) {
+		for (Listener listener : listeners) {
+			plugin.getServer().getPluginManager().registerEvents(listener, plugin);
+		}
 	}
 
 	@Override
 	public void onEnable() {
-		getServer().getPluginManager().registerEvents(this, this);
+		plugin = this;
+
+		register(new ChatHandler());
 	}
 
+	@Override
+	public void onDisable() {
+		plugin = null;
+	}
+
+	public static JavaPlugin getPlugin() {
+		return plugin;
+	}
 }
