@@ -11,6 +11,8 @@ import games.omg.resources.ServerColors;
 import games.omg.resources.ServerStrings;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextColor;
@@ -35,8 +37,8 @@ public class PlayerUtils {
     // // use Joining to append the prefix and username together
     // return Component.join();
 
-    Component bulletPoint = Component.text(ServerStrings.USERNAME_PREFIX).color(ServerColors.OWNER_ROLE_COLOR); // Red bullet point
-    Component username = Component.text(name); // Username without color
+    TextComponent bulletPoint = Component.text(ServerStrings.USERNAME_PREFIX).color(ServerColors.OWNER_ROLE_COLOR); // Red bullet point
+    TextComponent username = Component.text(name); // Username without color
 
     JoinConfiguration joinConfig = JoinConfiguration.noSeparators();
     Component combined = Component.join(joinConfig, bulletPoint, username);

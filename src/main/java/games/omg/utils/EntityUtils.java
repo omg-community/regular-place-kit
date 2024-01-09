@@ -10,6 +10,7 @@ import org.bukkit.entity.Tameable;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
@@ -23,7 +24,7 @@ public class EntityUtils {
     return Utils.getDisplayNameFromInternalName(type.name());
   }
 
-  public static Component getDisplayNameComponent(Entity entity) {
+  public static TextComponent getDisplayNameComponent(Entity entity) {
     // TODO: maybe not necessary if customName() is useable on Players
     if (entity instanceof Player) {
       String name = PlayerUtils.getPlayerName((Player) entity);
@@ -37,7 +38,8 @@ public class EntityUtils {
     if (entity instanceof Nameable) {
       Nameable nameable = (Nameable) entity;
       
-      Component name = nameable.customName(); // does this mean that you can set a custom name for .. Players .. ???
+      // TODO: a little lengthy, is there a better way?
+      TextComponent name = Component.text().append(nameable.customName()).build();
 
       if (name != null) {
         // return the name component in italics (to make it obvious that it's a custom name)
@@ -45,7 +47,7 @@ public class EntityUtils {
       }
     }
 
-    Component entityComponent = Component.text(getDisplayName(entity.getType()));
+    TextComponent entityComponent = Component.text(getDisplayName(entity.getType()));
 
     if (entity instanceof Tameable) {
       Tameable tameable = (Tameable) entity;
