@@ -1,4 +1,4 @@
-package games.omg.chat;
+package games.omg.listeners.chat;
 
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
