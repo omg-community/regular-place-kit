@@ -4,6 +4,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import games.omg.listeners.chat.ChatHandler;
+import games.omg.listeners.test.SerializeTest;
 
 public class Main extends JavaPlugin implements Listener {
 
@@ -20,6 +21,7 @@ public class Main extends JavaPlugin implements Listener {
 		plugin = this;
 
 		register(new ChatHandler());
+		register(new SerializeTest());
 	}
 
 	@Override
