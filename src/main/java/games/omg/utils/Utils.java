@@ -1,20 +1,16 @@
 package games.omg.utils;
 
-import org.apache.commons.text.WordUtils;
-import org.bukkit.*;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
+import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
-import java.text.DecimalFormat;
-import java.util.*;
+import org.apache.commons.text.WordUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 public class Utils {
 
@@ -95,18 +91,20 @@ public class Utils {
     return rand.nextInt((max - min) + 1) + min;
   }
 
-  public static ItemStack createItemStack(Material material, String name, List<String> lore, int amount, byte data, boolean unbreakable) {
-    ItemStack itemStack=new ItemStack(material,amount,data);
-    ItemMeta itemMeta=itemStack.getItemMeta();
-    itemMeta.setUnbreakable(unbreakable);
-    itemMeta.setDisplayName(name);
-    itemMeta.setLore(lore);
-    itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
-    itemStack.setItemMeta(itemMeta);
-    return itemStack;
-  }
+  // TODO: rewrite with components
 
-  // TODO: this isnt useful because it doesn't use components.
+  // public static ItemStack createItemStack(Material material, String name, List<String> lore, int amount, byte data, boolean unbreakable) {
+  //   ItemStack itemStack=new ItemStack(material,amount,data);
+  //   ItemMeta itemMeta=itemStack.getItemMeta();
+  //   itemMeta.setUnbreakable(unbreakable);
+  //   itemMeta.setDisplayName(name);
+  //   itemMeta.setLore(lore);
+  //   itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
+  //   itemStack.setItemMeta(itemMeta);
+  //   return itemStack;
+  // }
+
+  // TODO: this isnt useful because it doesn't use components. rewrite with components
 
   // public static List<String> getSummary(String summary, int cutLength) {
   //   List<String> summarized = new ArrayList<>();
