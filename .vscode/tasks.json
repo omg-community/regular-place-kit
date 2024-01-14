@@ -1,0 +1,120 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build regular-place-kit",
+			"type": "java (buildArtifact)",
+			"targetPath": "${workspaceFolder}/target/regular-place-kit.jar",
+			"elements": [
+				"${compileOutput}",
+				"${dependencies}"
+			],
+			"group": {
+				"kind": "build",
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Set permissions for scripts",
+			"hide": true,
+			"type": "shell",
+			"command": "chmod +x ${workspaceFolder}/.vscode/scripts/*.sh",
+			"windows": {
+				"command": "echo Bill Gates"
+			},
+			"presentation": {
+				"reveal": "never",
+				"echo": false,
+				"showReuseMessage": false,
+				"close": true,
+				"revealProblems": "never"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Copy JAR to server directory",
+			"dependsOn": [
+				"Set permissions for scripts",
+				"Build regular-place-kit"
+			],
+			"type": "shell",
+			"command": "${workspaceFolder}/.vscode/scripts/copy.sh",
+			"windows": {
+				"command": "${workspaceFolder}/.vscode/scripts/copy.bat"
+			},
+			"options": {
+				"env": {
+					"ENV_FILE": "${workspaceFolder}/.env",
+					"JAR_FILE": "${workspaceFolder}/target/regular-place-kit.jar",
+				}
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Start Paper server",
+			"dependsOn": [
+				"Copy JAR to server directory"
+			],
+			"type": "shell",
+			"command": "${workspaceFolder}/.vscode/scripts/launch.sh",
+			"windows": {
+				"command": "${workspaceFolder}/.vscode/scripts/launch.bat"
+			},
+			"isBackground": true,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"options": {
+				"env": {
+					"ENV_FILE": "${workspaceFolder}/.env",
+				}
+			},
+			"problemMatcher": {
+				"owner": "java",
+				"fileLocation": ["relative", "${workspaceFolder}"],
+				"pattern": {
+					"regexp": "^(.*):(\\d+):(.*)(error|warning):(.*)$",
+					"file": 1,
+					"line": 2,
+					"message": 5
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^.*Starting.*$",
+					"endsPattern": "^.*Done.*$"
+				}
+			}
+		},
+		{
+			"label": "Stop Paper server",
+			"type": "shell",
+			"command": "echo ${input:terminate}",
+			"presentation": {
+				"reveal": "silent"
+			},
+			"hide": true,
+			"problemMatcher": []
+		},
+	],
+	"inputs": [
+		{
+			"id": "terminate",
+			"type": "command",
+			"command": "workbench.action.tasks.terminate",
+			"args": "Start Paper server"
+		}
+	]
+}
