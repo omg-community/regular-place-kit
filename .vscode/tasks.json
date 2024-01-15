@@ -27,7 +27,7 @@
 				"${dependencies}"
 			],
 			"group": {
-				"kind": "build",
+				"kind": "build"
 			},
 			"problemMatcher": []
 		},
@@ -47,7 +47,7 @@
 				"env": {
 					"ENV_FILE": "${workspaceFolder}/.env",
 					"SERVER_DIRECTORY": "${workspaceFolder}/server",
-					"JAR_FILE": "${workspaceFolder}/target/regular-place-kit.jar",
+					"JAR_FILE": "${workspaceFolder}/target/regular-place-kit.jar"
 				}
 			},
 			"group": {
@@ -83,7 +83,10 @@
 			},
 			"problemMatcher": {
 				"owner": "java",
-				"fileLocation": ["relative", "${workspaceFolder}"],
+				"fileLocation": [
+					"relative",
+					"${workspaceFolder}"
+				],
 				"pattern": {
 					"regexp": "^(.*):(\\d+):(.*)(error|warning):(.*)$",
 					"file": 1,
@@ -118,7 +121,7 @@
 			},
 			"hide": true,
 			"problemMatcher": []
-		},
+		}
 	],
 	"inputs": [
 		{
