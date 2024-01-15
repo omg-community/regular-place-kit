@@ -1,4 +1,5 @@
 name: rpk
 version: 1.0
+api-version: 1.13
 author: OMG
 main: games.omg.Main
