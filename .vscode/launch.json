@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "Start and Debug Spigot Server",
-      "preLaunchTask": "Start Paper server",
+      "preLaunchTask": "Build and start Paper server",
       "postDebugTask": "Stop Paper server",
       "type": "java",
       "request": "attach",

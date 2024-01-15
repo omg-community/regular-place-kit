@@ -2,19 +2,6 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Build regular-place-kit",
-			"type": "java (buildArtifact)",
-			"targetPath": "${workspaceFolder}/target/regular-place-kit.jar",
-			"elements": [
-				"${compileOutput}",
-				"${dependencies}"
-			],
-			"group": {
-				"kind": "build",
-			},
-			"problemMatcher": []
-		},
-		{
 			"label": "Set permissions for scripts",
 			"hide": true,
 			"type": "shell",
@@ -32,11 +19,25 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "Copy JAR to server directory",
+			"label": "Build regular-place-kit",
+			"type": "java (buildArtifact)",
+			"targetPath": "${workspaceFolder}/target/regular-place-kit.jar",
+			"elements": [
+				"${compileOutput}",
+				"${dependencies}"
+			],
+			"group": {
+				"kind": "build",
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Build and copy JAR to plugin directory",
 			"dependsOn": [
 				"Set permissions for scripts",
 				"Build regular-place-kit"
 			],
+			"dependsOrder": "sequence",
 			"type": "shell",
 			"command": "${workspaceFolder}/.vscode/scripts/copy.sh",
 			"windows": {
@@ -45,6 +46,7 @@
 			"options": {
 				"env": {
 					"ENV_FILE": "${workspaceFolder}/.env",
+					"SERVER_DIRECTORY": "${workspaceFolder}/server",
 					"JAR_FILE": "${workspaceFolder}/target/regular-place-kit.jar",
 				}
 			},
@@ -56,9 +58,6 @@
 		},
 		{
 			"label": "Start Paper server",
-			"dependsOn": [
-				"Copy JAR to server directory"
-			],
 			"type": "shell",
 			"command": "${workspaceFolder}/.vscode/scripts/launch.sh",
 			"windows": {
@@ -74,12 +73,12 @@
 				"clear": false
 			},
 			"group": {
-				"kind": "test",
-				"isDefault": true
+				"kind": "test"
 			},
 			"options": {
 				"env": {
 					"ENV_FILE": "${workspaceFolder}/.env",
+					"SERVER_DIRECTORY": "${workspaceFolder}/server"
 				}
 			},
 			"problemMatcher": {
@@ -96,6 +95,18 @@
 					"beginsPattern": "^.*Starting.*$",
 					"endsPattern": "^.*Done.*$"
 				}
+			}
+		},
+		{
+			"label": "Build and start Paper server",
+			"dependsOn": [
+				"Build and copy JAR to plugin directory",
+				"Start Paper server"
+			],
+			"dependsOrder": "sequence",
+			"group": {
+				"kind": "build",
+				"isDefault": true
 			}
 		},
 		{
