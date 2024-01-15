@@ -33,3 +33,7 @@ Select "Clone from GitHub", and enter `omg-community/regular-place-kit`. You may
 Open the repository you've just cloned. When prompted for recommended extensions (on the bottom right of the window), make sure to install them. You'll need these to develop in Java, as Visual Studio Code doesn't include the these tools by default.
 
 And, VSCode is now all set up! You're almost ready to make your first changes.
+
+## To be continued
+
+Unfortunately, I can't really finish this part of the saga right now. But you can ask questions in the [OMG Dev Community](https://dev.omg.games/) if you need any more help. THANKS
