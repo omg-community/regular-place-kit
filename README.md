@@ -8,7 +8,7 @@ In the future and coming months, the creative server will be launched. As that a
 
 # Get started with development
 
-If you're a complete beginner to programming in general, it's highly recommend reading [Getting Started for Dummies](NOOB.md). Otherwise, continuing to read this assumes that you're acclimated to basic programming concepts.
+If you're a complete beginner to programming in general, please follow [Getting Started for Dummies](NOOB.md). It will guide you through setting up the project with extensive explanations, providing all the steps to set everything up from nothing.
 
 ## Install development tools
 
