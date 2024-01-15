@@ -31,18 +31,20 @@ Our plugin runs using Paper, which is a mod of Minecraft's vanilla server. More 
 
 If you don't need to test the plugin, you can skip this section. Otherwise, follow these steps to create a local Paper server:
 
-Download a Paper server JAR file for the current version of our server, **Minecraft 1.20.2**, from the [PaperMC website](https://papermc.io/downloads/all).
+Download a Paper server JAR file for the current version of our plugin and server, **Minecraft <!--mcversion-->1.20.2<!--mcversion-->**, from the [PaperMC website](https://papermc.io/downloads/all).
 
-The easiest way to create a development server is to create a `server` directory within the repository. Then, take your downloaded Paper server JAR file place it within that directory. Congratulations! You can now debug the server using `Run and Debug` from the sidebar.
+The easiest way to create a development server is to create a `server` directory within the repository. Take your downloaded Paper server JAR file place it within that directory. And, you're done!
 
-For more flexibility, you can create a `.env` file in the project directory to change the server directory location (rather than using the project directory) or modify the arguments of the Paper server, like so:
+You can now debug the server using `Run and Debug` from the sidebar, or better, use the Command Palette to run `Debug: Start Debugging`.
+
+For more flexibility, you have the option to create a `.env` file in the project directory to change the server path (instead of using the project directory), or modify the arguments of the Paper server, like so:
 
 ```sh
-SERVER_DIRECTORY="/Users/Sleuth/Documents/My Server"
+SERVER_DIRECTORY="/Users/Mae/Documents/My Server"
 SERVER_ARGS="-Xmx3G -Xms3G"
 ```
 
-If you don't specify server arguments, it will automatically choose `-Xmx1024M -Xms512M`. This will allocate 1024 MB of RAM at maximum and 512 MB at minimum.
+If you don't specify server arguments, it will automatically choose `-Xmx1024M -Xms512M`. This will allocate 1024 MB of RAM to your server at maximum, and 512 MB at minimum.
 
 ## Optional tools
 
