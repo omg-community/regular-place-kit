@@ -4,5 +4,26 @@
 
 By installing git, you will be able make changes to the code and collaborate with others, with the ability to push those changes to a remote repository (one that isn't on your local computer). This enables collaboration with other developers, facilitates code review, and ensures that everyone is working on the latest version of the codebase.
 
-Install [git for your platform](https://www.git-scm.com/downloads) from git's website.
+Install [git for your platform](https://www.git-scm.com/downloads) from git's website if you don't have it. If you're not sure if you have it, you can check by opening a terminal such as Windows Terminal on Windows, or Terminal on macOS and running this command:
 
+```sh
+git version
+```
+
+If it shows a version, you have git installed and can move on to the next section. Otherwise, if you see an error, you need to install git.
+
+## Install a JDK
+
+To develop for Java, you need a Java Development Kit (JDK). It enables you to run Java programs, and includes additional tools for compiling, debugging, and testing Java code.
+
+Install [the latest JDK from Oracle](https://www.oracle.com/java/technologies/downloads/) if you don't have it. Similar to before, you can run this command to verify if you already have it installed:
+
+```sh
+java -version
+```
+
+## Set up Visual Studio Code
+
+If you haven't already, install [Visual Studio Code](https://code.visualstudio.com/) from Visual Studio's website. This is a powerful IDE with many features which we will use to write our code.
+
+Now that you have it installed, 
