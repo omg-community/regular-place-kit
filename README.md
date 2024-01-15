@@ -29,9 +29,7 @@ Once you've opened the repository, install any recommended extensions when promp
 
 Our plugin runs using Paper, which is a mod of Minecraft's vanilla server. More specifically, it's a high-performance fork of Bukkit and Spigot. It provides additional optimizations and features that enhance server performance and gameplay experience.
 
-If you don't need to test the plugin, you can skip this section. Otherwise, follow these steps to create a local Paper server:
-
-Download a Paper server JAR file for the current version of our plugin and server, **Minecraft <!--mcversion-->1.20.2<!--mcversion-->**, from the [PaperMC website](https://papermc.io/downloads/all).
+If you don't need to test the plugin, you can skip this section. Otherwise, download a Paper server JAR file for the current version of our plugin and server, **Minecraft <!--mcversion-->1.20.2<!--mcversion-->**, from the [PaperMC website](https://papermc.io/downloads/all).
 
 The easiest way to create a development server is to create a `server` directory within the repository. Take your downloaded Paper server JAR file place it within that directory. And, you're done!
 
