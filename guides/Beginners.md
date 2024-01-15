@@ -30,4 +30,6 @@ Now that you have it installed, we can copy the plugin's code onto your system. 
 
 Select "Clone from GitHub", and enter `omg-community/regular-place-kit`. You may have to log in to GitHub to do this. Select a directory to store this repository in, like `Documents/Code`.
 
-[tell the dev to install recommended extensions when prompted]
+Open the repository you've just cloned. When prompted for recommended extensions (on the bottom right of the window), make sure to install them. You'll need these to develop in Java, as Visual Studio Code doesn't include the these tools by default.
+
+And, VSCode is now all set up! You're almost ready to make your first changes.
