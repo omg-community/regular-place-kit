@@ -50,7 +50,7 @@ If you don't specify server arguments, it will automatically choose `-Xmx1024M -
 
 For an even better development experience, install the [Fabric mod loader](https://fabricmc.net/use/installer/) and use the AutoReconnect mod to automatically reconnect to the server when you restart it.
 
-Once you install Fabric, add these dependencies into your mods folder:
+Once you install Fabric, add these dependencies into your mods folder in `%appdata%\.minecraft\mods`:
 
 - [Fabric API](https://modrinth.com/mod/fabric-api/versions)
 - [Cloth Config API](https://modrinth.com/mod/cloth-config/versions)
