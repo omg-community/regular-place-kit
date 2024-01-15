@@ -1,0 +1,134 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Set permissions for scripts",
+			"hide": true,
+			"type": "shell",
+			"command": "chmod +x ${workspaceFolder}/.vscode/scripts/*.sh",
+			"windows": {
+				"command": "echo Bill Gates"
+			},
+			"presentation": {
+				"reveal": "never",
+				"echo": false,
+				"showReuseMessage": false,
+				"close": true,
+				"revealProblems": "never"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Build regular-place-kit",
+			"type": "java (buildArtifact)",
+			"targetPath": "${workspaceFolder}/target/regular-place-kit.jar",
+			"elements": [
+				"${compileOutput}",
+				"${dependencies}"
+			],
+			"group": {
+				"kind": "build"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Build and copy JAR to plugin directory",
+			"dependsOn": [
+				"Set permissions for scripts",
+				"Build regular-place-kit"
+			],
+			"dependsOrder": "sequence",
+			"type": "shell",
+			"command": "${workspaceFolder}/.vscode/scripts/copy.sh",
+			"windows": {
+				"command": "${workspaceFolder}/.vscode/scripts/copy.bat"
+			},
+			"options": {
+				"env": {
+					"ENV_FILE": "${workspaceFolder}/.env",
+					"SERVER_DIRECTORY": "${workspaceFolder}/server",
+					"JAR_FILE": "${workspaceFolder}/target/regular-place-kit.jar"
+				}
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Start Paper server",
+			"type": "shell",
+			"command": "${workspaceFolder}/.vscode/scripts/launch.sh",
+			"windows": {
+				"command": "${workspaceFolder}/.vscode/scripts/launch.bat"
+			},
+			"isBackground": true,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"group": {
+				"kind": "test"
+			},
+			"options": {
+				"env": {
+					"ENV_FILE": "${workspaceFolder}/.env",
+					"SERVER_DIRECTORY": "${workspaceFolder}/server"
+				}
+			},
+			"problemMatcher": {
+				"owner": "java",
+				"fileLocation": [
+					"relative",
+					"${workspaceFolder}"
+				],
+				"pattern": {
+					"regexp": "^(.*):(\\d+):(.*)(error|warning):(.*)$",
+					"file": 1,
+					"line": 2,
+					"message": 5
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^.*Starting.*$",
+					"endsPattern": "^.*Done.*$"
+				}
+			}
+		},
+		{
+			"label": "Build and start Paper server",
+			"dependsOn": [
+				"Build and copy JAR to plugin directory",
+				"Start Paper server"
+			],
+			"dependsOrder": "sequence",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "Stop Paper server",
+			"type": "shell",
+			"command": "echo ${input:terminate}",
+			"presentation": {
+				"reveal": "silent"
+			},
+			"hide": true,
+			"problemMatcher": []
+		}
+	],
+	"inputs": [
+		{
+			"id": "terminate",
+			"type": "command",
+			"command": "workbench.action.tasks.terminate",
+			"args": "Start Paper server"
+		}
+	]
+}
