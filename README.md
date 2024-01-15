@@ -21,13 +21,9 @@ If you see any errors, you can [install git](https://www.git-scm.com/downloads) 
 
 ## Set up Visual Studio Code
 
-If you haven't already, install [Visual Studio Code](https://code.visualstudio.com/) from Visual Studio's website.
+This repository is set up to use VSCode. If you haven't already, install [Visual Studio Code](https://code.visualstudio.com/) from Visual Studio's website. Clone this repository and open it.
 
-Now, copy the plugin's code onto your system. To clone this repository in Visual Studio Code, open the Command Palette with `Ctrl` + `Shift` + `P` and search for "Git: Clone". Select "Clone from GitHub", and enter `omg-community/regular-place-kit`.
-
-Select a directory to store this repository in, like `Documents/Code`.
-
-[tell the dev to install recommended extensions when prompted]
+Once you've opened the repository, install any recommended extensions when prompted.
 
 ## Set up a local Minecraft server for testing
 
