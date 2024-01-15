@@ -6,12 +6,22 @@ If you're a complete beginner to programming in general, it's highly recommend r
 
 ## Install development tools
 
-Make sure you have git and a Java Development Kit (JDK) installed on your computer. You can check by opening a terminal or command prompt and typing these commands:
+Make sure you have git and a Java Development Kit (JDK) installed on your computer. You can check by opening a terminal and running these commands:
 ```sh
 git -v
 java -version
 ```
-If you see an error, you can [install git](https://www.git-scm.com/downloads) or [the latest JDK](https://www.oracle.com/java/technologies/downloads/) for your platform respectively.
+If you see any errors, you can [install git](https://www.git-scm.com/downloads) or [the latest JDK](https://www.oracle.com/java/technologies/downloads/) for your platform respectively.
+
+## Set up Visual Studio Code
+
+If you haven't already, install [Visual Studio Code](https://code.visualstudio.com/) from Visual Studio's website.
+
+Now, copy the plugin's code onto your system. To clone this repository in Visual Studio Code, open the Command Palette with `Ctrl` + `Shift` + `P` and search for "Git: Clone". Select "Clone from GitHub", and enter `omg-community/regular-place-kit`.
+
+Select a directory to store this repository in, like `Documents/Code`.
+
+[tell the dev to install recommended extensions when prompted]
 
 ## Set up a local Minecraft server for testing
 
@@ -31,16 +41,6 @@ SERVER_ARGS="-Xmx3G -Xms3G"
 ```
 
 If you don't specify server arguments, it will automatically choose `-Xmx1024M -Xms512M`. This will allocate 1024 MB of RAM at maximum and 512 MB at minimum.
-
-## Set up Visual Studio Code
-
-If you haven't already, install [Visual Studio Code](https://code.visualstudio.com/) from Visual Studio's website.
-
-Now, copy the plugin's code onto your system. To clone this repository in Visual Studio Code, open the Command Palette with `Ctrl` + `Shift` + `P` and search for "Git: Clone". Select "Clone from GitHub", and enter `omg-community/regular-place-kit`.
-
-Select a directory to store this repository in, like `Documents/Code`.
-
-[tell the dev to install recommended extensions when prompted]
 
 ## Optional tools
 
