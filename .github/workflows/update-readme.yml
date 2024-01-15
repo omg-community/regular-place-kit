@@ -23,15 +23,28 @@ jobs:
         run: |
           VERSION=$(grep -oPm1 "(?<=<version>)[^<]+" pom.xml | head -1)
           MINECRAFT_VERSION=${VERSION%%-*}
+
+          if [[ -z "$VERSION" ]]; then
+            echo "Couldn't extract version from pom.xml!"
+            exit 1
+          fi
+
           echo "Version (from pom.xml): $VERSION"
           echo "Minecraft version: $MINECRAFT_VERSION"
           echo "::set-output name=VERSION::$VERSION"
           echo "::set-output name=MINECRAFT_VERSION::$MINECRAFT_VERSION"
 
-      - name: Update README
-        if: steps.version.outputs.MINECRAFT_VERSION != ''
+      - name: Update README.md
         run: |
           sed -i "s/<!--mcversion-->.*<!--mcversion-->/<!--mcversion-->${{ steps.version.outputs.MINECRAFT_VERSION }}<!--mcversion-->/" README.md
           git add README.md
-          git commit -m "Update Minecraft version in README to ${{ steps.version.outputs.MINECRAFT_VERSION }}" || exit 0
+
+      - name: Update Beginners.md
+        run: |
+          sed -i "s/<!--mcversion-->.*<!--mcversion-->/<!--mcversion-->${{ steps.version.outputs.MINECRAFT_VERSION }}<!--mcversion-->/" guides/Beginners.md
+          git add guides/Beginners.md
+      
+      - name: Commit and push changes
+        run: |
+          git commit -m "Update to Minecraft ${{ steps.version.outputs.MINECRAFT_VERSION }}" -m "[skip ci]"
           git push
