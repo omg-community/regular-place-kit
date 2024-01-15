@@ -1,4 +1,10 @@
-currently housing all survival plugin code - eventually will turn into shared code between survival/creative plugins
+# regular-place-kit
+
+regular.place kit is meant to be a shared codebase/API for both the survival and creative servers.
+
+However, currently, the main and only focus is on the survival server. All code in this repository should relate to the survival server plugin.
+
+In the future and coming months, the creative server will be launched. As that approaches, the survival portion of this plugin will split off into another repository that depends on this one.
 
 # Get started with development
 
