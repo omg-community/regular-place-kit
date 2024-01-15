@@ -1,0 +1,37 @@
+name: Update README
+
+on:
+  push:
+    paths:
+      - 'pom.xml'
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up git credentials
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Extract version from pom.xml
+        id: version
+        run: |
+          VERSION=$(grep -oPm1 "(?<=<version>)[^<]+" pom.xml | head -1)
+          MINECRAFT_VERSION=${VERSION%%-*}
+          echo "Version (from pom.xml): $VERSION"
+          echo "Minecraft version: $MINECRAFT_VERSION"
+          echo "::set-output name=VERSION::$VERSION"
+          echo "::set-output name=MINECRAFT_VERSION::$MINECRAFT_VERSION"
+
+      - name: Update README
+        if: steps.version.outputs.MINECRAFT_VERSION != ''
+        run: |
+          sed -i "s/<!--mcversion-->.*<!--mcversion-->/<!--mcversion-->${{ steps.version.outputs.MINECRAFT_VERSION }}<!--mcversion-->/" README.md
+          git add README.md
+          git commit -m "Update Minecraft version in README to ${{ steps.version.outputs.MINECRAFT_VERSION }}" || exit 0
+          git push
