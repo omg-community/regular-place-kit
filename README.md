@@ -44,11 +44,27 @@ SERVER_ARGS="-Xmx3G -Xms3G"
 
 If you don't specify server arguments, it will automatically choose `-Xmx1024M -Xms512M`. This will allocate 1024 MB of RAM to your server at maximum, and 512 MB at minimum.
 
+### More tips
+
+In VSCode, you can run any "tasks" from the Command Palette. One task you might find useful is `Tasks: Run Task` `Start Paper server`. 
+
+This will start the server without building the plugin and copying it into the plugin directory, useful if you just want to start the server without the long build process.
+
+While debugging, you can use Hot Code Replacement to apply certain types of changes to the plugin without needing to completely restart the server. You can find this button in the debug menu at the top of the window.
+
+![Hot Code Replacement](<assets/hot-code-replacement.png>)
+
+It may be helpful to bind this to a Keyboard Shortcut like `Alt` + `R`, as this is not bound to anything by default.
+
+In this same menu, you can also restart the debug session, which will consequently restart the server, which is useful in the case that your changes are not Hot Code Replaceable.
+
+![Restart](<assets/restart.png>)
+
 ## Optional tools
 
 ### Install Fabric
 
-For an even better development experience, install the [Fabric mod loader](https://fabricmc.net/use/installer/) and use the AutoReconnect mod to automatically reconnect to the server when you restart it.
+For an even better development experience, you can install the [Fabric mod loader](https://fabricmc.net/use/installer/) and use the AutoReconnect mod to automatically reconnect to the server when you restart it.
 
 Once you install Fabric, add these dependencies into your mods folder in `%appdata%\.minecraft\mods`:
 
