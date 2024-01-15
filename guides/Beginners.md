@@ -26,4 +26,8 @@ java -version
 
 If you haven't already, install [Visual Studio Code](https://code.visualstudio.com/) from Visual Studio's website. This is a powerful IDE with many features which we will use to write our code.
 
-Now that you have it installed, 
+Now that you have it installed, we can copy the plugin's code onto your system. To clone this repository in Visual Studio Code, open the Command Palette with `Ctrl` + `Shift` + `P`. You can run many different useful actions from the Command Palette, but for now, search for "Git: Clone".
+
+Select "Clone from GitHub", and enter `omg-community/regular-place-kit`. You may have to log in to GitHub to do this. Select a directory to store this repository in, like `Documents/Code`.
+
+[tell the dev to install recommended extensions when prompted]
