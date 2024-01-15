@@ -19,14 +19,18 @@ Our plugin runs using Paper, which is a mod of Minecraft's vanilla server. More 
 
 If you don't need to test the plugin, you can skip this section. Otherwise, follow these steps to create a local Paper server:
 
-1. Create a directory somewhere on your computer to store the Minecraft server, like `Documents/Minecraft Servers/regular-place-kit`.
-2. Download a Paper server JAR file for the current version of our server, **Minecraft 1.20.2**, from the [PaperMC website](https://papermc.io/downloads/all), and place it in the directory you created earlier.
-3. Check out our [scripts directory](scripts/) for scripts to start your Minecraft server. If you're on Windows, copy the `start.bat` file into your server's directory. For macOS and Linux, copy the `start.sh` file.
-4. The server will generate necessary configuration files and folders. Once it finishes, stop the server by typing `stop` in the server console.
-## fard
+Download a Paper server JAR file for the current version of our server, **Minecraft 1.20.2**, from the [PaperMC website](https://papermc.io/downloads/all).
+
+The easiest way to create a development server is to create a `server` directory within the repository. Then, take your downloaded Paper server JAR file place it within that directory. Congratulations! You can now debug the server using `Run and Debug` from the sidebar.
+
+For more flexibility, you can create a `.env` file in the project directory to change the server directory location (rather than using the project directory) or modify the arguments of the Paper server, like so:
+
 ```sh
-chmod +x start.sh
+SERVER_DIRECTORY="/Users/Sleuth/Documents/My Server"
+SERVER_ARGS="-Xmx3G -Xms3G"
 ```
+
+If you don't specify server arguments, it will automatically choose `-Xmx1024M -Xms512M`. This will allocate 1024 MB of RAM at maximum and 512 MB at minimum.
 
 ## Set up Visual Studio Code
 
@@ -38,15 +42,11 @@ Select a directory to store this repository in, like `Documents/Code`.
 
 [tell the dev to install recommended extensions when prompted]
 
+## Optional tools
 
+### Install Fabric
 
-### IntelliJ IDEA
-
-TODO
-
-### Eclipse
-
-Please don't use Eclipse unless you actually genuinely hate yourself and/or don't enjoy life anymore. I have no tips for you if you use Eclipse.
+[AutoReconnect mod](https://modrinth.com/mod/autoreconnect)
 
 ## Good luck!
 
