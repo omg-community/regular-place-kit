@@ -28,23 +28,15 @@ If you don't need to test the plugin, you can skip this section. Otherwise, foll
 chmod +x start.sh
 ```
 
-## Pick an IDE for development
+## Set up Visual Studio Code
 
-To ensure the most streamlined development process, follow the steps below for the IDE of your choice.
-
-### Visual Studio Code
-
-If you haven't already, install [Visual Studio Code](https://code.visualstudio.com/) from Visual Studio's website, and install [GitHub Pull Requests and Issues](https://marketplace.visualstudio.com/items?itemName=GitHub.vscode-pull-request-github) from the marketplace.
-
-Log in to GitHub by clicking on the Accounts button on the bottom left of the window. Follow the instructions.
-
-<img src="assets/accounts.png" width="300"/>
-
-Make sure you've installed the [Extension Pack for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack) from the marketplace. This includes auto completion, refactoring, debugging (hot swapping), and many other useful tools you need for developing in Java.
+If you haven't already, install [Visual Studio Code](https://code.visualstudio.com/) from Visual Studio's website.
 
 Now, copy the plugin's code onto your system. To clone this repository in Visual Studio Code, open the Command Palette with `Ctrl` + `Shift` + `P` and search for "Git: Clone". Select "Clone from GitHub", and enter `omg-community/regular-place-kit`.
 
 Select a directory to store this repository in, like `Documents/Code`.
+
+[tell the dev to install recommended extensions when prompted]
 
 
 
