@@ -40,6 +40,9 @@ Temporary Items
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+# Minecraft server
+server/
+
 # Package Files #
 *.jar
 *.war
