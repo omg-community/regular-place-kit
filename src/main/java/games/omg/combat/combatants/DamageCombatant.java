@@ -10,6 +10,7 @@ public class DamageCombatant extends Combatant {
     this.name = name;
   }
 
+  @Override
   public TextComponent getName() {
     return Component.text(name);
   }
