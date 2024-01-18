@@ -1,4 +1,4 @@
-package games.omg.listeners.damage;
+package games.omg.handlers.damage;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,7 +7,6 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.TNTPrimed;
@@ -24,7 +23,6 @@ import org.bukkit.projectiles.ProjectileSource;
 
 import games.omg.utils.EntityUtils;
 import games.omg.utils.Utils;
-import net.md_5.bungee.api.ChatColor;
 
 public class DamageHandler implements Listener {
 

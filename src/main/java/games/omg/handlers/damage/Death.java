@@ -1,20 +1,12 @@
-package games.omg.listeners.damage;
+package games.omg.handlers.damage;
 
 import java.util.List;
 
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 
-import games.omg.utils.EntityUtils;
-import games.omg.utils.StringUtils;
-import games.omg.utils.Utils;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.event.HoverEvent;
-import net.kyori.adventure.text.event.HoverEvent.Action;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
-import net.md_5.bungee.api.ChatColor;
 
 /**
  * An object which represents a death.

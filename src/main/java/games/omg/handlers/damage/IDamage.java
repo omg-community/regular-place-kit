@@ -1,4 +1,4 @@
-package games.omg.listeners.damage;
+package games.omg.handlers.damage;
 
 /**
  * An interface which represents damage taken by an entity.
