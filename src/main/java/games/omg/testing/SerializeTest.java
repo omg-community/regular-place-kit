@@ -1,4 +1,4 @@
-package games.omg.handlers.test;
+package games.omg.testing;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

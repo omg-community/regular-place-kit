@@ -1,4 +1,4 @@
-package games.omg.handlers.damage;
+package games.omg.combat.damage;
 
 import java.util.ArrayList;
 import java.util.HashMap;

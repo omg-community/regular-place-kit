@@ -3,7 +3,7 @@ package games.omg;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import games.omg.handlers.chat.ChatHandler;
+import games.omg.chat.ChatHandler;
 
 public class Main extends JavaPlugin implements Listener {
 

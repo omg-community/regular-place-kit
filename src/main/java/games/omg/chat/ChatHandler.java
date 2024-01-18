@@ -1,4 +1,4 @@
-package games.omg.handlers.chat;
+package games.omg.chat;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
