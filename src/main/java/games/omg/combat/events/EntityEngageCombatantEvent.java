@@ -3,15 +3,16 @@ package games.omg.combat.events;
 import org.bukkit.event.HandlerList;
 
 import games.omg.combat.Combat;
+import games.omg.combat.combatants.Combatant;
 
 /**
- * Fires when an entity is now in combat.
+ * Fires when an Entity disengages from combat with a Combatant.
  */
-public class CombatEnteredEvent extends CombatEvent {
+public class EntityEngageCombatantEvent extends CombatantEvent {
   private static final HandlerList handlers = new HandlerList();
 
-  public CombatEnteredEvent(Combat combat) {
-    super(combat);
+  public EntityEngageCombatantEvent(Combat combat, Combatant combatant) {
+    super(combat, combatant);
   }
 
   @Override

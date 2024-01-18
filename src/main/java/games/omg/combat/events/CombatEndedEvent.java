@@ -5,12 +5,12 @@ import org.bukkit.event.HandlerList;
 import games.omg.combat.Combat;
 
 /**
- * Fires when an entity is now in combat.
+ * Fires when an entity is no longer in combat with any other entities.
  */
-public class CombatEnteredEvent extends CombatEvent {
+public class CombatEndedEvent extends CombatEvent {
   private static final HandlerList handlers = new HandlerList();
 
-  public CombatEnteredEvent(Combat combat) {
+  public CombatEndedEvent(Combat combat) {
     super(combat);
   }
 
