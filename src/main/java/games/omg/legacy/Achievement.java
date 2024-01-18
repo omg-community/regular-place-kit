@@ -1,5 +1,8 @@
 package games.omg.legacy;
 
+/**
+ * An enum which represents an achievement.
+ */
 public enum Achievement {
 
   // PIXEL_ART_WINNER("?????", "Win a season with your favorite build type being pixel art."),

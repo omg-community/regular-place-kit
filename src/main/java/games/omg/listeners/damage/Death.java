@@ -16,6 +16,9 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.md_5.bungee.api.ChatColor;
 
+/**
+ * An object which represents a death.
+ */
 public class Death {
 
     final private static TextColor KILLED_COLOR = NamedTextColor.RED;

@@ -28,6 +28,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import games.omg.menus.InventoryMenu;
 
+/**
+ * A utility class for builds.
+ * 
+ * @deprecated This class is deprecated and will be removed in a future update.
+ */
 public class BuildUtils {
 
   final public static String GET_BUILDS = "getBuilds";
@@ -104,6 +109,12 @@ public class BuildUtils {
     }
   }
 
+  /**
+   * Opens the Build Constructor menu for a build for the specified player.
+   * 
+   * @param p The player to open the menu for
+   * @param build The build to open the menu with
+   */
   public static void openBuildConstructor(Player p, UGCBuild build) {
     boolean newBuild = build.getId() == null;
 
@@ -312,6 +323,14 @@ public class BuildUtils {
     });
   }
 
+  /**
+   * Deletes a build with the specified ID.
+   * 
+   * An optional player can be specified to send messages to.
+   * 
+   * @param p The player to send messages to
+   * @param id The ID of the build to delete
+   */
   public static void deleteBuild(Player p, Integer id) {
     if (id == null)
       return;
@@ -335,6 +354,12 @@ public class BuildUtils {
     }
   }
 
+  /**
+   * Checks if a build title is valid.
+   * 
+   * @param title The title to check
+   * @return The result of the check
+   */
   public static BuildTitleResult checkBuildTitle(String title) {
     if (title.length() < 1) {
       return BuildTitleResult.TOO_SHORT;
@@ -347,6 +372,20 @@ public class BuildUtils {
     }
   }
 
+  // by god this sucks
+  /**
+   * Opens the build listing menu for the specified player.
+   * 
+   * The PreparedStatement must be a query which returns the following columns:
+   * id, owner, title, genre, privacy, season, creationTime, world, x, y, z, yaw, pitch
+   * 
+   * The PreparedStatement will be executed with an integer parameter for pagination.
+   * 
+   * @param p The player to open the menu for
+   * @param title The title of the menu
+   * @param statement The PreparedStatement to execute
+   * @param indexOfPagination The index number of the pagination parameter to allow for pagination
+   */
   public static void openBuildListing(Player p, String title, PreparedStatement statement, int indexOfPagination) {
     p.playSound(p.getLocation(), Sound.UI_TOAST_IN, 1, 1);
     new InventoryMenu(p, "BuildListing", 54, title, new InventoryMenu.InventoryClickHandler() {
@@ -483,6 +522,12 @@ public class BuildUtils {
     });
   }
 
+  /**
+   * Teleports a player to a build.
+   * 
+   * @param p The player to teleport
+   * @param build The build to teleport to
+   */
   public static void teleportToBuild(Player p, UGCBuild build) {
     Location loc = build.getLocation();
     p.teleport(loc);

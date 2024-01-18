@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * A very verbose and stupid enum which draws text.
+ * 
+ * @deprecated This enum is deprecated and will be removed in the future.
+ */
 public enum Text {
 
 	LETTER_A('a', new boolean[][] {

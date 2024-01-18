@@ -2,6 +2,9 @@ package games.omg.legacy.builds;
 
 import org.bukkit.Material;
 
+/**
+ * An enum which represents the privacy of a build.
+ */
 public enum UGCPrivacy {
 
   PUBLIC("Public", "Everyone can see", Material.LIME_WOOL),

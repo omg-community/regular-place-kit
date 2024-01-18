@@ -2,6 +2,9 @@ package games.omg.resources;
 
 import java.util.HashMap;
 
+/**
+ * A class which contains various decorations.
+ */
 public class Decorations {
   
   public static final String ENVELOPE = "✉";
@@ -27,6 +30,11 @@ public class Decorations {
   public static final String BULLET_REGULAR = "•";
   public static final String CRESCENT_MOON = "☽";
 
+  /**
+   * A class which maps letters to their circled versions.
+   * 
+   * It is case sensitive, and contains both upper and lower case letters.
+   */
   public static class CircledLetters {
     private static final String CIRCLED_LETTERS = "ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ";
     private static final String DIRECTORY = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -40,6 +48,11 @@ public class Decorations {
     }
   }
 
+  /**
+   * A class which maps numbers to their circled versions.
+   * 
+   * It only supports numbers 1-20.
+   */
   public static class CircledNumbers {
     public static final String CIRCLED_NUMBERS = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳";
 

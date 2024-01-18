@@ -18,10 +18,19 @@ import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.Style.Merge;
 
+/**
+ * A class which contains utility methods for players.
+ */
 public class PlayerUtils {
 
   // We don't color the nametag here because we want to be able to color it differently for different teams
   // Or various different colors for various different reasons
+  /**
+   * Gets the nametag component of a player.
+   * 
+   * @param player The player
+   * @return The nametag component of the player
+   */
   public static Component getNametag(OfflinePlayer player) {
     String name = PlayerUtils.getPlayerName(player);
 
@@ -49,16 +58,40 @@ public class PlayerUtils {
     return combined;
   }
 
+  /**
+   * Gets the name of a player.
+   * 
+   * We use this method instead of {@link Player#getName()}
+   * in the case of nicknames in the future.
+   * 
+   * @param player The player
+   * @return The name of the player
+   */
   public static String getPlayerName(Player player) {
     return getPlayerName((OfflinePlayer) player);
   }
 
+  /**
+   * Gets the name of an offline player.
+   * 
+   * We use this method instead of {@link OfflinePlayer#getName()}
+   * in the case of nicknames in the future.
+   * 
+   * @param player The offline player
+   * @return The name of the offline player
+   */
   public static String getPlayerName(OfflinePlayer player) {
     // TODO: possibly nicknames in the future
 
     return player.getName();
   }
 
+  /**
+   * Gets the name of a command sender.
+   * 
+   * @param sender The command sender
+   * @return The name of the command sender
+   */
   public static String getPlayerName(CommandSender sender)  {
     if (sender instanceof OfflinePlayer) {
       return getPlayerName((OfflinePlayer) sender);
@@ -68,6 +101,17 @@ public class PlayerUtils {
 
   // for commands where you can enter partial usernames and search for online players
   // eventually, this should also be added to the proxy server to also search for players in other servers and possibly teleport to them
+  /**
+   * Gets the player which matches the specified query.
+   * 
+   * This method will first look for an exact match for the query.
+   * If no exact match is found, it will look for a partial match.
+   * 
+   * If no match is found, it will return null.
+   * 
+   * @param query The query
+   * @return The player which matches the query
+   */
   public static Player getSearchedPlayer(String query) {
     Collection<? extends Player> players = Bukkit.getOnlinePlayers();
     query = query.toLowerCase();

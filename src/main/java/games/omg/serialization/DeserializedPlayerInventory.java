@@ -3,6 +3,9 @@ package games.omg.serialization;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+/**
+ * A (currently unused) class which represents a deserialized player inventory.
+ */
 public class DeserializedPlayerInventory {
     public ItemStack[] contents;
     public ItemStack[] armorContents;
