@@ -31,60 +31,65 @@ public class DamageHandler implements Listener {
   final private static int MAX_DAMAGES = 20;
   final private static double IGNORE_TIME = 8000;
 
-  final private static ChatColor CAUSE_COLOR = ChatColor.YELLOW;
-
   final private static HashMap<Entity, List<Damage>> damageList = new HashMap<>();
 
   //
 
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void recordDamageTaken(EntityDamageByEntityEvent event) {
+  public void onEntityDamagedByCause(EntityDamageEvent event) {
+    // Stop if the damage was caused by a custom damage event.
+    if (event.getCause() == EntityDamageEvent.DamageCause.CUSTOM) {
+      return;
+    }
+
     Entity damaged = event.getEntity();
-    Entity damager = event.getDamager();
-    EntityType damagerType = damager.getType();
+    Entity damager = null;
 
-    if (damager instanceof Projectile) {
-      // The damaged entity was hit by a projectile.
-      Projectile projectile = (Projectile) damager;
-      ProjectileSource projectileSource = projectile.getShooter();
+    // Since EntityDamageEvent does not have a getDamager() method,
+    // if this is an EntityDamageByEntityEvent, we need to extract the damager.
+    if (event instanceof EntityDamageByEntityEvent) {
+      damager = ((EntityDamageByEntityEvent) event).getDamager();
+    }
 
-      if (!(projectileSource instanceof Entity)) {
-        // There is no entity which shot the projectile.
-        recordDamage(damaged, damager, null);
+    if (damager != null) {
+      // The damaged entity was damaged by another entity.
+      String damagerTypeName = EntityUtils.getDisplayName(damager.getType());
+
+      if (damager instanceof Projectile) {
+        // The damaged entity was hit by a projectile.
+        Projectile projectile = (Projectile) damager;
+        ProjectileSource projectileSource = projectile.getShooter();
+
+        if (!(projectileSource instanceof Entity)) {
+          // There is no entity which shot the projectile.
+          recordDamage(damaged, damager, null);
+        } else {
+          // There is an entity which shot the projectile.
+          Entity shooter = (Entity) projectileSource;
+          recordDamage(damaged, shooter, damagerTypeName);
+        }
+      } else if (damager instanceof TNTPrimed) {
+        // The damaged entity was hit by TNT.
+        TNTPrimed tnt = (TNTPrimed) damager;
+        Entity tntSource = tnt.getSource();
+
+        if (tntSource == null) {
+          // There is no entity which caused the TNT to be lit.
+          recordDamage(damaged, damager, null);
+        } else {
+          // There is an entity which caused the TNT to be lit.
+          recordDamage(damaged, tntSource, damagerTypeName);
+        }
       } else {
-        // There is an entity which shot the projectile.
-        Entity shooter = (Entity) projectileSource;
-        recordDamage(damaged, shooter, EntityUtils.getDisplayName(damagerType));
-      }
-    } else if (damager instanceof TNTPrimed) {
-      // The damaged entity was hit by TNT.
-      TNTPrimed tnt = (TNTPrimed) damager;
-      Entity tntSource = tnt.getSource();
-
-      if (tntSource == null) {
-        // There is no entity which caused the TNT to be lit.
+        // The damaged entity was most likely attacked by an entity directly with no
+        // external sources.
         recordDamage(damaged, damager, null);
-      } else {
-        // There is an entity which caused the TNT to be lit.
-        recordDamage(damaged, tntSource, EntityUtils.getDisplayName(damagerType));
       }
     } else {
-      // The damaged entity was most likely attacked by an entity directly with no external sources.
-      recordDamage(damaged, damager, null);
+      // The damaged entity was damaged by something other than an entity.
+      // Simply record the damage with no damager.
+      recordDamage(damaged, null, Utils.getDisplayNameFromInternalName(event.getCause().name()));
     }
-  }
-
-  @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-  public void onEntityDamagedByCause(EntityDamageEvent event) {
-    // Stop if the damage was caused by another entity.
-    if (event instanceof EntityDamageByEntityEvent) return;
-
-    // Stop if the damage was caused by a custom damage event.
-    Entity damagedEntity = event.getEntity();
-    if (event.getCause() == EntityDamageEvent.DamageCause.CUSTOM) return;
-
-    // Record the damage.
-    recordDamage(damagedEntity, null, Utils.getDisplayNameFromInternalName(event.getCause().name()));
   }
 
   //
@@ -122,7 +127,8 @@ public class DamageHandler implements Listener {
             assists.add(damager);
           }
 
-          // Continue to the next damage - we don't want to add their cause to the causes list.
+          // Continue to the next damage - we don't want to add their cause to the causes
+          // list.
           continue;
         }
       }
