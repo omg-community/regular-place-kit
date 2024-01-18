@@ -3,6 +3,9 @@ package games.omg.listeners.damage;
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;
 
+/**
+ * An object which represents damage taken by an entity.
+ */
 public class Damage {
 
 	final private Entity damager;

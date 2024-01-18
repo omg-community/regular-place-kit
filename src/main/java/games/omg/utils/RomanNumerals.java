@@ -1,7 +1,16 @@
 package games.omg.utils;
 
+/**
+ * A class which converts integers to roman numerals.
+ */
 public class RomanNumerals {
 
+  /**
+   * Converts an integer to a roman numeral.
+   * 
+   * @param input The integer to convert
+   * @return The roman numeral
+   */
   public static String from(int input) {
     if (input < 2) return "";
     String s = "";

@@ -2,6 +2,9 @@ package games.omg.legacy.builds;
 
 import org.bukkit.Material;
 
+/**
+ * An enum which represents the genre of a build.
+ */
 public enum UGCGenre {
 
   MISC("Miscellaneous", Material.BOOKSHELF),

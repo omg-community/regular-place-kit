@@ -18,6 +18,11 @@ import io.papermc.paper.event.player.AsyncChatEvent;
 
 public class ChatHandler implements ChatRenderer, Listener {
 
+	/**
+	 * An EventHandler method which is called when a player joins the server.
+	 * 
+	 * @param event The PlayerJoinEvent
+	 */
   @EventHandler
 	public void onLogin(PlayerJoinEvent event) {
 		Component killedBy = Component.text("You were killed by ").color(NamedTextColor.RED);
@@ -44,6 +49,12 @@ public class ChatHandler implements ChatRenderer, Listener {
 		event.joinMessage(message);
 	}
 
+	/**
+	 * The render method which is called when a player sends a chat message.
+	 * 
+	 * From ChatRenderer.
+	 * Overrides the default chat renderer.
+	 */
   @Override
   public @NotNull Component render(@NotNull Player source, @NotNull Component sourceDisplayName, @NotNull Component message, @NotNull Audience audience) {
     return Component.text("[")
@@ -55,6 +66,11 @@ public class ChatHandler implements ChatRenderer, Listener {
       .append(message);
   }
 
+	/**
+	 * An EventHandler method which is called when a player sends a chat message.
+	 * 
+	 * @param event The AsyncChatEvent
+	 */
   @EventHandler
   public void onChat(AsyncChatEvent event) {
     event.renderer(this);

@@ -10,6 +10,9 @@ import org.bukkit.inventory.ItemStack;
 import games.omg.Main;
 import games.omg.serialization.BukkitSerialization;
 
+/**
+ * A Listener class which is used to test serialization.
+ */
 public class SerializeTest implements Listener {
   
   @EventHandler

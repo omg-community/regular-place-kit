@@ -2,6 +2,9 @@ package games.omg.legacy.builds;
 
 import org.bukkit.Material;
 
+/**
+ * An enum which represents the type of a world.
+ */
 public enum WorldType {
 
   FLATBUILD("Flatbuild", "Flatbuild", Material.GRASS_BLOCK),
@@ -14,7 +17,7 @@ public enum WorldType {
   final private String fileName;
   final private String displayName;
   final private Material displayMaterial;
-
+  
   WorldType(String fileName, String displayName, Material displayMaterial) {
     this.fileName = fileName;
     this.displayName = displayName;

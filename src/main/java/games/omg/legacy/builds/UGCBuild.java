@@ -5,6 +5,9 @@ import org.bukkit.Location;
 
 import java.util.UUID;
 
+/**
+ * An object which represents a build.
+ */
 public class UGCBuild extends UGC {
 
   private UUID world;
@@ -14,6 +17,23 @@ public class UGCBuild extends UGC {
   private float yaw;
   private float pitch;
 
+  /**
+   * Creates a build object.
+   * 
+   * @param id The unique identifier of the build
+   * @param owner The owner of the build
+   * @param title The title of the build
+   * @param genre The genre of the build
+   * @param privacy The privacy of the build
+   * @param season The season in which the build was created
+   * @param creationTime The time the build was created
+   * @param world The world the build is in
+   * @param x The x coordinate of the build
+   * @param y The y coordinate of the build
+   * @param z The z coordinate of the build
+   * @param yaw The yaw of the build
+   * @param pitch The pitch of the build
+   */
   public UGCBuild(Integer id, UUID owner, String title, UGCGenre genre, UGCPrivacy privacy, Season season,
       long creationTime, UUID world, double x, double y, double z, float yaw, float pitch) {
     super(id, owner, title, genre, privacy, season, creationTime);

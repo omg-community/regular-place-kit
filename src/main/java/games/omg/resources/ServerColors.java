@@ -3,6 +3,9 @@ package games.omg.resources;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 
+/**
+ * A class which contains all of the colors used on the server.
+ */
 public class ServerColors {
 
   public static final TextColor OMG_FRIEND_COLOR = TextColor.fromHexString("#fad32a");

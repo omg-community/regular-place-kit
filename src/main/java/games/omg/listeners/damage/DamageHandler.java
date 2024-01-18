@@ -28,15 +28,29 @@ import net.md_5.bungee.api.ChatColor;
 
 public class DamageHandler implements Listener {
 
+  /**
+   * The maximum number of {@link Damage Damages} to store for each entity.
+   */
   final private static int MAX_DAMAGES = 20;
+
+  /**
+   * The maximum amount of time until a {@link Damage} becomes invalid.
+   */
   final private static double IGNORE_TIME = 8000;
 
   final private static ChatColor CAUSE_COLOR = ChatColor.YELLOW;
 
   final private static HashMap<Entity, List<Damage>> damageList = new HashMap<>();
 
-  //
-
+  /**
+   * An EventHandler method which records damage taken by any entity.
+   * This event and function is only called when the damage is caused by another
+   * entity.
+   * 
+   * Projectiles and TNT have special handling.
+   * 
+   * @param event The EntityDamageByEntityEvent
+   */
   @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
   public void recordDamageTaken(EntityDamageByEntityEvent event) {
     Entity damaged = event.getEntity();
@@ -89,6 +103,15 @@ public class DamageHandler implements Listener {
 
   //
 
+  /**
+   * Gets a Death object for an entity based on their damage history.
+   * 
+   * This should be called when a user dies, but can be called at any time
+   * if it may be necessary to retrieve the latest attacker information.
+   * 
+   * @param killed The entity which was killed
+   * @return The Death object for the entity
+   */
   public static Death getDeath(Entity killed) {
     Entity killer = null;
     List<Entity> assists = new ArrayList<>();
@@ -136,10 +159,30 @@ public class DamageHandler implements Listener {
     return new Death(killed, killer, assists, causes);
   }
 
+  /**
+   * Broadcasts a death message for an entity.
+   * 
+   * @param damagedEntity The entity which died
+   * 
+   * @deprecated This method probably shouldn't be used. Implement the message sender in the Death object.
+   */
   public static void broadcastDeathMessage(Entity damagedEntity) {
     // Bukkit.broadcastMessage(getDeathMessage(damagedEntity));
   }
 
+  // TODO: move damage history clearing into a separate method
+  // simply use this method to broadcast the death message
+
+  /**
+   * Listens for when Entities die to broadcast a death message.
+   * 
+   * This method also clears the damage history for the entity.
+   * 
+   * There are some special cases for Tameable entities to locally
+   * broadcast the death message to the owner.
+   * 
+   * @param event The EntityDeathEvent
+   */
   @EventHandler(priority = EventPriority.MONITOR)
   public void onEntityDeath(EntityDeathEvent event) {
     if (event.getEntity() instanceof Tameable) {
@@ -160,6 +203,14 @@ public class DamageHandler implements Listener {
     }
   }
 
+  // TODO: why reduplicate code?
+  /**
+   * Listens for when Players die to broadcast a death message.
+   * 
+   * This method also clears the damage history for the entity.
+   * 
+   * @param event The PlayerDeathEvent
+   */
   @EventHandler
   public void onPlayerDeath(PlayerDeathEvent event) {
     broadcastDeathMessage(event.getEntity());
@@ -167,11 +218,25 @@ public class DamageHandler implements Listener {
     event.setDeathMessage(null);
   }
 
+  /**
+   * Listens for when Players quit to clear their damage history.
+   * 
+   * @param event The PlayerQuitEvent
+   */
   @EventHandler(priority = EventPriority.MONITOR)
   public void onQuit(PlayerQuitEvent event) {
     clearDamages(event.getPlayer());
   }
 
+  // TODO: move this stuff into Damage. Don't allow this to be called directly
+  /**
+   * Records a damage for an entity.
+   * 
+   * @param entity The entity which was damaged
+   * @param cause The cause of the damage
+   * 
+   * @deprecated Don't call this directly.
+   */
   public static void recordDamage(Entity entity, Damage cause) {
     if (!damageList.containsKey(entity))
       damageList.put(entity, new ArrayList<>());
@@ -181,10 +246,26 @@ public class DamageHandler implements Listener {
                                                   // reference variable?
   }
 
+  /**
+   * Records a damage for an entity.
+   * 
+   * @param damaged The entity which was damaged
+   * @param damager The entity which caused the damage
+   * @param cause The cause of the damage
+   * 
+   * @deprecated Don't call this directly.
+   */
   public static void recordDamage(Entity damaged, Entity damager, String cause) {
     recordDamage(damaged, new Damage(damager, cause, System.currentTimeMillis()));
   }
 
+  /**
+   * Clears the damage history for an entity.
+   * 
+   * @param entity The entity to clear the damage history for
+   * 
+   * @deprecated Don't call this directly.
+   */
   public static void clearDamages(Entity entity) {
     damageList.remove(entity);
   }
