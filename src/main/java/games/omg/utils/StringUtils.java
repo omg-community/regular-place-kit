@@ -3,7 +3,17 @@ package games.omg.utils;
 import java.text.DecimalFormat;
 import java.util.List;
 
+/**
+ * A class which provides utilities for strings.
+ */
 public class StringUtils {
+
+  /**
+   * Makes a name possessive.
+   * 
+   * @param name The name to make possessive
+   * @return The possessive name
+   */
   public static String makePossessive(String name) {
     if (name.endsWith("s")) {
       return name + "'";
@@ -12,6 +22,14 @@ public class StringUtils {
     }
   }
 
+  /**
+   * Creates a grammatical list from a list of strings.
+   * 
+   * @param items The list of strings
+   * @return The grammatical list
+   * 
+   * @deprecated This may not be useful anymore. You may simply want to use a JoinConfiguration.
+   */
   public static String createGrammaticalList(List<String> items) {
     int listSize = items.size();
 
@@ -28,6 +46,15 @@ public class StringUtils {
     return builder.toString();
   }
 
+  /**
+   * Separates a list of strings with a separator.
+   * 
+   * @param items The list of strings
+   * @param separator The separator
+   * @return The separated list
+   * 
+   * @deprecated This may not be useful anymore. You may simply want to use a JoinConfiguration.
+   */
   public static String separateListWith(List<String> items, String separator) {
     int listSize = items.size();
 
@@ -43,11 +70,25 @@ public class StringUtils {
     return builder.toString();
   }
   
+  /**
+   * Formats a number by adding commas for place separation.
+   * 
+   * @param num The number to format
+   * @return The formatted number
+   */
   public static String getCommaSeparatedNumber(int num) {
     DecimalFormat formatter = new DecimalFormat("#,###");
     return formatter.format(num);
   }
 
+  /**
+   * Gets the placement string for a number.
+   * 
+   * 1, 2, and 3 should become 1st, 2nd, and 3rd.
+   * 
+   * @param placement The number
+   * @return The placement string
+   */
   public static String getPlacementString(int placement) {
     int rankChecker = placement % 100;
     if (rankChecker > 10 && rankChecker < 20) return placement + "th";
@@ -63,10 +104,27 @@ public class StringUtils {
     return placement + "th";
   }
 
+  /**
+   * Gets a formatted time string from a number of seconds.
+   * 
+   * The format is minutes:seconds.
+   * 
+   * @param seconds The number of seconds
+   * @return The formatted time string
+   */
   public static String getFormattedTime(long seconds) {
     return String.format("%d:%02d", seconds / 60, seconds % 60);
   }
 
+  // TODO: this does not match community-bots, the functionality differs slightly
+  /**
+   * Gets a formatted time string from a number of seconds.
+   * 
+   * The format is similar to "34.3 minutes".
+   * 
+   * @param seconds The number of seconds
+   * @return The formatted time string
+   */
   public static String getTextTime(double time) {
     if (time <= 0) return "0 seconds";
     if (time > 31536000) {
@@ -90,6 +148,16 @@ public class StringUtils {
     }
   }
 
+  /**
+   * Computes the Levenshtein distance between two strings.
+   * 
+   * This is the minimum number of single-character edits (insertions, deletions or substitutions)
+   * required to change one string into the other.
+   * 
+   * @param str1 The first string
+   * @param str2 The second string
+   * @return The Levenshtein distance
+   */
   public static int computeLevenshteinDistance(String str1,String str2) {
     int[][] distance = new int[str1.length() + 1][str2.length() + 1];
     for (int i = 0; i <= str1.length(); i++) distance[i][0] = i;

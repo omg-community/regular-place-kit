@@ -1,5 +1,8 @@
 package games.omg.legacy.builds;
 
+/**
+ * An enum which represents a season of the server.
+ */
 public enum Season {
 
   ZERO("Season 0");

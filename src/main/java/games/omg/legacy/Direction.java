@@ -1,5 +1,13 @@
 package games.omg.legacy;
 
+/**
+ * An enum which represents a direction.
+ * 
+ * I don't currently know if Spigot already exposes a class like this,
+ * but I didn't think of it at the time this was created.
+ * 
+ * This class may not be needed.
+ */
 public enum Direction {
 
 	NORTH(1, 0),

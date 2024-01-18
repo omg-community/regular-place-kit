@@ -19,6 +19,9 @@ import java.util.HashMap;
 
 public class InventoryMenu implements Listener {
 
+  /**
+   * A HashMap which maps players to the InventoryMenu they have open.
+   */
   final private static HashMap<Player, InventoryMenu> openMenus = new HashMap<>();
 
   //
@@ -37,6 +40,15 @@ public class InventoryMenu implements Listener {
 
   //
 
+  /**
+   * Creates a new InventoryMenu and opens it for the specified player.
+   * 
+   * @param p The player to open the menu for
+   * @param name The name of the menu
+   * @param size The size of the menu
+   * @param title The title of the menu
+   * @param handler The {@link InventoryClickHandler} for the menu
+   */
   public InventoryMenu(Player p, String name, int size, String title, InventoryClickHandler handler) {
     openMenus.put(p, this);
 
@@ -64,7 +76,7 @@ public class InventoryMenu implements Listener {
   public Inventory getInventory() {
     return inventory;
   }
-
+  
   @EventHandler(priority = EventPriority.MONITOR)
   public void onInventoryClose(InventoryCloseEvent event) {
     if (!event.getView().getTopInventory().equals(inventory))

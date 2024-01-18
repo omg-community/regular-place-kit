@@ -14,16 +14,51 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
+/**
+ * A class which contains utility methods for entities.
+ */
 public class EntityUtils {
 
+  /**
+   * Gets the display name of a {@link DamageCause}.
+   * 
+   * This will call {@link Utils#getDisplayNameFromInternalName(String)}
+   * on the name of the DamageCause.
+   * 
+   * @param cause The DamageCause
+   * @return The display name of the DamageCause
+   */
   public static String getDisplayName(DamageCause cause) {
     return Utils.getDisplayNameFromInternalName(cause.name());
   }
 
+  /**
+   * Gets the display name of an {@link EntityType}.
+   * 
+   * This will call {@link Utils#getDisplayNameFromInternalName(String)}
+   * on the name of the EntityType.
+   * 
+   * @param type The EntityType
+   * @return The display name of the EntityType
+   */
   public static String getDisplayName(EntityType type) {
     return Utils.getDisplayNameFromInternalName(type.name());
   }
 
+  /**
+   * Gets the display name component of an {@link Entity}.
+   * 
+   * If the provided entity is a Player, it will return the player's name
+   * from {@link PlayerUtils#getPlayerName(Player)}.
+   * 
+   * Otherwise, if the entity was named, it will return the custom name of the entity.
+   * 
+   * Otherwise, it will return the display name of the entity's EntityType.
+   * For pets, it will also include the owner's name.
+   * 
+   * @param entity The entity
+   * @return The display name component of the entity
+   */
   public static TextComponent getDisplayNameComponent(Entity entity) {
     // TODO: maybe not necessary if customName() is useable on Players
     if (entity instanceof Player) {
@@ -70,6 +105,18 @@ public class EntityUtils {
     return entityComponent;
   }
 
+  /**
+   * If the provided entity is a Player, it will return the player's name
+   * from {@link PlayerUtils#getPlayerName(Player)}.
+   * 
+   * Otherwise, if the entity was named, it will return the custom name of the entity.
+   * 
+   * Otherwise, it will return the display name of the entity's EntityType.
+   * For pets, it will also include the owner's name.
+   * 
+   * @param entity The entity
+   * @return The display name of the entity
+   */
   public static String getDisplayName(Entity entity) {
     return PlainTextComponentSerializer.plainText().serialize(
       getDisplayNameComponent(entity)

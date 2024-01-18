@@ -47,6 +47,14 @@ public class Utils {
   //   return buildStringFromArguments(args, 0);
   // }
 
+  /**
+   * Gets the display name of an internal name.
+   * 
+   * This performs general cleanups such as removing prefixes and updating capitalization.
+   * 
+   * @param internalName The internal name
+   * @return The display name
+   */
   public static String getDisplayNameFromInternalName(String internalName) {
     String replacementPhase = internalName
       .replaceAll("ENTITY_", "")
@@ -60,12 +68,30 @@ public class Utils {
     return touchupPhase;
   }
 
+  /**
+   * Plays a sound to all players.
+   * 
+   * @param sound The sound to play
+   * @param volume The volume of the sound
+   * @param pitch The pitch of the sound
+   * 
+   * @deprecated Use native Spigot methods instead.
+   */
   public static void playSoundToAll(String sound, float volume, float pitch) {
     for (Player p : Bukkit.getOnlinePlayers()) {
       p.playSound(p.getLocation(), sound, volume, pitch);
     }
   }
 
+  /**
+   * Centers items around a specific slot in an inventory.
+   * 
+   * If the number of items is even, the center slot will be skipped.
+   * 
+   * @param i The inventory
+   * @param itemStacks The items to center
+   * @param center The slot to center around
+   */
   public static void centerItemsInInventory(Inventory i, List<ItemStack> itemStacks, int center) {
     int current = (int) (center - Math.floor(itemStacks.size() / 2));
     boolean skipCenter = itemStacks.size() % 2 == 0;
@@ -76,6 +102,12 @@ public class Utils {
     }
   }
 
+  /**
+   * Creates a skull with a specific owner.
+   * 
+   * @param u The UUID of the owner
+   * @return The skull
+   */
   public static ItemStack createSkull(UUID u) {
     ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
     if (u == null) return skull;
@@ -86,6 +118,13 @@ public class Utils {
     return skull;
   }
 
+  /**
+   * Generates a random integer between a minimum and maximum value.
+   * 
+   * @param min The minimum value
+   * @param max The maximum value
+   * @return The random integer
+   */
   public static int randInt(int min, int max) {
     Random rand = new Random();
     return rand.nextInt((max - min) + 1) + min;
