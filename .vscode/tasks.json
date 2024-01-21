@@ -2,19 +2,13 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Set permissions for scripts",
-			"hide": true,
+			"label": "Script: Set permissions for scripts",
 			"type": "shell",
-			"command": "chmod +x ${workspaceFolder}/.vscode/scripts/*.sh",
-			"windows": {
-				"command": "echo Bill Gates"
-			},
+			"command": "/bin/bash -c \"chmod +x ${workspaceFolder}/.vscode/scripts/*.sh\" && echo Permissions set.",
 			"presentation": {
-				"reveal": "never",
 				"echo": false,
 				"showReuseMessage": false,
-				"close": true,
-				"revealProblems": "never"
+				"clear": true
 			},
 			"problemMatcher": []
 		},
@@ -34,15 +28,13 @@
 		{
 			"label": "Build and copy JAR to plugin directory",
 			"dependsOn": [
-				"Set permissions for scripts",
 				"Build regular-place-kit"
 			],
-			"dependsOrder": "sequence",
 			"type": "shell",
-			"command": "${workspaceFolder}/.vscode/scripts/copy.sh",
-			"windows": {
-				"command": "${workspaceFolder}/.vscode/scripts/copy.bat"
-			},
+			"command": "/bin/bash",
+			"args": [
+				"${workspaceFolder}/.vscode/scripts/copy.sh"
+			],
 			"options": {
 				"env": {
 					"ENV_FILE": "${workspaceFolder}/.env",
@@ -59,10 +51,10 @@
 		{
 			"label": "Start Paper server",
 			"type": "shell",
-			"command": "${workspaceFolder}/.vscode/scripts/launch.sh",
-			"windows": {
-				"command": "${workspaceFolder}/.vscode/scripts/launch.bat"
-			},
+			"command": "/bin/bash",
+			"args": [
+				"${workspaceFolder}/.vscode/scripts/launch.sh"
+			],
 			"isBackground": true,
 			"presentation": {
 				"echo": true,
