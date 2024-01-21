@@ -1,5 +1,4 @@
 #!/bin/bash
-# Unix-like
 
 # If there's an env file defined, load the environment variables from it
 if [ -f "$ENV_FILE" ]; then
