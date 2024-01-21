@@ -33,7 +33,7 @@
 			"type": "shell",
 			"command": "/bin/bash",
 			"args": [
-				"${workspaceFolder}/.vscode/scripts/copy.sh"
+				"${workspaceFolder}/.vscode/scripts/copy-build.sh"
 			],
 			"options": {
 				"env": {
@@ -53,7 +53,7 @@
 			"type": "shell",
 			"command": "/bin/bash",
 			"args": [
-				"${workspaceFolder}/.vscode/scripts/launch.sh"
+				"${workspaceFolder}/.vscode/scripts/start-server.sh"
 			],
 			"isBackground": true,
 			"presentation": {
