@@ -1,13 +1,24 @@
 {
 	"version": "2.0.0",
+	"presentation": {
+		"echo": false,
+		"showReuseMessage": false,
+		"clear": false
+	},
+	"options": {
+		"cwd": "${workspaceFolder}",
+		"env": {
+			"ENV_FILE": "${workspaceFolder}/.env",
+			"SERVER_DIRECTORY": "${workspaceFolder}/server",
+			"JAR_FILE": "${workspaceFolder}/target/regular-place-kit.jar"
+		}
+	},
 	"tasks": [
 		{
 			"label": "Script: Set permissions for scripts",
 			"type": "shell",
-			"command": "/bin/bash -c \"chmod +x ${workspaceFolder}/.vscode/scripts/*.sh\" && echo Permissions set.",
+			"command": "/bin/bash -c \"chmod +x ${workspaceFolder}/scripts/*.sh\" && echo Permissions set.",
 			"presentation": {
-				"echo": false,
-				"showReuseMessage": false,
 				"clear": true
 			},
 			"problemMatcher": []
@@ -33,15 +44,8 @@
 			"type": "shell",
 			"command": "/bin/bash",
 			"args": [
-				"${workspaceFolder}/.vscode/scripts/copy-build.sh"
+				"${workspaceFolder}/scripts/copy-build.sh"
 			],
-			"options": {
-				"env": {
-					"ENV_FILE": "${workspaceFolder}/.env",
-					"SERVER_DIRECTORY": "${workspaceFolder}/server",
-					"JAR_FILE": "${workspaceFolder}/target/regular-place-kit.jar"
-				}
-			},
 			"group": {
 				"kind": "build",
 				"isDefault": true
@@ -53,7 +57,7 @@
 			"type": "shell",
 			"command": "/bin/bash",
 			"args": [
-				"${workspaceFolder}/.vscode/scripts/start-server.sh"
+				"${workspaceFolder}/scripts/start-server.sh"
 			],
 			"isBackground": true,
 			"presentation": {
@@ -66,12 +70,6 @@
 			},
 			"group": {
 				"kind": "test"
-			},
-			"options": {
-				"env": {
-					"ENV_FILE": "${workspaceFolder}/.env",
-					"SERVER_DIRECTORY": "${workspaceFolder}/server"
-				}
 			},
 			"problemMatcher": {
 				"owner": "java",
@@ -112,6 +110,66 @@
 				"reveal": "silent"
 			},
 			"hide": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Script: Update Minecraft version",
+			"hide": true,
+			"type": "shell",
+			"command": "/bin/bash",
+			"args": [
+				"${workspaceFolder}/scripts/update-version.sh"
+			],
+			"presentation": {
+				"echo": false,
+				"showReuseMessage": false
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Script: Update Minecraft patch",
+			"hide": true,
+			"type": "shell",
+			"command": "/bin/bash",
+			"args": [
+				"${workspaceFolder}/scripts/update-patch.sh"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "Project: Update Paper build",
+			"type": "shell",
+			"command": "/bin/bash",
+			"args": [
+				"${workspaceFolder}/scripts/update-build.sh"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "Project: Update Minecraft version",
+			"dependsOn": [
+				"Script: Update Minecraft version",
+				"Project: Update Paper build",
+			],
+			"dependsOrder": "sequence",
+			"problemMatcher": []
+		},
+		{
+			"label": "Project: Update Minecraft patch",
+			"dependsOn": [
+				"Script: Update Minecraft patch",
+				"Project: Update Paper build",
+			],
+			"dependsOrder": "sequence",
+			"problemMatcher": []
+		},
+		{
+			"label": "Replace Paper server JAR with correct build",
+			"type": "shell",
+			"command": "/bin/bash",
+			"args": [
+				"${workspaceFolder}/scripts/replace-server-jar.sh"
+			],
 			"problemMatcher": []
 		}
 	],
