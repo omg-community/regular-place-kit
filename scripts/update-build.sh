@@ -17,5 +17,11 @@ if [ -z "$BUILD" ]; then
 fi
 
 # Replace PAPER_BUILD in project.properties with the build
-sed -i '' "s/^PAPER_BUILD=.*/PAPER_BUILD=$BUILD/" project.properties
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # macOS
+  sed -i '' "s/^PAPER_BUILD=.*/PAPER_BUILD=$BUILD/" project.properties
+else
+  # Linux
+  sed -i "s/^PAPER_BUILD=.*/PAPER_BUILD=$BUILD/" project.properties
+fi
 echo "Updated PAPER_BUILD to $BUILD in project.properties"

@@ -14,5 +14,11 @@ if [ -z "$VERSION" ]; then
 fi
 
 # Replace MINECRAFT_VERSION in project.properties with the retrieved version
-sed -i "s/^MINECRAFT_VERSION=.*/MINECRAFT_VERSION=$VERSION/" project.properties
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  # macOS
+  sed -i '' "s/^MINECRAFT_VERSION=.*/MINECRAFT_VERSION=$VERSION/" project.properties
+else
+  # Linux
+  sed -i "s/^MINECRAFT_VERSION=.*/MINECRAFT_VERSION=$VERSION/" project.properties
+fi
 echo "Updated project.properties MINECRAFT_VERSION to $VERSION."
