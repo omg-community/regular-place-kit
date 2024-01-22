@@ -137,6 +137,15 @@
 			"problemMatcher": []
 		},
 		{
+			"label": "Script: Update pom to match project properties",
+			"type": "shell",
+			"command": "/bin/bash",
+			"args": [
+				"${workspaceFolder}/scripts/update-pom.sh"
+			],
+			"problemMatcher": []
+		},
+		{
 			"label": "Project: Update Paper build",
 			"type": "shell",
 			"command": "/bin/bash",
@@ -150,6 +159,7 @@
 			"dependsOn": [
 				"Script: Update Minecraft version",
 				"Project: Update Paper build",
+				"Script: Update pom to match project properties"
 			],
 			"dependsOrder": "sequence",
 			"problemMatcher": []
@@ -159,6 +169,7 @@
 			"dependsOn": [
 				"Script: Update Minecraft patch",
 				"Project: Update Paper build",
+				"Script: Update pom to match project properties"
 			],
 			"dependsOrder": "sequence",
 			"problemMatcher": []
