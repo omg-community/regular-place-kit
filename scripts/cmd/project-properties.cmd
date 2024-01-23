@@ -1,8 +1,5 @@
 @echo off
 
-REM Exit script immediately on first error.
-set errorlevel=0
-
 REM Extracting MINECRAFT_VERSION and PAPER_BUILD from project.properties
 for /f "tokens=1,* delims==" %%a in ('findstr "^MINECRAFT_VERSION=" project.properties') do set MINECRAFT_VERSION=%%b
 for /f "tokens=1,* delims==" %%a in ('findstr "^PAPER_BUILD=" project.properties') do set PAPER_BUILD=%%b

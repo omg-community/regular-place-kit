@@ -1,11 +1,8 @@
 @echo off
-setlocal EnableDelayedExpansion
 
-REM Exit script immediately on first error.
-set errorlevel=0
-
+REM Call get-env.cmd and check if it was successful
 call .\scripts\cmd\get-env.cmd
-if %errorlevel% neq 0 exit /b %errorlevel%
+if ERRORLEVEL 1 exit /b 1
 
 REM Make sure a JAR file is specified
 if not exist "%JAR_FILE%" (

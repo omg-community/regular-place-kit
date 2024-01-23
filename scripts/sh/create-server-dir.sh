@@ -18,12 +18,11 @@ if [ ! -d "$SERVER_DIRECTORY" ]; then
   echo # Move to a new line
 
   # If the user says yes, create the directory
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
-    echo "Creating the directory.."
-    mkdir -p "$SERVER_DIRECTORY"
-    echo "Created the Minecraft server directory. Proceeding.."
-  else
+  if [[ $REPLY =~ ^[Nn]$ ]]; then
     echo "Please create the directory and try again."
     exit 1
+  else
+    mkdir -p "$SERVER_DIRECTORY"
+    echo "Created the Minecraft server directory. Proceeding.."
   fi
 fi

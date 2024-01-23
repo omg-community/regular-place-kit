@@ -1,12 +1,8 @@
 @echo off
-setlocal enabledelayedexpansion
 
-REM Exit script immediately on first error.
-set errorlevel=0
-
-set POM_FILE=.\pom.xml
-set README_FILE=.\README.md
-set GUIDE_FILE=.\guides\Beginners.md
+set POM_FILE=./pom.xml
+set README_FILE=./README.md
+set GUIDE_FILE=./guides/Beginners.md
 
 REM Check if the pom.xml file exists
 if not exist "%POM_FILE%" (
@@ -28,10 +24,9 @@ if not exist "%GUIDE_FILE%" (
 
 REM Get the project properties
 call .\scripts\cmd\project-properties.cmd
-if %errorlevel% neq 0 exit /b %errorlevel%
 
 REM Update the paper-api version in pom.xml
-powershell -command "(Get-Content '%POM_FILE%') -replace '<artifactId>paper-api<\/artifactId>(.*?)<version>.*<\/version>', '<artifactId>paper-api<\/artifactId>`n<version>%MINECRAFT_VERSION%-R0.1-SNAPSHOT<\/version>' | Set-Content '%POM_FILE%'"
+powershell -command "(Get-Content '%POM_FILE%') -replace '<artifactId>paper-api<\/artifactId>.*?<version>.*?<\/version>', '<artifactId>paper-api<\/artifactId>`n<version>%MINECRAFT_VERSION%-R0.1-SNAPSHOT<\/version>' | Set-Content '%POM_FILE%'"
 echo Updated paper-api version to %MINECRAFT_VERSION%-R0.1-SNAPSHOT in pom.xml
 
 REM Update the .md files
