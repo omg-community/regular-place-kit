@@ -17,7 +17,7 @@
 		{
 			"label": "Script: Set permissions for scripts",
 			"type": "shell",
-			"command": "/bin/bash -c \"chmod +x ${workspaceFolder}/scripts/*.sh\" && echo Permissions set.",
+			"command": "chmod +x ${workspaceFolder}/scripts/sh/*.sh && echo Permissions set.",
 			"presentation": {
 				"clear": true
 			},
@@ -42,10 +42,10 @@
 				"Build regular-place-kit"
 			],
 			"type": "shell",
-			"command": "/bin/bash",
-			"args": [
-				"${workspaceFolder}/scripts/copy-build.sh"
-			],
+			"command": "${workspaceFolder}/scripts/sh/copy-build.sh",
+			"windows": {
+				"command": "${workspaceFolder}/scripts/cmd/copy-build.cmd"
+			},
 			"group": {
 				"kind": "build",
 				"isDefault": true
@@ -55,10 +55,10 @@
 		{
 			"label": "Start Paper server",
 			"type": "shell",
-			"command": "/bin/bash",
-			"args": [
-				"${workspaceFolder}/scripts/start-server.sh"
-			],
+			"command": "${workspaceFolder}/scripts/sh/start-server.sh",
+			"windows": {
+				"command": "${workspaceFolder}/scripts/cmd/start-server.cmd"
+			},
 			"isBackground": true,
 			"presentation": {
 				"echo": true,
@@ -116,10 +116,10 @@
 			"label": "Script: Update Minecraft version",
 			"hide": true,
 			"type": "shell",
-			"command": "/bin/bash",
-			"args": [
-				"${workspaceFolder}/scripts/update-version.sh"
-			],
+			"command": "${workspaceFolder}/scripts/sh/update-version.sh",
+			"windows": {
+				"command": "${workspaceFolder}/scripts/cmd/update-version.cmd"
+			},
 			"presentation": {
 				"echo": false,
 				"showReuseMessage": false
@@ -130,28 +130,28 @@
 			"label": "Script: Update Minecraft patch",
 			"hide": true,
 			"type": "shell",
-			"command": "/bin/bash",
-			"args": [
-				"${workspaceFolder}/scripts/update-patch.sh"
-			],
+			"command": "${workspaceFolder}/scripts/sh/update-patch.sh",
+			"windows": {
+				"command": "${workspaceFolder}/scripts/cmd/update-patch.cmd"
+			},
 			"problemMatcher": []
 		},
 		{
 			"label": "Script: Update pom/README to match project properties",
 			"type": "shell",
-			"command": "/bin/bash",
-			"args": [
-				"${workspaceFolder}/scripts/update-pom.sh"
-			],
+			"command": "${workspaceFolder}/scripts/sh/update-pom.sh",
+			"windows": {
+				"command": "${workspaceFolder}/scripts/cmd/update-pom.cmd"
+			},
 			"problemMatcher": []
 		},
 		{
 			"label": "Project: Update Paper build",
 			"type": "shell",
-			"command": "/bin/bash",
-			"args": [
-				"${workspaceFolder}/scripts/update-build.sh"
-			],
+			"command": "${workspaceFolder}/scripts/sh/update-build.sh",
+			"windows": {
+				"command": "${workspaceFolder}/scripts/cmd/update-build.cmd"
+			},
 			"problemMatcher": []
 		},
 		{
@@ -177,10 +177,10 @@
 		{
 			"label": "Replace Paper server JAR with correct build",
 			"type": "shell",
-			"command": "/bin/bash",
-			"args": [
-				"${workspaceFolder}/scripts/replace-server-jar.sh"
-			],
+			"command": "${workspaceFolder}/scripts/sh/replace-server-jar.sh",
+			"windows": {
+				"command": "${workspaceFolder}/scripts/cmd/replace-server-jar.cmd"
+			},
 			"problemMatcher": []
 		}
 	],

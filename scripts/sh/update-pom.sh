@@ -25,7 +25,7 @@ if [ ! -f "$GUIDE_FILE" ]; then
 fi
 
 # Get the project properties
-source ./scripts/project-properties.sh
+source ./scripts/cmd/project-properties.sh
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   # macOS
