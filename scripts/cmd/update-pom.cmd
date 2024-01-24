@@ -26,7 +26,7 @@ REM Get the project properties
 call .\scripts\cmd\project-properties.cmd
 
 REM Update the paper-api version in pom.xml
-powershell -command "(Get-Content '%POM_FILE%') -replace '<artifactId>paper-api<\/artifactId>.*?<version>.*?<\/version>', '<artifactId>paper-api<\/artifactId>`n<version>%MINECRAFT_VERSION%-R0.1-SNAPSHOT<\/version>' | Set-Content '%POM_FILE%'"
+powershell -command "$xml = [xml](Get-Content '%POM_FILE%'); $xml.project.dependencies.dependency | where { $_.artifactId -eq 'paper-api' } | ForEach-Object { $_.version = '%MINECRAFT_VERSION%-R0.1-SNAPSHOT' }; $xml.Save('%POM_FILE%')"
 echo Updated paper-api version to %MINECRAFT_VERSION%-R0.1-SNAPSHOT in pom.xml
 
 REM Update the .md files

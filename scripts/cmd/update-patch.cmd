@@ -12,11 +12,8 @@ if "%VERSION_GROUP%"=="" (
   exit /b 1
 )
 
-REM Fetch the JSON data from the PaperMC API using PowerShell
-for /f %%i in ('powershell -command "(Invoke-WebRequest -Uri 'https://api.papermc.io/v2/projects/paper/version_group/%VERSION_GROUP%').Content"') do set API_RESPONSE=%%i
-
-REM Parse the JSON to get the version using PowerShell
-for /f %%a in ('powershell -command "$obj = ConvertFrom-Json '%API_RESPONSE%'; $obj.versions[-1]"') do set VERSION=%%a
+REM Fetch the JSON data and parse it to get the version using PowerShell
+for /f %%a in ('powershell -command "try { $response = Invoke-WebRequest -Uri 'https://api.papermc.io/v2/projects/paper/version_group/%VERSION_GROUP%'; $obj = ConvertFrom-Json $response.Content; $obj.versions[-1] } catch { '' }"') do set VERSION=%%a
 
 REM Check if the version was successfully retrieved
 if "%VERSION%"=="" (
