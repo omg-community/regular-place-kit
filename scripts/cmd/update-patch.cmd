@@ -4,7 +4,7 @@ REM Extract the current MINECRAFT_VERSION from project.properties
 for /f "tokens=1,* delims==" %%a in ('findstr "^MINECRAFT_VERSION=" project.properties') do set PREVIOUS_VERSION=%%b
 
 REM Extract version group (major.minor) using PowerShell
-for /f %%i in ('echo %PREVIOUS_VERSION% ^| powershell -command "$input -match '^[0-9]+\.[0-9]+'; $matches[0]"') do set VERSION_GROUP=%%i
+for /f "tokens=1,2 delims=." %%a in ("%PREVIOUS_VERSION%") do set VERSION_GROUP=%%a.%%b
 
 REM Check if version group was successfully extracted
 if "%VERSION_GROUP%"=="" (

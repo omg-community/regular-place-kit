@@ -27,25 +27,27 @@ REM Check that the server directory has a paper*.jar
 set PAPER_JAR_FOUND=0
 for %%F in ("%SERVER_DIRECTORY%\paper*.jar") do if exist "%%F" set PAPER_JAR_FOUND=1
 
-if "%PAPER_JAR_FOUND%"=="0" (
-  set DOWNLOAD=0
+if "%PAPER_JAR_FOUND%"=="0" goto no_paper_jar
+goto end
 
-  if "%AUTO_DOWNLOAD%"=="1" (
-    set DOWNLOAD=1
-  ) else (
-    echo No Paper JAR found in %SERVER_DIRECTORY%.
-    set /p USER_INPUT="Would you like to download it (Minecraft %MINECRAFT_VERSION%, build %PAPER_BUILD%)? [Y/n] "
-    
-    if /i "%USER_INPUT%"=="Y" set DOWNLOAD=1
-    if /i "%USER_INPUT%"=="" set DOWNLOAD=1
-  )
+:no_paper_jar
+if "%AUTO_DOWNLOAD%"=="1" goto download_paper_jar
 
-  if "%DOWNLOAD%"=="1" (
-    echo Downloading the Paper JAR..
-    powershell -command "Invoke-WebRequest -Uri 'https://papermc.io/api/v2/projects/paper/versions/%MINECRAFT_VERSION%/builds/%PAPER_BUILD%/downloads/%SERVER_JAR_NAME%' -OutFile '%SERVER_DIRECTORY%\%SERVER_JAR_NAME%'"
-    echo Downloaded the Paper JAR. Proceeding..
-  ) else (
-    echo Please download the Paper JAR and try again.
-    exit /b 1
-  )
-)
+echo No Paper JAR found in %SERVER_DIRECTORY%.
+set /p USER_INPUT="Would you like to download it (Minecraft %MINECRAFT_VERSION%, build %PAPER_BUILD%)? [Y/n] "
+
+if /i "%USER_INPUT%"=="Y" goto download_paper_jar
+if /i "%USER_INPUT%"=="" goto download_paper_jar
+goto no_download
+
+:no_download
+echo Please download the Paper JAR and try again.
+exit /b 1
+
+:download_paper_jar
+echo Downloading the Paper JAR..
+powershell -command "Invoke-WebRequest -Uri 'https://papermc.io/api/v2/projects/paper/versions/%MINECRAFT_VERSION%/builds/%PAPER_BUILD%/downloads/%SERVER_JAR_NAME%' -OutFile '%SERVER_DIRECTORY%\%SERVER_JAR_NAME%'"
+echo Downloaded the Paper JAR. Proceeding..
+goto end
+
+:end

@@ -13,6 +13,15 @@
 			"JAR_FILE": "${workspaceFolder}/target/regular-place-kit.jar"
 		}
 	},
+	"windows": {
+		"options": {
+			"env": {
+				"ENV_FILE": "${workspaceFolder}\\.env",
+				"SERVER_DIRECTORY": "${workspaceFolder}\\server",
+				"JAR_FILE": "${workspaceFolder}\\target\\regular-place-kit.jar"
+			}
+		}
+	},
 	"tasks": [
 		{
 			"label": "Script: Set permissions for scripts",
