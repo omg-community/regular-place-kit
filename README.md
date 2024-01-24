@@ -1,4 +1,4 @@
-# regular-place-kit
+# regular-place-kit (MC <!--mcversion-->1.20.2<!--mcversion-->)
 
 regular.place kit is meant to be a shared codebase/API for both the survival and creative servers.
 
@@ -27,13 +27,11 @@ Once you've opened the repository, install any recommended extensions when promp
 
 ## Set up a local Minecraft server for testing
 
-Our plugin runs using Paper, which is a mod of Minecraft's vanilla server. More specifically, it's a high-performance fork of Bukkit and Spigot. It provides additional optimizations and features that enhance server performance and gameplay experience.
+Our plugin runs using Paper, which is a mod of Minecraft's vanilla server. More specifically, it's a high-performance fork of Bukkit and Spigot. It provides additional optimizations and features that enhance server performance and gameplay experience. If you don't need to test the plugin, you can skip this section.
 
-If you don't need to test the plugin, you can skip this section. Otherwise, download a Paper server JAR file for the current version of our plugin and server, **Minecraft <!--mcversion-->1.20.2<!--mcversion-->**, from the [PaperMC website](https://papermc.io/downloads/all).
+The easiest way to set up a Paper server is to use the VSCode tooling provided by our project. Open the Command Palette and run `Tasks: Run Task`. Then search for `Start Paper server`. This will help create a Paper server for you which will be stored in the project directory under `./server`. This command runs the server without any debugging and won't automatically build the plugin.
 
-The easiest way to create a development server is to create a `server` directory within the repository. Take your downloaded Paper server JAR file place it within that directory. And, you're done!
-
-You can now debug the server using `Run and Debug` from the sidebar, or better, use the Command Palette to run `Debug: Start Debugging`.
+To debug the server, which allows for Hot Code Replacement, you can run the server using `Run and Debug` from the sidebar, or better, use the Command Palette to run `Debug: Start Debugging`.
 
 For more flexibility, you have the option to create a `.env` file in the project directory to change the server path (instead of using the project directory), or modify the arguments of the Paper server, like so:
 
@@ -43,6 +41,10 @@ SERVER_ARGS="-Xmx3G -Xms3G"
 ```
 
 If you don't specify server arguments, it will automatically choose `-Xmx1024M -Xms512M`. This will allocate 1024 MB of RAM to your server at maximum, and 512 MB at minimum.
+
+The best way to apply new patches of Minecraft, update to the latest version of Minecraft, or to update Paper to the latest build is by opening the Command Palette, and running any of the `Project: Update..` tasks.
+
+You can also manually modify the `project.properties` file. Change it from Minecraft <!--mcversion-->1.20.2<!--mcversion--> or change the Paper build to whatever you need. Then, run `Replace Paper server JAR with correct build`.
 
 ### More tips
 
