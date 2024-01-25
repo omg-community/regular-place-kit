@@ -1,0 +1,26 @@
+name: Check for version mismatch
+
+on: [push, pull_request]
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Compare MC version with POM file
+      run: |
+        # Extract Minecraft version from project.properties
+        MINECRAFT_VERSION=$(grep "^MINECRAFT_VERSION=" project.properties | cut -d'=' -f2)
+
+        # Extract paper-api version from pom.xml
+        PAPER_API_VERSION=$(grep -A1 "<artifactId>paper-api</artifactId>" pom.xml | grep "<version>" | cut -d'>' -f2 | cut -d'<' -f1)
+
+        if [ "${MINECRAFT_VERSION}-R0.1-SNAPSHOT" = "$PAPER_API_VERSION" ]; then
+          echo "Versions match."
+        else
+          echo "Versions do not match."
+          exit 1
+        fi
