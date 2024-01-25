@@ -16,11 +16,21 @@ public class CombatTracker {
   protected static Map<Entity, Combat> combatMap = new HashMap<>();
 
   protected static void engageEntityInCombat(Entity entity, Entity otherEntity) {
+    Combat combat = combatMap.get(entity);
+    
+    if (combat == null) {
+      combat = new Combat(entity);
+      combatMap.put(entity, combat);
+    }
 
+    combat.addCombatant(otherEntity);
   }
 
   public static boolean isInCombat(Entity entity) {
-    // TODO
-    return false;
+    return combatMap.containsKey(entity);
+  }
+
+  public static Combat getCombat(Entity entity) {
+    return combatMap.get(entity);
   }
 }

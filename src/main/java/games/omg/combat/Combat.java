@@ -1,14 +1,25 @@
 package games.omg.combat;
 
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Server.Spigot;
 import org.bukkit.entity.Entity;
 
 import games.omg.combat.combatants.Combatant;
 
 public class Combat {
+
+  private static HashMap<Entity, Combat> combatMap = new HashMap<>();
+
+  public static Combat get(Entity entity) {
+    return combatMap.get(entity);
+  }
+
+  //
+
   private Entity entity;
 
   // TODO: certain types of non-entity causes
@@ -27,21 +38,23 @@ public class Combat {
 
   public Combat(Entity entity) {
     this.entity = entity;
+
+    combatMap.put(entity, this);
   }
 
-  public Combat(Entity entity, List<Combatant> combatants) {
-    this(entity);
+  // public Combat(Entity entity, List<Combatant> combatants) {
+  //   this(entity);
 
-    this.currentCombatants.addAll(combatants);
-    this.allCombatants.addAll(combatants);
-  }
+  //   this.currentCombatants.addAll(combatants);
+  //   this.allCombatants.addAll(combatants);
+  // }
 
-  public Combat(Entity entity, Combatant combatant) {
-    this(entity);
+  // public Combat(Entity entity, Combatant combatant) {
+  //   this(entity);
 
-    this.currentCombatants.add(combatant);
-    this.allCombatants.add(combatant);
-  }
+  //   this.currentCombatants.add(combatant);
+  //   this.allCombatants.add(combatant);
+  // }
 
   //
 
@@ -77,6 +90,10 @@ public class Combat {
   public void addCombatant(Combatant combatant) {
     currentCombatants.add(combatant);
     allCombatants.add(combatant);
+  }
+
+  public void addCombatant(Entity entity) {
+    addCombatant(Combatant.from(entity));
   }
 
   public void removeCombatant(Combatant combatant) {
