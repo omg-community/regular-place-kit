@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e # Exit script immediately on first error.
 
-source ./scripts/cmd/get-env.sh
+source ./scripts/sh/get-env.sh
 
 # Make sure SERVER_DIRECTORY is set
 if [ -z "$SERVER_DIRECTORY" ]; then

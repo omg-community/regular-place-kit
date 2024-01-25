@@ -2,10 +2,10 @@
 set -e # Exit script immediately on first error.
 
 # Create the server directory if it doesn't exist
-./scripts/cmd/create-server-dir.sh
+./scripts/sh/create-server-dir.sh
 
 # Enforce that the server directory has a Paper JAR
-./scripts/cmd/enforce-server-jar.sh
+./scripts/sh/enforce-server-jar.sh
 
 # Check if SERVER_ARGS is set, otherwise set it to "-Xmx1024M -Xms512M"
 if [ -z "$SERVER_ARGS" ]; then

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e # Exit script immediately on first error.
 
-source ./scripts/cmd/get-env.sh
+source ./scripts/sh/get-env.sh
 
 # Make sure a JAR file is specified
 if [ ! -f "$JAR_FILE" ]; then
