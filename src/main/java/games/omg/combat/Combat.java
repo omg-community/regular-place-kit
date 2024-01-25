@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Server.Spigot;
 import org.bukkit.entity.Entity;
 
 import games.omg.combat.combatants.Combatant;
@@ -33,8 +32,8 @@ public class Combat {
   private Set<Combatant> currentCombatants = new HashSet<>();
   private Set<Combatant> allCombatants = new HashSet<>();
 
-  private long startTime = System.currentTimeMillis();
-  private long endTime = 0;
+  private int startTick = Bukkit.getCurrentTick();
+  private int endTick = 0;
 
   public Combat(Entity entity) {
     this.entity = entity;
@@ -70,19 +69,23 @@ public class Combat {
     return allCombatants;
   }
 
-  public long getStartTime() {
-    return startTime;
+  public int getStartTick() {
+    return startTick;
+  }
+
+  public int getEndTick() {
+    return endTick;
   }
 
   public boolean hasEnded() {
-    return endTime != 0;
+    return endTick != 0;
   }
 
-  public long getDuration() {
+  public int getDuration() {
     if (hasEnded()) {
-      return endTime - startTime;
+      return endTick - startTick;
     }
-    return System.currentTimeMillis() - startTime;
+    return Bukkit.getCurrentTick() - startTick;
   }
 
   //
