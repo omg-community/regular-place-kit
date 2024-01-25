@@ -1,20 +1,34 @@
 {
 	"version": "2.0.0",
+	"presentation": {
+		"echo": false,
+		"showReuseMessage": false,
+		"clear": false
+	},
+	"options": {
+		"cwd": "${workspaceFolder}",
+		"env": {
+			"ENV_FILE": "${workspaceFolder}/.env",
+			"SERVER_DIRECTORY": "${workspaceFolder}/server",
+			"JAR_FILE": "${workspaceFolder}/target/regular-place-kit.jar"
+		}
+	},
+	"windows": {
+		"options": {
+			"env": {
+				"ENV_FILE": "${workspaceFolder}\\.env",
+				"SERVER_DIRECTORY": "${workspaceFolder}\\server",
+				"JAR_FILE": "${workspaceFolder}\\target\\regular-place-kit.jar"
+			}
+		}
+	},
 	"tasks": [
 		{
-			"label": "Set permissions for scripts",
-			"hide": true,
+			"label": "Script: Set permissions for scripts",
 			"type": "shell",
-			"command": "chmod +x ${workspaceFolder}/.vscode/scripts/*.sh",
-			"windows": {
-				"command": "echo Bill Gates"
-			},
+			"command": "chmod +x ${workspaceFolder}/scripts/sh/*.sh && echo Permissions set.",
 			"presentation": {
-				"reveal": "never",
-				"echo": false,
-				"showReuseMessage": false,
-				"close": true,
-				"revealProblems": "never"
+				"clear": true
 			},
 			"problemMatcher": []
 		},
@@ -34,21 +48,12 @@
 		{
 			"label": "Build and copy JAR to plugin directory",
 			"dependsOn": [
-				"Set permissions for scripts",
 				"Build regular-place-kit"
 			],
-			"dependsOrder": "sequence",
 			"type": "shell",
-			"command": "${workspaceFolder}/.vscode/scripts/copy.sh",
+			"command": "${workspaceFolder}/scripts/sh/copy-build.sh",
 			"windows": {
-				"command": "${workspaceFolder}/.vscode/scripts/copy.bat"
-			},
-			"options": {
-				"env": {
-					"ENV_FILE": "${workspaceFolder}/.env",
-					"SERVER_DIRECTORY": "${workspaceFolder}/server",
-					"JAR_FILE": "${workspaceFolder}/target/regular-place-kit.jar"
-				}
+				"command": "${workspaceFolder}/scripts/cmd/copy-build.cmd"
 			},
 			"group": {
 				"kind": "build",
@@ -59,9 +64,9 @@
 		{
 			"label": "Start Paper server",
 			"type": "shell",
-			"command": "${workspaceFolder}/.vscode/scripts/launch.sh",
+			"command": "${workspaceFolder}/scripts/sh/start-server.sh",
 			"windows": {
-				"command": "${workspaceFolder}/.vscode/scripts/launch.bat"
+				"command": "${workspaceFolder}/scripts/cmd/start-server.cmd"
 			},
 			"isBackground": true,
 			"presentation": {
@@ -74,12 +79,6 @@
 			},
 			"group": {
 				"kind": "test"
-			},
-			"options": {
-				"env": {
-					"ENV_FILE": "${workspaceFolder}/.env",
-					"SERVER_DIRECTORY": "${workspaceFolder}/server"
-				}
 			},
 			"problemMatcher": {
 				"owner": "java",
@@ -120,6 +119,77 @@
 				"reveal": "silent"
 			},
 			"hide": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Script: Update Minecraft version",
+			"hide": true,
+			"type": "shell",
+			"command": "${workspaceFolder}/scripts/sh/update-version.sh",
+			"windows": {
+				"command": "${workspaceFolder}/scripts/cmd/update-version.cmd"
+			},
+			"presentation": {
+				"echo": false,
+				"showReuseMessage": false
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Script: Update Minecraft patch",
+			"hide": true,
+			"type": "shell",
+			"command": "${workspaceFolder}/scripts/sh/update-patch.sh",
+			"windows": {
+				"command": "${workspaceFolder}/scripts/cmd/update-patch.cmd"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Script: Update pom/README to match project properties",
+			"type": "shell",
+			"command": "${workspaceFolder}/scripts/sh/update-pom.sh",
+			"windows": {
+				"command": "${workspaceFolder}/scripts/cmd/update-pom.cmd"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Project: Update Paper build",
+			"type": "shell",
+			"command": "${workspaceFolder}/scripts/sh/update-build.sh",
+			"windows": {
+				"command": "${workspaceFolder}/scripts/cmd/update-build.cmd"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Project: Update Minecraft version",
+			"dependsOn": [
+				"Script: Update Minecraft version",
+				"Project: Update Paper build",
+				"Script: Update pom/README to match project properties"
+			],
+			"dependsOrder": "sequence",
+			"problemMatcher": []
+		},
+		{
+			"label": "Project: Update Minecraft patch",
+			"dependsOn": [
+				"Script: Update Minecraft patch",
+				"Project: Update Paper build",
+				"Script: Update pom/README to match project properties"
+			],
+			"dependsOrder": "sequence",
+			"problemMatcher": []
+		},
+		{
+			"label": "Replace Paper server JAR with correct build",
+			"type": "shell",
+			"command": "${workspaceFolder}/scripts/sh/replace-server-jar.sh",
+			"windows": {
+				"command": "${workspaceFolder}/scripts/cmd/replace-server-jar.cmd"
+			},
 			"problemMatcher": []
 		}
 	],
