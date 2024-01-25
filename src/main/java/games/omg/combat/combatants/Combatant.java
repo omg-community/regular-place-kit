@@ -23,11 +23,11 @@ public abstract class Combatant {
 
   //
 
-  static Combatant from(String name) {
+  public static Combatant from(String name) {
     return new DamageCombatant(name);
   }
 
-  static Combatant from(Entity entity) {
+  public static Combatant from(Entity entity) {
     return new EntityCombatant(entity);
   }
 }
