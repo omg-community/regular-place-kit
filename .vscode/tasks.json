@@ -75,7 +75,8 @@
 				"focus": true,
 				"panel": "shared",
 				"showReuseMessage": true,
-				"clear": false
+				"clear": false,
+				"group": "server"
 			},
 			"group": {
 				"kind": "test"
@@ -189,6 +190,20 @@
 			"command": "${workspaceFolder}/scripts/sh/replace-server-jar.sh",
 			"windows": {
 				"command": "${workspaceFolder}/scripts/cmd/replace-server-jar.cmd"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Create ngrok tunnel",
+			"type": "shell",
+			"command": "ngrok tcp 25565",
+			"presentation": {
+				"reveal": "always",
+				"focus": true,
+				"panel": "dedicated",
+				"clear": true,
+				"close": true,
+				"group": "server"
 			},
 			"problemMatcher": []
 		}
