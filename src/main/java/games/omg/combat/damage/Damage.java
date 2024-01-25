@@ -1,4 +1,4 @@
-package games.omg.listeners.damage;
+package games.omg.combat.damage;
 
 import org.bukkit.entity.Damageable;
 import org.bukkit.entity.Entity;

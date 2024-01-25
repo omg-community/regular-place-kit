@@ -17,11 +17,11 @@ for arg in "$@"; do
 done
 
 # Create the server directory if it doesn't exist
-./scripts/cmd/create-server-dir.sh
+./scripts/sh/create-server-dir.sh
 
 # Get the environment variables and project properties
-source ./scripts/cmd/get-env.sh
-source ./scripts/cmd/project-properties.sh
+source ./scripts/sh/get-env.sh
+source ./scripts/sh/project-properties.sh
 
 # Check that the server directory has a paper*.jar
 if [ ! -f "$SERVER_DIRECTORY"/paper*.jar ]; then

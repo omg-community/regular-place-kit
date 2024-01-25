@@ -2,11 +2,11 @@
 set -e # Exit script immediately on first error.
 
 # Create the server directory if it doesn't exist
-./scripts/cmd/create-server-dir.sh
+./scripts/sh/create-server-dir.sh
 
 # Get the environment variables and project properties
-source ./scripts/cmd/get-env.sh
-source ./scripts/cmd/project-properties.sh
+source ./scripts/sh/get-env.sh
+source ./scripts/sh/project-properties.sh
 
 # Check if the server directory has a $SERVER_JAR_NAME file
 if [ ! -f "$SERVER_DIRECTORY/$SERVER_JAR_NAME" ]; then
@@ -18,7 +18,7 @@ if [ ! -f "$SERVER_DIRECTORY/$SERVER_JAR_NAME" ]; then
   fi
 
   # Download the Paper JAR without asking for confirmation
-  ./scripts/cmd/enforce-server-jar.sh --force
+  ./scripts/sh/enforce-server-jar.sh --force
   echo "Done!"
 else
   echo "Server directory already running the proper build of Paper. No need to replace it!"
