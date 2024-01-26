@@ -28,15 +28,19 @@ public class StringUtils {
    * @param items The list of strings
    * @return The grammatical list
    * 
-   * @deprecated This may not be useful anymore. You may simply want to use a JoinConfiguration.
+   * @deprecated This may not be useful anymore. You may simply want to use a
+   *             JoinConfiguration.
    */
   public static String createGrammaticalList(List<String> items) {
     int listSize = items.size();
 
-    if (listSize == 0) return "";
-    if (listSize == 1) return items.get(0);
-    if (listSize == 2) return items.get(0) + " and " + items.get(1);
-    
+    if (listSize == 0)
+      return "";
+    if (listSize == 1)
+      return items.get(0);
+    if (listSize == 2)
+      return items.get(0) + " and " + items.get(1);
+
     StringBuilder builder = new StringBuilder(items.get(0));
     for (int i = 1; i < listSize; i++) {
       builder.append(i == listSize - 1 ? ", and" : ", ");
@@ -49,18 +53,21 @@ public class StringUtils {
   /**
    * Separates a list of strings with a separator.
    * 
-   * @param items The list of strings
+   * @param items     The list of strings
    * @param separator The separator
    * @return The separated list
    * 
-   * @deprecated This may not be useful anymore. You may simply want to use a JoinConfiguration.
+   * @deprecated This may not be useful anymore. You may simply want to use a
+   *             JoinConfiguration.
    */
   public static String separateListWith(List<String> items, String separator) {
     int listSize = items.size();
 
-    if (listSize == 0) return "";
-    if (listSize == 1) return items.get(0);
-    
+    if (listSize == 0)
+      return "";
+    if (listSize == 1)
+      return items.get(0);
+
     StringBuilder builder = new StringBuilder(items.get(0));
     for (int i = 1; i < listSize; i++) {
       builder.append(separator);
@@ -69,7 +76,7 @@ public class StringUtils {
 
     return builder.toString();
   }
-  
+
   /**
    * Formats a number by adding commas for place separation.
    * 
@@ -91,7 +98,8 @@ public class StringUtils {
    */
   public static String getPlacementString(int placement) {
     int rankChecker = placement % 100;
-    if (rankChecker > 10 && rankChecker < 20) return placement + "th";
+    if (rankChecker > 10 && rankChecker < 20)
+      return placement + "th";
     rankChecker %= 10;
     switch (rankChecker) {
       case 1:
@@ -126,7 +134,8 @@ public class StringUtils {
    * @return The formatted time string
    */
   public static String getTextTime(double time) {
-    if (time <= 0) return "0 seconds";
+    if (time <= 0)
+      return "0 seconds";
     if (time > 31536000) {
       time = Math.ceil(time / 31536000 * 10) / 10;
       return time + " years";
@@ -151,18 +160,75 @@ public class StringUtils {
   /**
    * Computes the Levenshtein distance between two strings.
    * 
-   * This is the minimum number of single-character edits (insertions, deletions or substitutions)
+   * This is the minimum number of single-character edits (insertions, deletions
+   * or substitutions)
    * required to change one string into the other.
    * 
    * @param str1 The first string
    * @param str2 The second string
    * @return The Levenshtein distance
    */
-  public static int computeLevenshteinDistance(String str1,String str2) {
+  public static int computeLevenshteinDistance(String str1, String str2) {
     int[][] distance = new int[str1.length() + 1][str2.length() + 1];
-    for (int i = 0; i <= str1.length(); i++) distance[i][0] = i;
-    for (int j = 1; j <= str2.length(); j++) distance[0][j] = j;
-    for (int i = 1; i <= str1.length(); i++) for (int j = 1; j <= str2.length(); j++) distance[i][j] = Math.min(Math.min(distance[i - 1][j] + 1,distance[i][j - 1] + 1),distance[i - 1][j - 1] + ((str1.charAt(i - 1) == str2.charAt(j - 1)) ? 0 : 1));
+    for (int i = 0; i <= str1.length(); i++)
+      distance[i][0] = i;
+    for (int j = 1; j <= str2.length(); j++)
+      distance[0][j] = j;
+    for (int i = 1; i <= str1.length(); i++)
+      for (int j = 1; j <= str2.length(); j++)
+        distance[i][j] = Math.min(Math.min(distance[i - 1][j] + 1, distance[i][j - 1] + 1),
+            distance[i - 1][j - 1] + ((str1.charAt(i - 1) == str2.charAt(j - 1)) ? 0 : 1));
     return distance[str1.length()][str2.length()];
+  }
+
+  public static String getShortenedTime(long time) {
+    long y = 0;
+    while (time >= 31536000) {
+      time -= 31536000;
+      y++;
+    }
+
+    long mo = 0;
+    while (time >= 2628000) {
+      time -= 2628000;
+      mo++;
+    }
+
+    long d = 0;
+    while (time >= 86400) {
+      time -= 86400;
+      d++;
+    }
+
+    long h = 0;
+    while (time >= 3600) {
+      time -= 3600;
+      h++;
+    }
+
+    long m = 0;
+    while (time >= 60) {
+      time -= 60;
+      m++;
+    }
+
+    long s = time;
+
+    if (y > 0) {
+      return y + "y " + mo + "mo " + d + "d " + h + "h " + m + "m " + s + "s";
+    }
+    if (mo > 0) {
+      return mo + "mo " + d + "d " + h + "h " + m + "m " + s + "s";
+    }
+    if (d > 0) {
+      return d + "d " + h + "h " + m + "m " + s + "s";
+    }
+    if (h > 0) {
+      return h + "h " + m + "m " + s + "s";
+    }
+    if (m > 0) {
+      return m + "m " + s + "s";
+    }
+    return s + "s";
   }
 }

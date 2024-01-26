@@ -1,5 +1,6 @@
 package games.omg.utils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -12,6 +13,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class Utils {
 
   // Check out Component.decorationIfAbsent() - seems very useful
@@ -20,50 +23,54 @@ public class Utils {
 
   // what is the purpose of this..?
 
-  // public static void teleport(CommandSender summoner, Player player, Object location) {
-  //   teleport(summoner, player, location, false);
-  //   if (location instanceof Location) player.teleport((Location) location);
-  //   if (location instanceof Player) player.teleport(((Player) location).getLocation());
+  // public static void teleport(CommandSender summoner, Player player, Object
+  // location) {
+  // teleport(summoner, player, location, false);
+  // if (location instanceof Location) player.teleport((Location) location);
+  // if (location instanceof Player) player.teleport(((Player)
+  // location).getLocation());
   // }
 
-  // public static void teleport(CommandSender summoner, Player player, Object location, boolean bypass) {
-  //   boolean selfTp = summoner.equals(player);
+  // public static void teleport(CommandSender summoner, Player player, Object
+  // location, boolean bypass) {
+  // boolean selfTp = summoner.equals(player);
   // }
 
   // WHATS THE POINT ???
 
   // public static String buildStringFromArguments(String[] args, int index) {
-  //   StringBuilder titleBuilder = new StringBuilder();
+  // StringBuilder titleBuilder = new StringBuilder();
 
-  //   for (int i = index; i < args.length; i++) {
-  //     if (i != index) titleBuilder.append(" ");
-  //     titleBuilder.append(args[i]);
-  //   }
+  // for (int i = index; i < args.length; i++) {
+  // if (i != index) titleBuilder.append(" ");
+  // titleBuilder.append(args[i]);
+  // }
 
-  //   return titleBuilder.toString().trim();
+  // return titleBuilder.toString().trim();
   // }
 
   // public static String buildStringFromArguments(String[] args) {
-  //   return buildStringFromArguments(args, 0);
+  // return buildStringFromArguments(args, 0);
   // }
 
   /**
    * Gets the display name of an internal name.
    * 
-   * This performs general cleanups such as removing prefixes and updating capitalization.
+   * This performs general cleanups such as removing prefixes and updating
+   * capitalization.
    * 
    * @param internalName The internal name
    * @return The display name
    */
   public static String getDisplayNameFromInternalName(String internalName) {
     String replacementPhase = internalName
-      .replaceAll("ENTITY_", "")
-      .replaceAll("_", " ");
+        .replaceAll("ENTITY_", "")
+        .replaceAll("_", " ");
 
     String formattingPhase = WordUtils.capitalizeFully(replacementPhase);
-    
+
     String touchupPhase = formattingPhase
-      .replaceAll("Tnt", "TNT");
+        .replaceAll("Tnt", "TNT");
 
     return touchupPhase;
   }
@@ -71,9 +78,9 @@ public class Utils {
   /**
    * Plays a sound to all players.
    * 
-   * @param sound The sound to play
+   * @param sound  The sound to play
    * @param volume The volume of the sound
-   * @param pitch The pitch of the sound
+   * @param pitch  The pitch of the sound
    * 
    * @deprecated Use native Spigot methods instead.
    */
@@ -88,15 +95,16 @@ public class Utils {
    * 
    * If the number of items is even, the center slot will be skipped.
    * 
-   * @param i The inventory
+   * @param i          The inventory
    * @param itemStacks The items to center
-   * @param center The slot to center around
+   * @param center     The slot to center around
    */
   public static void centerItemsInInventory(Inventory i, List<ItemStack> itemStacks, int center) {
     int current = (int) (center - Math.floor(itemStacks.size() / 2));
     boolean skipCenter = itemStacks.size() % 2 == 0;
     for (ItemStack itemStack : itemStacks) {
-      if (current == center && skipCenter) current++;
+      if (current == center && skipCenter)
+        current++;
       i.setItem(current, itemStack);
       current++;
     }
@@ -110,7 +118,8 @@ public class Utils {
    */
   public static ItemStack createSkull(UUID u) {
     ItemStack skull = new ItemStack(Material.PLAYER_HEAD);
-    if (u == null) return skull;
+    if (u == null)
+      return skull;
     skull.setDurability((short) 3);
     SkullMeta sm = (SkullMeta) skull.getItemMeta();
     sm.setOwningPlayer(Bukkit.getOfflinePlayer(u));
@@ -132,37 +141,39 @@ public class Utils {
 
   // TODO: rewrite with components
 
-  // public static ItemStack createItemStack(Material material, String name, List<String> lore, int amount, byte data, boolean unbreakable) {
-  //   ItemStack itemStack=new ItemStack(material,amount,data);
-  //   ItemMeta itemMeta=itemStack.getItemMeta();
-  //   itemMeta.setUnbreakable(unbreakable);
-  //   itemMeta.setDisplayName(name);
-  //   itemMeta.setLore(lore);
-  //   itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
-  //   itemStack.setItemMeta(itemMeta);
-  //   return itemStack;
+  // public static ItemStack createItemStack(Material material, String name,
+  // List<String> lore, int amount, byte data, boolean unbreakable) {
+  // ItemStack itemStack=new ItemStack(material,amount,data);
+  // ItemMeta itemMeta=itemStack.getItemMeta();
+  // itemMeta.setUnbreakable(unbreakable);
+  // itemMeta.setDisplayName(name);
+  // itemMeta.setLore(lore);
+  // itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES, ItemFlag.HIDE_UNBREAKABLE);
+  // itemStack.setItemMeta(itemMeta);
+  // return itemStack;
   // }
 
-  // TODO: this isnt useful because it doesn't use components. rewrite with components
+  // TODO: this isnt useful because it doesn't use components. rewrite with
+  // components
 
-  // public static List<String> getSummary(String summary, int cutLength) {
-  //   List<String> summarized = new ArrayList<>();
-  //   String[] words = summary.split(" ");
-  //   StringBuilder currentLine = new StringBuilder();
-    
-  //   for (String word : words) {
-  //     if (currentLine.length() + word.length() <= cutLength) {
-  //       currentLine.append(word).append(" ");
-  //     } else {
-  //       summarized.add(ChatColor.GRAY + currentLine.toString().trim());
-  //       currentLine = new StringBuilder(word + " ");
-  //     }
-  //   }
-    
-  //   if (currentLine.length() > 0) {
-  //     summarized.add(ChatColor.GRAY + currentLine.toString().trim());
-  //   }
-    
-  //   return summarized;
-  // }
+  public static List<String> getSummary(String summary, int cutLength) {
+    List<String> summarized = new ArrayList<>();
+    String[] words = summary.split(" ");
+    StringBuilder currentLine = new StringBuilder();
+
+    for (String word : words) {
+      if (currentLine.length() + word.length() <= cutLength) {
+        currentLine.append(word).append(" ");
+      } else {
+        summarized.add(ChatColor.GRAY + currentLine.toString().trim());
+        currentLine = new StringBuilder(word + " ");
+      }
+    }
+
+    if (currentLine.length() > 0) {
+      summarized.add(ChatColor.GRAY + currentLine.toString().trim());
+    }
+
+    return summarized;
+  }
 }

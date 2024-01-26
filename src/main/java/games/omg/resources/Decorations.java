@@ -2,11 +2,15 @@ package games.omg.resources;
 
 import java.util.HashMap;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
+
 /**
  * A class which contains various decorations.
  */
 public class Decorations {
-  
+
   public static final String ENVELOPE = "✉";
   public static final String PENCIL = "✎";
   public static final String SKULL = "☠";
@@ -63,5 +67,14 @@ public class Decorations {
         return "";
       }
     }
+  }
+
+  public static Component createSystemMessage(TextColor color, String prefix, Component message) {
+    return Component.text()
+        .color(NamedTextColor.GRAY)
+        .append(Component.text(prefix).color(color))
+        .append(Component.space())
+        .append(message)
+        .build();
   }
 }

@@ -14,7 +14,7 @@ public class ServerColors {
 
   public static final TextColor PRIMARY_COLOR = NamedTextColor.BLUE;
   public static final TextColor SECONDARY_COLOR = NamedTextColor.GRAY;
-  
+
   public static final TextColor MOTD_ACCENT = OMG_FRIEND_COLOR;
 
   public static final TextColor COMMAND_COLOR = PRIMARY_COLOR;
