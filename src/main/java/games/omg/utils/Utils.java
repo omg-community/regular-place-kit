@@ -153,14 +153,22 @@ public class Utils {
   // return itemStack;
   // }
 
-  // TODO: this isnt useful because it doesn't use components. rewrite with
-  // components
+  // TODO: this isnt useful because it doesn't use components. rewrite with components
 
+  /**
+   * Creates a lore from a summary.
+   * 
+   * @param summary The summary 
+   * @param cutLength The length to cut each line of the summary at
+   * @return The lore
+   * 
+   * @deprecated Use components or {@link JoinConfiguration JoinConfigurations} instead.
+   */
   public static List<String> getSummary(String summary, int cutLength) {
     List<String> summarized = new ArrayList<>();
     String[] words = summary.split(" ");
     StringBuilder currentLine = new StringBuilder();
-
+    
     for (String word : words) {
       if (currentLine.length() + word.length() <= cutLength) {
         currentLine.append(word).append(" ");
