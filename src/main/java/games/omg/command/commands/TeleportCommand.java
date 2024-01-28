@@ -16,36 +16,42 @@ import games.omg.Main;
 import games.omg.channeling.ChannelingObject;
 import games.omg.channeling.TeleportReason;
 import games.omg.channeling.TeleportTools;
+import games.omg.chat.SystemMessage;
+import games.omg.command.CommandMessage;
+import games.omg.command.RegularCommand;
+import games.omg.utils.PlayerUtils;
 import games.omg.utils.StringUtils;
 import games.omg.utils.TaskManager;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.md_5.bungee.api.ChatColor;
 
-public class TeleportCommand implements Listener {
+public class TeleportCommand extends RegularCommand implements Listener {
 
   static HashMap<Player, Player> teleportAsk = new HashMap<>();
 
-  public TextComponent play(CommandSender sender, String label, String[] args) {
+  public CommandMessage execute(CommandSender sender, String label, String[] args) {
     Player p = (Player) sender;
     if (args.length < 1)
-      return Component.text("You need to enter a player name. (/" + label.toLowerCase() + " <name>)");
+      return CommandMessage.from("You need to enter a player name. (/" + label.toLowerCase() + " <name>)");
     if (args.length > 1)
-      return Component
-          .text("You need to enter only a player name. (/" + label.toLowerCase() + " " + args[0] + ")");
-    final Player player = Bukkit.getPlayer(args[0]);
+      return CommandMessage
+          .from("You need to enter only a player name. (/" + label.toLowerCase() + " " + args[0] + ")");
+    final Player player = PlayerUtils.getSearchedPlayer(args[0]);
     if (player == null || !player.isOnline())
-      return Component.text("That is not a valid player.");
+      return CommandMessage.from("That is not a valid player.");
     if (player.equals(p))
-      return Component.text("You can't teleport to yourself.");
+      return CommandMessage.from("You can't teleport to yourself.");
     if (label.equalsIgnoreCase("teleport") || label.equalsIgnoreCase("tp") || label.equalsIgnoreCase("tpa")) {
       if (teleportAsk.containsKey(p)) {
         if (teleportAsk.get(p).equals(player))
-          return Component.text("A request is already pending for that player.");
-        // Kollections.SM(teleportAsk.get(p), "Teleport",
-        // ChatColor.RESET+p.getName()+ChatColor.GRAY+" cancelled the teleport.");
-        // Kollections.SM(p, "Teleport", "You cancelled the teleport to
-        // "+ChatColor.RESET+teleportAsk.get(p).getName()+ChatColor.GRAY+".");
+          return CommandMessage.from("A request is already pending for that player.");
+        SystemMessage.from("Teleport",
+            ChatColor.RESET + p.getName() + ChatColor.GRAY + " cancelled the teleport.").sendTo(teleportAsk.get(p));
+        SystemMessage
+            .from("Teleport",
+                "You cancelled the teleport to " + ChatColor.RESET + teleportAsk.get(p).getName() + ChatColor.GRAY
+                    + ".")
+            .sendTo(p);
       }
       teleportAsk.put(p, player);
       TaskManager.initTask(p, "teleport",
@@ -54,14 +60,15 @@ public class TeleportCommand implements Listener {
               teleportAsk.remove(p);
             }
           }, 20 * 60));
-      // Kollections.SM(player, "Teleport",
-      // ChatColor.RESET+p.getName()+ChatColor.GRAY+" wants to teleport to
-      // you.\nAccept with (/tpaccept "+p.getName()+")");
-      return Component
-          .text("You asked to teleport to " + ChatColor.RESET + player.getName() + ChatColor.GRAY + ".");
+      SystemMessage.from("Teleport",
+          ChatColor.RESET + p.getName() + ChatColor.GRAY + " wants to teleport to you.\nAccept with (/tpaccept "
+              + p.getName() + ")")
+          .sendTo(player);
+      return CommandMessage
+          .from("You asked to teleport to " + ChatColor.RESET + player.getName() + ChatColor.GRAY + ".");
     }
     if (!(teleportAsk.containsKey(player) && teleportAsk.get(player).equals(p)))
-      return Component.text("That player hasn't asked to teleport to you.");
+      return CommandMessage.from("That player hasn't asked to teleport to you.");
     teleportAsk.remove(player);
     UUID uuid = p.getUniqueId();
     ChannelingObject channel = new ChannelingObject(TeleportTools.getChannelingTimesBetweenPlayers(p, player),
@@ -75,10 +82,11 @@ public class TeleportCommand implements Listener {
               // Kollections.SM(player,"Teleport","That player is gone.");
               return;
             }
-            // Kollections.SM(player,"Teleport","Teleported to
-            // "+ChatColor.RESET+teleportPlayer.getName()+ChatColor.GRAY+".");
-            // Kollections.SM(teleportPlayer, "Teleport",
-            // ChatColor.RESET+player.getName()+ChatColor.GRAY+" has arrived.");
+            SystemMessage
+                .from("Teleport", "Teleported to " + ChatColor.RESET + teleportPlayer.getName() + ChatColor.GRAY + ".")
+                .sendTo(player);
+            SystemMessage.from("Teleport",
+                ChatColor.RESET + player.getName() + ChatColor.GRAY + " has arrived.").sendTo(teleportPlayer);
             player.teleport(teleportPlayer);
           }
         }, new Runnable() {
@@ -96,15 +104,16 @@ public class TeleportCommand implements Listener {
       // Kollections.SM(player, "Teleport",
       // ChatColor.RESET+p.getName()+ChatColor.GRAY+" accepted your teleport request,
       // but you are already channeling somewhere!");
-      return Component.text("That player is already teleporting somewhere.");
+      return CommandMessage.from("That player is already teleporting somewhere.");
     }
     // Kollections.SM(player, "Teleport",
     // ChatColor.RESET+p.getName()+ChatColor.GRAY+" accepted your teleport
     // request.");
-    return Component.text("Accepted " + ChatColor.RESET + player.getName() + ChatColor.GRAY + "'s teleport request."
-        + (result == TeleportReason.INSTANT_TELEPORT ? ""
-            : " They will arrive in " + ChatColor.RESET + StringUtils.getTextTime(channel.getStartingTime())
-                + ChatColor.GRAY + " or longer."));
+    return CommandMessage
+        .from("Accepted " + ChatColor.RESET + player.getName() + ChatColor.GRAY + "'s teleport request."
+            + (result == TeleportReason.INSTANT_TELEPORT ? ""
+                : " They will arrive in about " + ChatColor.RESET + StringUtils.getTextTime(channel.getStartingTime())
+                    + ChatColor.GRAY + "."));
   }
 
   @EventHandler
@@ -112,23 +121,23 @@ public class TeleportCommand implements Listener {
     teleportAsk.remove(e.getPlayer());
   }
 
+  @Override
   public List<String> getAliases() {
     return Arrays.asList("tp", "tpa", "teleport", "tpaccept", "teleportaccept", "tpaaccept");
   }
 
+  @Override
   public boolean canUse(CommandSender sender) {
     return true;
   }
 
-  public boolean doesSuggestedCommandHaveSpace() {
-    return true;
+  @Override
+  public String getDescription(CommandSender sender) {
+    return "Teleport to a player.";
   }
 
-  public TextComponent getDescription(CommandSender sender) {
-    return Component.text("Teleport to a player.");
-  }
-
-  public boolean requireOp() {
-    return false;
+  @Override
+  public String getDisplayName() {
+    return "Teleport";
   }
 }

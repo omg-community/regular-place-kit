@@ -47,7 +47,7 @@ public class CommandManager {
 
         BukkitCommand bukkitCommand = new BukkitCommand(firstAlias) {
           @Override
-          public boolean execute(org.bukkit.command.CommandSender sender, String commandLabel, String[] args) {
+          public boolean execute(org.bukkit.command.CommandSender sender, String label, String[] args) {
             try {
               if (!command.canUse(sender)) {
                 SystemMessage
@@ -56,7 +56,7 @@ public class CommandManager {
                 return true;
               }
 
-              CommandMessage result = command.execute(sender, args);
+              CommandMessage result = command.execute(sender, label, args);
 
               if (result != null) {
                 result

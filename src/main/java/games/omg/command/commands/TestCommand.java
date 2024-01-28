@@ -11,7 +11,7 @@ import games.omg.command.RegularCommand;
 public class TestCommand extends RegularCommand {
 
   @Override
-  public CommandMessage execute(CommandSender sender, String[] args) {
+  public CommandMessage execute(CommandSender sender, String label, String[] args) {
     return CommandMessage.from("Complete!");
   }
 
