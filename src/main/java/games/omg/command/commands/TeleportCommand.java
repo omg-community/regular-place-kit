@@ -79,7 +79,7 @@ public class TeleportCommand extends RegularCommand implements Listener {
               return;
             Player teleportPlayer = Bukkit.getPlayer(uuid);
             if (teleportPlayer == null || !teleportPlayer.isOnline()) {
-              // Kollections.SM(player,"Teleport","That player is gone.");
+              SystemMessage.from("Teleport","That player is gone.").sendTo(player);
               return;
             }
             SystemMessage
@@ -95,20 +95,20 @@ public class TeleportCommand extends RegularCommand implements Listener {
             Player teleportPlayer = Bukkit.getPlayer(uuid);
             if (teleportPlayer == null)
               return;
-            // Kollections.SM(teleportPlayer, "Teleport",
-            // ChatColor.RESET+player.getName()+ChatColor.GRAY+" stopped channeling.");
+            SystemMessage.from("Teleport",
+                ChatColor.RESET + player.getName() + ChatColor.GRAY + " stopped channeling.").sendTo(teleportPlayer);
           }
         });
     TeleportReason result = TeleportTools.channelTeleport(player, channel);
     if (result == TeleportReason.ALREADY_TELEPORTING) {
-      // Kollections.SM(player, "Teleport",
-      // ChatColor.RESET+p.getName()+ChatColor.GRAY+" accepted your teleport request,
-      // but you are already channeling somewhere!");
+      SystemMessage.from("Teleport",
+          ChatColor.RESET + p.getName() + ChatColor.GRAY
+              + " accepted your teleport request, but you are already channeling somewhere!")
+          .sendTo(player);
       return CommandMessage.from("That player is already teleporting somewhere.");
     }
-    // Kollections.SM(player, "Teleport",
-    // ChatColor.RESET+p.getName()+ChatColor.GRAY+" accepted your teleport
-    // request.");
+    SystemMessage.from("Teleport",
+        ChatColor.RESET + p.getName() + ChatColor.GRAY + " accepted your teleport request.").sendTo(player);
     return CommandMessage
         .from("Accepted " + ChatColor.RESET + player.getName() + ChatColor.GRAY + "'s teleport request."
             + (result == TeleportReason.INSTANT_TELEPORT ? ""
