@@ -16,9 +16,11 @@ public class SystemMessage {
   private String header;
   private String message;
 
-  public SystemMessage(String header, String message) {
-    this.header = header;
-    this.message = message;
+  public static SystemMessage from(String header, String message) {
+    SystemMessage systemMessage = new SystemMessage();
+    systemMessage.header = header;
+    systemMessage.message = message;
+    return systemMessage;
   }
 
   public SystemMessage icon(String icon) {
