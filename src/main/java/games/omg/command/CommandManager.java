@@ -19,8 +19,7 @@ public class CommandManager {
 
   static {
     COMMANDS.addAll(
-      ClassUtils.instantiateClassesInPackageByType("games.omg.command.commands", RegularCommand.class)
-    );
+        ClassUtils.instantiateClassesInPackageByType("games.omg.command.commands", RegularCommand.class));
 
     Main.getPlugin().getLogger().info("Loaded " + COMMANDS.size() + " commands.");
 
@@ -33,7 +32,8 @@ public class CommandManager {
       // commandMap.register("seen", new CommandSeen("seen"));
       for (RegularCommand command : COMMANDS) {
         List<String> aliases = command.getAliases();
-        if (aliases.size() == 0) continue;
+        if (aliases.size() == 0)
+          continue;
 
         String firstAlias = aliases.get(0);
         List<String> otherAliases = aliases.subList(1, aliases.size());
@@ -41,12 +41,24 @@ public class CommandManager {
         BukkitCommand bukkitCommand = new BukkitCommand(firstAlias) {
           @Override
           public boolean execute(org.bukkit.command.CommandSender sender, String commandLabel, String[] args) {
-            if (!command.canUse(sender)) {
-              new SystemMessage(command.getDisplayName(), "You don't have permission to use this command!")
-                .sendTo(sender);
-              return true;
+            try {
+              if (!command.canUse(sender)) {
+                SystemMessage
+                    .from(command.getDisplayName(), "You don't have permission to use this command!")
+                    .sendTo(sender);
+                return true;
+              }
+
+              CommandMessage result = command.execute(sender, args);
+
+              if (result != null) {
+                result
+                    .headerIfAbsent(command.getDisplayName())
+                    .sendTo(sender);
+              }
+            } catch (Exception e) {
+              e.printStackTrace();
             }
-            command.execute(sender, args);
             return true;
           }
         };
@@ -56,7 +68,7 @@ public class CommandManager {
         // bukkitCommand.setPermission(command.getPermission());
         bukkitCommand.setAliases(otherAliases);
 
-        commandMap.register(firstAlias, bukkitCommand);
+        commandMap.register(Main.getPlugin().getName(), bukkitCommand);
       }
     } catch (Exception e) {
       e.printStackTrace();

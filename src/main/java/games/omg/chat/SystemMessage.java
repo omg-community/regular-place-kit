@@ -10,17 +10,34 @@ import net.kyori.adventure.text.format.TextColor;
 
 public class SystemMessage {
 
-  private String icon = Decorations.BULLET_POINT;
+  private String icon = Decorations.SMALL_BULLET_POINT;
   private TextColor color = ServerColors.PRIMARY_COLOR;
 
   private String header;
-  private String message;
+  private Component message;
 
-  public static SystemMessage from(String header, String message) {
+  public static SystemMessage from(String header, Component message) {
     SystemMessage systemMessage = new SystemMessage();
     systemMessage.header = header;
     systemMessage.message = message;
     return systemMessage;
+  }
+
+  public static SystemMessage from(String header, String message) {
+    return from(header, Component.text(message));
+  }
+
+  public static SystemMessage message(String message) {
+    return from(null, message);
+  }
+
+  public static SystemMessage message(Component message) {
+    return from(null, message);
+  }
+
+  public SystemMessage header(String header) {
+    this.header = header;
+    return this;
   }
 
   public SystemMessage icon(String icon) {
@@ -33,15 +50,37 @@ public class SystemMessage {
     return this;
   }
 
+  public String header() {
+    return header;
+  }
+
+  public Component message() {
+    return message;
+  }
+
+  public String icon() {
+    return icon;
+  }
+
+  public TextColor color() {
+    return color;
+  }
+
   public Component build() {
-    TextComponent headerComponent = Component
-        .text(header + " " + icon + " ")
-        .color(color);
+    TextComponent headerComponent;
+
+    if (header == null) {
+      headerComponent = Component.empty();
+    } else {
+      headerComponent = Component
+          .text(header + " " + icon + " ")
+          .color(color);
+    }
 
     return Component.join(
         JoinConfiguration.noSeparators(),
         headerComponent,
-        Component.text(message));
+        message);
   }
 
   public void sendTo(Audience audience) {

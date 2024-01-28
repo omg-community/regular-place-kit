@@ -5,7 +5,7 @@ import java.util.List;
 import org.bukkit.command.CommandSender;
 
 public abstract class RegularCommand {
-  public abstract void execute(CommandSender sender, String[] args);
+  public abstract CommandMessage execute(CommandSender sender, String[] args);
 
   public abstract String getDisplayName();
   
