@@ -5,6 +5,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import games.omg.chat.ChatHandler;
+import games.omg.command.CommandManager;
 import games.omg.command.commands.Tpa;
 
 public class Main extends JavaPlugin implements Listener {
@@ -27,7 +28,8 @@ public class Main extends JavaPlugin implements Listener {
 
 		register(new ChatHandler());
 
-		registerCommand("tpa", new Tpa());	
+		// registerCommand("tpa", new Tpa());	
+		CommandManager commandManager = new CommandManager();
 	}
 
 	@Override
