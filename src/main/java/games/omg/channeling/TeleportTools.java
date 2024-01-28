@@ -208,7 +208,7 @@ public class TeleportTools implements Listener {
         && (l1.getWorld().getEnvironment() == World.Environment.THE_END
             || l2.getWorld().getEnvironment() == World.Environment.THE_END)) {
       channelTimes.add(new ExtendedChannelTime(60 * 10, "Eye of Ender", Material.ENDER_PEARL,
-          "Entering The End isn't cheap, and neither is teleporting there."));
+          "This might take a while."));
     }
 
     return channelTimes;
@@ -232,6 +232,6 @@ public class TeleportTools implements Listener {
 
   @EventHandler
   public void leave(PlayerQuitEvent e) {
-    teleportComplete(e.getPlayer());
+    teleportInterrupted(e.getPlayer());
   }
 }
