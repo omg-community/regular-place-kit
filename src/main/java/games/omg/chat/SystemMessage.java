@@ -1,4 +1,4 @@
-package games.omg.utils;
+package games.omg.chat;
 
 import games.omg.resources.Decorations;
 import games.omg.resources.ServerColors;
