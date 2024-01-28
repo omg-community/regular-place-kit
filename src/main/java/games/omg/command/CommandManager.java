@@ -7,10 +7,12 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.defaults.BukkitCommand;
+import org.bukkit.event.Listener;
 
 import games.omg.Main;
 import games.omg.chat.SystemMessage;
 import games.omg.utils.ClassUtils;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 public class CommandManager {
 
@@ -20,6 +22,11 @@ public class CommandManager {
   static {
     COMMANDS.addAll(
         ClassUtils.instantiateClassesInPackageByType("games.omg.command.commands", RegularCommand.class));
+
+    // register listeners for all commands that are also listeners
+    COMMANDS.stream()
+        .filter(command -> command instanceof Listener)
+        .forEach(command -> Main.register((Listener) command));
 
     Main.getPlugin().getLogger().info("Loaded " + COMMANDS.size() + " commands.");
 
