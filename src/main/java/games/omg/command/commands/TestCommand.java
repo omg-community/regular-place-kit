@@ -1,5 +1,8 @@
 package games.omg.command.commands;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.bukkit.command.CommandSender;
 
 import games.omg.command.RegularCommand;
@@ -17,7 +20,7 @@ public class TestCommand extends RegularCommand {
   }
 
   @Override
-  public String[] getAliases() {
-    return new String[]{ "test1", "test2" };
+  public List<String> getAliases() {
+    return Arrays.asList("test1", "test2");
   }
 }

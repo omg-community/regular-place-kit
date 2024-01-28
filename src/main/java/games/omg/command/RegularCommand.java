@@ -1,5 +1,7 @@
 package games.omg.command;
 
+import java.util.List;
+
 import org.bukkit.command.CommandSender;
 
 public abstract class RegularCommand {
@@ -11,7 +13,7 @@ public abstract class RegularCommand {
     return null;
   }
 
-  public abstract String[] getAliases();
+  public abstract List<String> getAliases();
   
   public boolean canUse(CommandSender sender) {
     return true;
