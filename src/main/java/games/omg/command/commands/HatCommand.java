@@ -1,4 +1,4 @@
-package games.omg.command;
+package games.omg.command.commands;
 
 import java.util.Arrays;
 import java.util.List;
