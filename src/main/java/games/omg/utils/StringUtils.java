@@ -157,21 +157,6 @@ public class StringUtils {
     }
   }
 
-  // TODO rename these functions, they're not very descriptive and they're all too similar to each other
-  /**
-   * Gets a shortened time string from a number of seconds.
-   * 
-   * The format is similar to "29m8s".
-   * 
-   * @param i The number of seconds
-   * @return The shortened time string
-   */
-  public static String getShortenedTime(long i) {
-    long s = i % 60;
-    long m = (long) Math.floor(i / 60);
-    return m > 0 ? m + "m " + s + "s" : s + "s";
-  }
-
   /**
    * Computes the Levenshtein distance between two strings.
    * 
@@ -196,6 +181,15 @@ public class StringUtils {
     return distance[str1.length()][str2.length()];
   }
 
+  // TODO rename these functions, they're not very descriptive and they're all too similar to each other
+  /**
+   * Gets a shortened time string from a number of seconds.
+   * 
+   * The format is similar to "29m8s".
+   * 
+   * @param i The number of seconds
+   * @return The shortened time string
+   */
   public static String getShortenedTime(long time) {
     long y = 0;
     while (time >= 31536000) {
