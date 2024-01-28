@@ -3,8 +3,3 @@ version: 1.0
 api-version: 1.13
 author: OMG
 main: games.omg.Main
-commands:
-  tpa:
-    description: Ask to teleport to a player
-    usage: /<command>
-    aliases: [teleportask, tpask]
