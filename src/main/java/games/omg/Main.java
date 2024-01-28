@@ -4,9 +4,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import games.omg.channeling.TeleportTools;
 import games.omg.chat.ChatHandler;
 import games.omg.command.CommandManager;
-import games.omg.command.commands.Tpa;
 
 public class Main extends JavaPlugin implements Listener {
 
@@ -26,7 +26,7 @@ public class Main extends JavaPlugin implements Listener {
 	public void onEnable() {
 		plugin = this;
 
-		register(new ChatHandler());
+		register(new ChatHandler(), new TeleportTools());
 
 		// registerCommand("tpa", new Tpa());	
 		CommandManager commandManager = new CommandManager();
