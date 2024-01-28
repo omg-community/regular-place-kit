@@ -1,5 +1,9 @@
 package games.omg.resources;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
+
 /**
  * A class which contains various decorations.
  */
@@ -121,5 +125,24 @@ public class Decorations {
         return "";
       }
     }
+  }
+
+  /**
+   * Creates a system message. Used in older code.
+   * 
+   * @param color   The color
+   * @param prefix  The prefix
+   * @param message The message
+   * @return The system message
+   * 
+   * @deprecated Use Messenger instead.
+   */
+  public static Component createSystemMessage(TextColor color, String prefix, Component message) {
+    return Component.text()
+        .color(NamedTextColor.GRAY)
+        .append(Component.text(prefix).color(color))
+        .append(Component.space())
+        .append(message)
+        .build();
   }
 }
