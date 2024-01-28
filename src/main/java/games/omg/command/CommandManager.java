@@ -58,6 +58,11 @@ public class CommandManager {
               }
             } catch (Exception e) {
               e.printStackTrace();
+
+              SystemMessage
+                  .from("Error", "An error occurred while executing this command.")
+                  .color(NamedTextColor.RED)
+                  .sendTo(sender);
             }
             return true;
           }
