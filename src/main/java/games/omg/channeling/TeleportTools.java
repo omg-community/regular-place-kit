@@ -82,6 +82,8 @@ public class TeleportTools implements Listener {
               displayItem.setItemMeta(itemMeta);
 
               channelingInventory.setItem(current, displayItem);
+              p.updateInventory();
+              
               current++;
             }
           }
