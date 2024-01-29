@@ -6,6 +6,13 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+/**
+ * A utility class for managing tasks.
+ * 
+ * Written 10 years ago by a child.
+ * 
+ * @deprecated Use {@link org.bukkit.scheduler.BukkitScheduler} instead.
+ */
 public class TaskManager {
   private static HashMap<String, Integer> tasks = new HashMap<String, Integer>();
   private static HashMap<String, Integer> alwaystasks = new HashMap<String, Integer>();
