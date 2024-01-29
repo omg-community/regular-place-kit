@@ -1,5 +1,7 @@
 package games.omg.menus;
 
+import java.util.HashMap;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,8 +16,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import games.omg.Main;
-
-import java.util.HashMap;
+import net.kyori.adventure.text.Component;
 
 public class InventoryMenu implements Listener {
 
@@ -55,8 +56,8 @@ public class InventoryMenu implements Listener {
     this.handler = handler;
     this.name = name;
 
-    // TODO: change to a string
-    inventory = Bukkit.createInventory(p, size, title);
+    // TODO: use a component for the title
+    inventory = Bukkit.createInventory(p, size, Component.text(title));
     handler.create(inventory);
     p.openInventory(inventory);
 
@@ -113,6 +114,7 @@ public class InventoryMenu implements Listener {
   }
 
   public static void setCursor(InventoryInteractEvent e, ItemStack stack) {
+    // deprecated: see event.getWhoClicked().setItemOnCursor(...);
     if (e instanceof InventoryClickEvent)
       ((InventoryClickEvent) e).setCursor(stack);
     if (e instanceof InventoryDragEvent)

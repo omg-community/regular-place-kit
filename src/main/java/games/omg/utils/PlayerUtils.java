@@ -12,11 +12,6 @@ import games.omg.resources.ServerStrings;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.event.HoverEvent;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.Style;
-import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.text.format.Style.Merge;
 
 /**
  * A class which contains utility methods for players.
@@ -31,31 +26,32 @@ public class PlayerUtils {
    * @param player The player
    * @return The nametag component of the player
    */
-  public static Component getNametag(OfflinePlayer player) {
+  public static Component getNametag(OfflinePlayer player, boolean includePrefix, boolean colorName) {
     String name = PlayerUtils.getPlayerName(player);
 
-    // Component prefix = Component.text(ServerStrings.USERNAME_PREFIX)
-    //                             .color(ServerColors.OWNER_ROLE_COLOR)
-    //                             .mergeStyle(Style.empty(), Style.Merge.Strategy.IF_ABSENT_ON_TARGET);
+    TextComponent username = Component.text(name);
 
-    // Component username = Component.text(name);
+    Component nametag;
+    if (includePrefix) {
+      TextComponent bulletPoint = Component.text(ServerStrings.USERNAME_PREFIX).color(ServerColors.OWNER_ROLE_COLOR);
+      
+      nametag = Component.join(
+        JoinConfiguration.separator(Component.space()),
+        bulletPoint,
+        username
+      );
+    } else {
+      nametag = username;
+    }
 
-    // JoinConfiguration config = JoinConfiguration.builder()
-    //                                             .parentStyle(null)
-
-    // // use Joining to append the prefix and username together
-    // return Component.join();
-
-    TextComponent bulletPoint = Component.text(ServerStrings.USERNAME_PREFIX).color(ServerColors.OWNER_ROLE_COLOR); // Red bullet point
-    TextComponent username = Component.text(name); // Username without color
-
-    JoinConfiguration joinConfig = JoinConfiguration.noSeparators();
-    Component combined = Component.join(joinConfig, bulletPoint, username);
+    if (colorName) {
+      nametag = nametag.color(ServerColors.OWNER_ROLE_COLOR);
+    }
 
     // Later, apply fallback style
     // combined = combined.applyFallbackStyle(Style.style(NamedTextColor.YELLOW)); // Example fallback color
 
-    return combined;
+    return nametag;
   }
 
   /**
