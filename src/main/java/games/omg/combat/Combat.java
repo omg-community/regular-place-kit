@@ -14,7 +14,7 @@ public class Combat {
   private static final int COMBAT_TIMEOUT = 20 * 10;
 
   private static HashMap<Entity, Combat> combatMap = new HashMap<>();
-  private static HashMap<Entity, Integer> combatTaskMap = new HashMap<>();
+  private static HashMap<String, Integer> combatTaskMap = new HashMap<>();
 
   public static Combat get(Entity entity) {
     return combatMap.get(entity);
