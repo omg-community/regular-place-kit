@@ -11,10 +11,28 @@ import games.omg.combat.combatants.Combatant;
 
 public class Combat {
 
+  private static final int COMBAT_TIMEOUT = 20 * 10;
+
   private static HashMap<Entity, Combat> combatMap = new HashMap<>();
+  private static HashMap<Entity, Integer> combatTaskMap = new HashMap<>();
 
   public static Combat get(Entity entity) {
     return combatMap.get(entity);
+  }
+
+  public static boolean isInCombat(Entity entity) {
+    return combatMap.containsKey(entity);
+  }
+
+  protected static void engageEntityInCombat(Entity entity, Entity otherEntity) {
+    Combat combat = combatMap.get(entity);
+    
+    if (combat == null) {
+      combat = new Combat(entity);
+      combatMap.put(entity, combat);
+    }
+
+    combat.addCombatant(otherEntity);
   }
 
   //
@@ -33,6 +51,7 @@ public class Combat {
   private Set<Combatant> allCombatants = new HashSet<>();
 
   private int startTick = Bukkit.getCurrentTick();
+  private int updateTick = startTick;
   private int endTick = 0;
 
   public Combat(Entity entity) {
@@ -88,11 +107,21 @@ public class Combat {
     return Bukkit.getCurrentTick() - startTick;
   }
 
+  public int getRemainingTime() {
+    if (hasEnded()) {
+      return 0;
+    }
+    return Math.max(0, COMBAT_TIMEOUT - (Bukkit.getCurrentTick() - updateTick));
+  }
+
   //
 
   public void addCombatant(Combatant combatant) {
     currentCombatants.add(combatant);
     allCombatants.add(combatant);
+
+    updateTick = Bukkit.getCurrentTick();
+    // TODO: remove this combatant after the timeout
   }
 
   public void addCombatant(Entity entity) {
