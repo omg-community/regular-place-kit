@@ -59,8 +59,7 @@ public class EntityUtils {
    * @param entity The entity
    * @return The display name component of the entity
    */
-  public static TextComponent getDisplayNameComponent(Entity entity) {
-    // TODO: maybe not necessary if customName() is useable on Players
+  public static Component getDisplayNameComponent(Entity entity) {
     if (entity instanceof Player) {
       String name = PlayerUtils.getPlayerName((Player) entity);
 
@@ -71,10 +70,7 @@ public class EntityUtils {
     }
 
     if (entity instanceof Nameable) {
-      Nameable nameable = (Nameable) entity;
-      
-      // TODO: a little lengthy, is there a better way?
-      TextComponent name = Component.text().append(nameable.customName()).build();
+      Component name = ((Nameable) entity).customName();
 
       if (name != null) {
         // return the name component in italics (to make it obvious that it's a custom name)
