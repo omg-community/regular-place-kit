@@ -18,9 +18,15 @@ public class MotdService implements Listener {
     event.motd(
       Component.join(
         JoinConfiguration.noSeparators(),
-        Component.text("regular").color(ServerColors.MOTD_ACCENT).decorate(TextDecoration.BOLD),
-        Component.text(Decorations.SmallLetters.get(".place")).color(ServerColors.MOTD_ACCENT),
+        
+        Component.text(Decorations.FLOWER).color(ServerColors.MOTD_ACCENT),
+        Component.space(),
+        Component.text("regular.place").color(ServerColors.MOTD_ACCENT).decorate(TextDecoration.BOLD),
+        Component.space(),
+        Component.text(Decorations.FLOWER).color(ServerColors.MOTD_ACCENT),
+
         Component.newline(),
+        
         Component.text("v0.0.1").color(NamedTextColor.DARK_GRAY)
           .appendSpace()
           .append(Component.text(Decorations.SMALL_BULLET_POINT))
