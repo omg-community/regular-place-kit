@@ -4,6 +4,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.ServerListPingEvent;
 
+import games.omg.Main;
 import games.omg.resources.Decorations;
 import games.omg.resources.ServerColors;
 import net.kyori.adventure.text.Component;
@@ -27,10 +28,13 @@ public class MotdService implements Listener {
 
         Component.newline(),
         
-        Component.text("v0.0.1").color(NamedTextColor.DARK_GRAY)
+        Component.text("v")
+          .append(Component.text(Main.getPlugin().getPluginMeta().getVersion()))
           .appendSpace()
           .append(Component.text(Decorations.SMALL_BULLET_POINT))
-          .appendSpace(),
+          .appendSpace()
+          .color(NamedTextColor.DARK_GRAY),
+        
         Component.text("a regular place")
       )
     );
