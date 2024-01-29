@@ -83,12 +83,39 @@ public class Decorations {
   public static class Dice {
     private static final String DICE = "⚀⚁⚂⚃⚄⚅";
 
+    /**
+     * Gets the die representation of a number.
+     * 
+     * If the number is not 1-6, or is a non-number, an empty string is returned.
+     * 
+     * @param number The number
+     * @return The die representation
+     */
     public static String get(int number) {
       try {
         return DICE.charAt(number - 1) + "";
       } catch (IndexOutOfBoundsException e) {
         return "";
       }
+    }
+
+    /**
+     * Gets the dice representations of a string containing a set of numbers, 1-6.
+     * 
+     * For any number which is not 1-6, or any non-numbers, an empty string is returned for that character.
+     * 
+     * @param numbers The string of numbers
+     * @return The dice representations
+     */
+    public static String get(String numbers) {
+      StringBuilder builder = new StringBuilder();
+      for (char number : numbers.toCharArray()) {
+        try {
+          builder.append(get(Integer.parseInt(number + "")));
+        } catch (NumberFormatException e) {
+        }
+      }
+      return builder.toString();
     }
   }
 
@@ -101,12 +128,80 @@ public class Decorations {
     private static final String CIRCLED_LETTERS = "ⒶⒷⒸⒹⒺⒻⒼⒽⒾⒿⓀⓁⓂⓃⓄⓅⓆⓇⓈⓉⓊⓋⓌⓍⓎⓏⓐⓑⓒⓓⓔⓕⓖⓗⓘⓙⓚⓛⓜⓝⓞⓟⓠⓡⓢⓣⓤⓥⓦⓧⓨⓩ";
     private static final String DIRECTORY = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-    public static String get(String letter) {
+    /**
+     * Gets the circled version of a letter.
+     * 
+     * This is case sensitive and supports both upper and lower case letters.
+     * If the letter is not in the alphabet, an empty string is returned.
+     * 
+     * @param letter The letter
+     * @return The circled letter
+     */
+    public static String get(char letter) {
       try {
         return CIRCLED_LETTERS.charAt(DIRECTORY.indexOf(letter)) + "";
       } catch (IndexOutOfBoundsException e) {
         return "";
       }
+    }
+
+    /**
+     * Gets the circled versions of a string containing letters.
+     * 
+     * This is case sensitive and supports both upper and lower case letters.
+     * If a letter is not in the alphabet, an empty string is returned for that character.
+     * 
+     * @param word The string of letters
+     * @return The circled letters
+     */
+    public static String get(String word) {
+      StringBuilder builder = new StringBuilder();
+      for (char letter : word.toCharArray()) {
+        builder.append(get(letter));
+      }
+      return builder.toString();
+    }
+  }
+
+  /**
+   * A class which maps letters to their small versions.
+   */
+  public static class SmallLetters {
+    private static final String SMALL_LETTERS = "ᴀʙᴄᴅᴇғɢʜɪᴊᴋʟᴍɴᴏᴘǫʀsᴛᴜᴠᴡxʏᴢ";
+    private static final String DIRECTORY = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    /**
+     * Gets the small version of a letter.
+     * 
+     * This is case insensitive, and will return a small uppercase letter in any case.
+     * If the character is not in the alphabet, it will be returned as itself.
+     * 
+     * @param letter The letter
+     * @return The small letter
+     */
+    public static String get(char letter) {
+      try {
+        return SMALL_LETTERS.charAt(DIRECTORY.indexOf((letter + "").toUpperCase())) + "";
+      } catch (IndexOutOfBoundsException e) {
+        return letter + "";
+      }
+    }
+
+    /**
+     * Gets the small versions of a string containing letters.
+     * 
+     * This is case insensitive, and will return a small uppercase letter in any case.
+     * If a character in the string is not in the alphabet, it is returned as itself.
+     * 
+     * @param word The string of letters
+     * @return The small letters
+     */
+    public static String get(String word) {
+      StringBuilder builder = new StringBuilder();
+      for (char letter : word.toCharArray()) {
+        builder.append(get(letter));
+      }
+      return builder.toString();
     }
   }
 
@@ -116,13 +211,21 @@ public class Decorations {
    * It only supports numbers 1-20.
    */
   public static class CircledNumbers {
-    public static final String CIRCLED_NUMBERS = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳";
+    private static final String CIRCLED_NUMBERS = "①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳";
 
+    /**
+     * Gets the circled version of a number.
+     * 
+     * If the number is not 1-20, or is a non-number, the number is returned as a string.
+     * 
+     * @param number The number
+     * @return The circled number
+     */
     public static String get(int number) {
       try {
         return CIRCLED_NUMBERS.charAt(number - 1) + "";
       } catch (IndexOutOfBoundsException e) {
-        return "";
+        return number + "";
       }
     }
   }
@@ -135,7 +238,7 @@ public class Decorations {
    * @param message The message
    * @return The system message
    * 
-   * @deprecated Use Messenger instead.
+   * @deprecated Use SystemMessage instead.
    */
   public static Component createSystemMessage(TextColor color, String prefix, Component message) {
     return Component.text()
