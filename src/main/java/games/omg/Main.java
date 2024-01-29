@@ -7,6 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import games.omg.channeling.TeleportTools;
 import games.omg.chat.ChatHandler;
 import games.omg.command.CommandManager;
+import games.omg.server.MotdService;
 
 public class Main extends JavaPlugin implements Listener {
 
@@ -26,9 +27,11 @@ public class Main extends JavaPlugin implements Listener {
 	public void onEnable() {
 		plugin = this;
 
-		register(new ChatHandler(), new TeleportTools());
+		register(new ChatHandler(), new TeleportTools(), new MotdService());
 
 		// registerCommand("tpa", new Tpa());	
+
+		// this is really dumb
 		CommandManager commandManager = new CommandManager();
 	}
 

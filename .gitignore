@@ -41,7 +41,7 @@ Temporary Items
 .mtj.tmp/
 
 # Minecraft server
-server/
+/server/
 
 # Package Files #
 *.jar
