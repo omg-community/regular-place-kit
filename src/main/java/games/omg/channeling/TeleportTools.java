@@ -25,7 +25,7 @@ import games.omg.Main;
 import games.omg.menus.InventoryMenu;
 import games.omg.resources.Decorations;
 import games.omg.utils.StringUtils;
-import games.omg.utils.TaskManager;
+import games.omg.utils.OldTaskManager;
 import games.omg.utils.Utils;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -46,7 +46,7 @@ public class TeleportTools implements Listener {
           Material.PACKED_ICE, "All channels must either be instant or last at least 10 seconds."));
     channels.put(p, channelingObject);
 
-    if (TaskManager.isTaskRunning(p, "teleportation"))
+    if (OldTaskManager.isTaskRunning(p, "teleportation"))
       return TeleportReason.ALREADY_TELEPORTING;
 
     InventoryMenu channelingMenu = new InventoryMenu(p, "ChannelingMenu", 9 * 3, menuTitle,
@@ -96,7 +96,7 @@ public class TeleportTools implements Listener {
           @Override
           public void create(Inventory i) {
             updateChannelingInventory(i);
-            TaskManager.initTask(p, "teleportation",
+            OldTaskManager.initTask(p, "teleportation",
                 Bukkit.getScheduler().scheduleSyncRepeatingTask(Main.getPlugin(), new Runnable() {
                   public void run() {
                     if (!channelingObject.next()) {
@@ -110,7 +110,7 @@ public class TeleportTools implements Listener {
 
           @Override
           public void close(Inventory i) {
-            if (TaskManager.isTaskRunning(p, "teleportation")) {
+            if (OldTaskManager.isTaskRunning(p, "teleportation")) {
               teleportInterrupted(p);
               p.sendMessage(Decorations.createSystemMessage(NamedTextColor.BLUE, "Teleport",
                   Component.text("You cancelled the teleport.")));
@@ -125,7 +125,7 @@ public class TeleportTools implements Listener {
   }
 
   private static void teleportFinished(Player p, boolean complete) {
-    TaskManager.stopTask(p, "teleportation");
+    OldTaskManager.stopTask(p, "teleportation");
     // ScoreboardTools.setGlobalPrefix(p, "");
     // Main.updateScoreboard();
     p.closeInventory();

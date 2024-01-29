@@ -11,9 +11,9 @@ import org.bukkit.entity.Player;
  * 
  * Written 10 years ago by a child.
  * 
- * @deprecated Use {@link org.bukkit.scheduler.BukkitScheduler} instead.
+ * @deprecated Use {@link games.omg.utils.TaskManager} instead.
  */
-public class TaskManager {
+public class OldTaskManager {
   private static HashMap<String, Integer> tasks = new HashMap<String, Integer>();
   private static HashMap<String, Integer> alwaystasks = new HashMap<String, Integer>();
   private static HashMap<UUID, HashMap<String, Integer>> ptasks = new HashMap<UUID, HashMap<String, Integer>>();
