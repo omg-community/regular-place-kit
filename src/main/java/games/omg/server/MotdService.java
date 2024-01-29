@@ -16,6 +16,18 @@ public class MotdService implements Listener {
   
   @EventHandler
   public void onServerListPing(ServerListPingEvent event) {
+    Component message;
+
+    if (RunService.isDevelopment()) {
+      message = Component.join(
+        JoinConfiguration.separator(Component.space()),
+        Component.text("development test server"),
+        Component.text(Decorations.PENCIL)
+      );
+    } else {
+      message = Component.text("a regular place");
+    }
+    
     event.motd(
       Component.join(
         JoinConfiguration.noSeparators(),
@@ -35,7 +47,7 @@ public class MotdService implements Listener {
           .appendSpace()
           .color(NamedTextColor.DARK_GRAY),
         
-        Component.text("a regular place")
+        message
       )
     );
   }
