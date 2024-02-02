@@ -21,7 +21,7 @@ import games.omg.command.CommandMessage;
 import games.omg.command.RegularCommand;
 import games.omg.utils.PlayerUtils;
 import games.omg.utils.StringUtils;
-import games.omg.utils.TaskManager;
+import games.omg.utils.OldTaskManager;
 import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.ChatColor;
 
@@ -54,7 +54,7 @@ public class TeleportCommand extends RegularCommand implements Listener {
             .sendTo(p);
       }
       teleportAsk.put(p, player);
-      TaskManager.initTask(p, "teleport",
+      OldTaskManager.initTask(p, "teleport",
           Bukkit.getScheduler().scheduleSyncDelayedTask(Main.getPlugin(), new Runnable() {
             public void run() {
               teleportAsk.remove(p);

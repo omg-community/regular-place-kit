@@ -6,7 +6,14 @@ import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-public class TaskManager {
+/**
+ * A utility class for managing tasks.
+ * 
+ * Written 10 years ago by a child.
+ * 
+ * @deprecated Use {@link games.omg.utils.TaskManager} instead.
+ */
+public class OldTaskManager {
   private static HashMap<String, Integer> tasks = new HashMap<String, Integer>();
   private static HashMap<String, Integer> alwaystasks = new HashMap<String, Integer>();
   private static HashMap<UUID, HashMap<String, Integer>> ptasks = new HashMap<UUID, HashMap<String, Integer>>();
