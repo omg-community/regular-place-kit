@@ -7,9 +7,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import games.omg.channeling.TeleportTools;
 import games.omg.chat.ChatHandler;
 import games.omg.command.CommandManager;
+import games.omg.improvements.AnvilCostFix;
 import games.omg.server.MotdService;
 import games.omg.security.SafeExplosions;
-import games.omg.menus.AnvilCostFix;
 
 public class Main extends JavaPlugin implements Listener {
 

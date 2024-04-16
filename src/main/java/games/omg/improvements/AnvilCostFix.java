@@ -1,4 +1,4 @@
-package games.omg.menus;
+package games.omg.improvements;
 import java.util.logging.Logger;
 
 import org.bukkit.Material;
