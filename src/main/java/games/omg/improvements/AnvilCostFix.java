@@ -15,7 +15,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class AnvilCostFix implements Listener {
     
-    private static Logger logger = Logger.getLogger("Minecraft");
     // the max extra levels added from a enchant is something like 13?
     private static int max_repair_penalty = 39;
     
@@ -26,12 +25,7 @@ public class AnvilCostFix implements Listener {
         }
 
         AnvilInventory anvil = ((AnvilInventory) event.getInventory());
-        // Lol
         anvil.setMaximumRepairCost(Integer.MAX_VALUE);
-        
-        // this stops the first item from showing as "Too Expensive" since we havent reset the repairCost metadata yet
-        // this doesnt actually do that, unfortunately, but ill keep it here anyway
-        anvil.setRepairCost(0);
     }
 
     @EventHandler
