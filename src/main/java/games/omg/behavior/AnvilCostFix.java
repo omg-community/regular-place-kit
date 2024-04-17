@@ -1,4 +1,4 @@
-package games.omg.improvements;
+package games.omg.behavior;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
