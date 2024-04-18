@@ -5,6 +5,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import games.omg.behavior.AnvilCostFix;
+import games.omg.behavior.NoEggTeleport;
 import games.omg.channeling.TeleportTools;
 import games.omg.chat.ChatHandler;
 import games.omg.command.CommandManager;
@@ -29,7 +30,14 @@ public class Main extends JavaPlugin implements Listener {
 	public void onEnable() {
 		plugin = this;
 
-		register(new ChatHandler(), new TeleportTools(), new MotdService(), new SafeExplosions(), new AnvilCostFix());
+		register(
+			new ChatHandler(),
+			new TeleportTools(),
+			new MotdService(),
+			new SafeExplosions(),
+			new AnvilCostFix(),
+			new NoEggTeleport()
+		);
 
 		// registerCommand("tpa", new Tpa());	
 
