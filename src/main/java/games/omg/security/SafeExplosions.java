@@ -19,89 +19,88 @@ import org.bukkit.event.hanging.HangingBreakEvent;
 
 public class SafeExplosions implements Listener {
 
-    /**
-     * Protects blocks from block explosions
-     */
-    @EventHandler
-    public void onBlockExplode(BlockExplodeEvent event) {
-        // Only protect blocks in the Overworld
-        if (event.getBlock().getWorld().getEnvironment() != Environment.NORMAL) {
-            return;
-        }
-
-        protectBlocks(event.blockList());
+  /**
+   * Protects blocks from block explosions
+   */
+  @EventHandler
+  public void onBlockExplode(BlockExplodeEvent event) {
+    // Only protect blocks in the Overworld
+    if (event.getBlock().getWorld().getEnvironment() != Environment.NORMAL) {
+      return;
     }
 
-    /**
-     * Protects blocks from entity explosions
-     */
-    @EventHandler
-    public void onEntityExplode(EntityExplodeEvent event) {
-        // Only protect blocks in the Overworld
-        if (event.getLocation().getWorld().getEnvironment() != Environment.NORMAL) {
-            return;
-        }
+    protectBlocks(event.blockList());
+  }
 
-        protectBlocks(event.blockList());
+  /**
+   * Protects blocks from entity explosions
+   */
+  @EventHandler
+  public void onEntityExplode(EntityExplodeEvent event) {
+    // Only protect blocks in the Overworld
+    if (event.getLocation().getWorld().getEnvironment() != Environment.NORMAL) {
+      return;
     }
 
-    /**
-     * Removes protected blocks from a block list
-     * @param blocks The list of blocks to protect
-     */
-    private void protectBlocks(List<Block> blocks) {
-        Iterator<Block> iterator = blocks.iterator();
+    protectBlocks(event.blockList());
+  }
 
-        while (iterator.hasNext()) {
-            Block block = iterator.next();
+  /**
+   * Removes protected blocks from a block list
+   * 
+   * @param blocks The list of blocks to protect
+   */
+  private void protectBlocks(List<Block> blocks) {
+    Iterator<Block> iterator = blocks.iterator();
 
-            BlockState blockState = block.getState();
+    while (iterator.hasNext()) {
+      Block block = iterator.next();
 
-            if (
-                blockState instanceof Container
-            ) {
-                iterator.remove();
-                continue;
-            }
-        }
+      BlockState blockState = block.getState();
+
+      if (blockState instanceof Container) {
+        iterator.remove();
+        continue;
+      }
+    }
+  }
+
+  /**
+   * Prevent explosions from harming certain entities
+   */
+  @EventHandler
+  public void onExplosionDamage(EntityDamageEvent event) {
+    // Check if the damage was caused by an explosion
+    if (
+      event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION ||
+      event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION
+    ) {
+      Entity entity = event.getEntity();
+
+      if (
+        entity instanceof Tameable ||
+        entity instanceof ArmorStand ||
+        // entity instanceof Hanging ||
+        event.getEntity().customName() != null
+      ) {
+        event.setCancelled(true);
+      }
+    }
+  }
+
+  /**
+   * Prevent hanging entities from exploding in the Overworld
+   */
+  @EventHandler
+  public void onBreakHangingEntity(HangingBreakEvent event) {
+    // Only protect hanging entities in the Overworld
+    if (event.getEntity().getLocation().getWorld().getEnvironment() != Environment.NORMAL) {
+      return;
     }
 
-    /**
-     * Prevent explosions from harming certain entities
-     */
-    @EventHandler
-    public void onExplosionDamage(EntityDamageEvent event) {
-        // Check if the damage was caused by an explosion
-        if (
-            event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION ||
-            event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION
-        ) {
-            Entity entity = event.getEntity();
-
-            if (
-                entity instanceof Tameable ||
-                entity instanceof ArmorStand ||
-                // entity instanceof Hanging ||
-                event.getEntity().customName() != null
-            ) {
-                event.setCancelled(true);
-            }
-        }
+    // Cancel explosions
+    if (event.getCause() == HangingBreakEvent.RemoveCause.EXPLOSION) {
+      event.setCancelled(true);
     }
-
-    /**
-     * Prevent hanging entities from exploding in the Overworld
-     */
-    @EventHandler
-    public void onBreakHangingEntity(HangingBreakEvent event) {
-        // Only protect hanging entities in the Overworld
-        if (event.getEntity().getLocation().getWorld().getEnvironment() != Environment.NORMAL) {
-            return;
-        }
-
-        // Cancel explosions
-        if (event.getCause() == HangingBreakEvent.RemoveCause.EXPLOSION) {
-            event.setCancelled(true);
-        }
-    }
+  }
 }
