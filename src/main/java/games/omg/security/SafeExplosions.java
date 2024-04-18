@@ -2,112 +2,104 @@ package games.omg.security;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
 
-import org.bukkit.Material;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.Container;
-import org.bukkit.block.Sign;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.ItemFrame;
+import org.bukkit.entity.Tameable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-// import org.bukkit.event.block.BlockExplodeEvent;
+import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.hanging.HangingBreakEvent;
 
 public class SafeExplosions implements Listener {
 
-    private final Logger logger = Logger.getLogger("Minecraft");
+    /**
+     * Protects blocks from block explosions
+     */
+    @EventHandler
+    public void onBlockExplode(BlockExplodeEvent event) {
+        // Only protect blocks in the Overworld
+        if (event.getBlock().getWorld().getEnvironment() != Environment.NORMAL) {
+            return;
+        }
 
-    private final List<EntityType> protectedEntities = List.of(
-        EntityType.CAT,
-        EntityType.WOLF,
-        
-        EntityType.PARROT,
-        
-        EntityType.HORSE,
-        EntityType.SKELETON_HORSE,
-        EntityType.ZOMBIE_HORSE,
-        EntityType.MULE,
-        EntityType.DONKEY,
-        EntityType.CAMEL,
+        protectBlocks(event.blockList());
+    }
 
-        EntityType.LLAMA,
-        EntityType.TRADER_LLAMA,
-
-        EntityType.ARMOR_STAND,
-
-        // i Genuinely cant tell if these actually do anything, but whatever
-        EntityType.ITEM_FRAME,
-        EntityType.GLOW_ITEM_FRAME
-    );
-
+    /**
+     * Protects blocks from entity explosions
+     */
     @EventHandler
     public void onEntityExplode(EntityExplodeEvent event) {
+        // Only protect blocks in the Overworld
         if (event.getLocation().getWorld().getEnvironment() != Environment.NORMAL) {
             return;
         }
 
-        // Stop destroying BLOCKS !
-        Iterator<Block> iterator = event.blockList().iterator();
+        protectBlocks(event.blockList());
+    }
+
+    /**
+     * Removes protected blocks from a block list
+     * @param blocks The list of blocks to protect
+     */
+    private void protectBlocks(List<Block> blocks) {
+        Iterator<Block> iterator = blocks.iterator();
 
         while (iterator.hasNext()) {
             Block block = iterator.next();
 
-            // anything with a inventory, any sign, or a mob spawner :D
+            BlockState blockState = block.getState();
+
             if (
-                (block.getState() instanceof Container) || 
-                (block.getState() instanceof Sign) || 
-                (block.getType() == Material.SPAWNER)
+                blockState instanceof Container
             ) {
                 iterator.remove();
                 continue;
             }
-
-            // should we protect the blocks armor stands/signs are on?
-            // i feel like its more hassle than its worth for a one time use thing
-            // if we choose to, we need to protect structural blocks, stuff like scaffolding, dripstone, vines, etc
-            // blocks that will chain destroy themselves if one part is cut off
-            // this also applys for item frames/paintings, but is it really worth it to safe guard those?
         }
     }
 
+    /**
+     * Prevent explosions from harming certain entities
+     */
     @EventHandler
     public void onExplosionDamage(EntityDamageEvent event) {
-        // if not overworld and if not block/entity explosion damage
+        // Check if the damage was caused by an explosion
         if (
-            (event.getEntity().getWorld().getEnvironment() != Environment.NORMAL) ||
-            (event.getCause() != EntityDamageEvent.DamageCause.BLOCK_EXPLOSION && event.getCause() != EntityDamageEvent.DamageCause.ENTITY_EXPLOSION)
+            event.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION ||
+            event.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION
         ) {
-            return;
-        }
+            Entity entity = event.getEntity();
 
-        Entity ent = event.getEntity();
-
-        if (
-            (ent.getType() == EntityType.DROPPED_ITEM || event.getEntity() instanceof Item) || 
-            (event.getEntity().customName() != null || protectedEntities.stream().anyMatch(en -> event.getEntityType().equals(en)))
-        ) {
-            event.setCancelled(true);
+            if (
+                entity instanceof Tameable ||
+                entity instanceof ArmorStand ||
+                // entity instanceof Hanging ||
+                event.getEntity().customName() != null
+            ) {
+                event.setCancelled(true);
+            }
         }
     }
 
-    // Specifically for paintings and item frames (mainly item frames)
+    /**
+     * Prevent hanging entities from exploding in the Overworld
+     */
     @EventHandler
     public void onBreakHangingEntity(HangingBreakEvent event) {
+        // Only protect hanging entities in the Overworld
         if (event.getEntity().getLocation().getWorld().getEnvironment() != Environment.NORMAL) {
             return;
         }
-        
-        if (!(event.getEntity() instanceof ItemFrame)) {
-            return;
-        }
 
+        // Cancel explosions
         if (event.getCause() == HangingBreakEvent.RemoveCause.EXPLOSION) {
             event.setCancelled(true);
         }

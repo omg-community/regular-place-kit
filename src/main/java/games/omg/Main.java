@@ -4,10 +4,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import games.omg.behavior.AnvilCostFix;
 import games.omg.channeling.TeleportTools;
 import games.omg.chat.ChatHandler;
 import games.omg.command.CommandManager;
-import games.omg.improvements.AnvilCostFix;
 import games.omg.server.MotdService;
 import games.omg.security.SafeExplosions;
 
