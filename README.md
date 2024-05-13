@@ -36,8 +36,8 @@ To debug the server, which allows for Hot Code Replacement, you can run the serv
 For more flexibility, you have the option to create a `.env` file in the project directory to change the server path (instead of using the project directory), or modify the arguments of the Paper server, like so:
 
 ```sh
-SERVER_DIRECTORY="/Users/Mae/Documents/My Server"
-SERVER_ARGS="-Xmx3G -Xms3G"
+SERVER_DIRECTORY=/Users/Mae/Documents/My Server
+SERVER_ARGS=-Xmx3G -Xms3G
 ```
 
 If you don't specify server arguments, it will automatically choose `-Xmx1024M -Xms512M`. This will allocate 1024 MB of RAM to your server at maximum, and 512 MB at minimum.
